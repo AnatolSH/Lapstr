@@ -28,7 +28,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class CameraActivity extends Activity implements View.OnTouchListener, View.OnClickListener {
-
+//delete this comment
     private Camera myCamera;
     private MyCameraSurfaceView myCameraSurfaceView;
     public static MediaRecorder mediaRecorder;
