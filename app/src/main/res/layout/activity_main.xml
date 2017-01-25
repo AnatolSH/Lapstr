@@ -45,9 +45,18 @@
         android:layout_below="@+id/new_activity"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:text="Database"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/data_b"
+        android:layout_below="@+id/sign_out"
+        android:layout_centerHorizontal="true" />
+
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
+        android:layout_below="@+id/data_b"
         >
 
         <VideoView

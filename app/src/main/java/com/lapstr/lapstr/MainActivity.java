@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonStart;
     private Button newActivity;
     private Button singout;
+
+    private Button database;
+
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
@@ -74,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         singout = (Button) findViewById(R.id.sign_out);
         ////////
 
+        database = (Button) findViewById(R.id.data_b);
+
         mSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,6 +107,17 @@ public class MainActivity extends AppCompatActivity {
                 if (view == newActivity) {
                     Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
                     startActivity(SecAct);
+                }
+            }
+        });
+
+        database.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                database.setOnClickListener(this);
+                if (view == database) {
+                    Intent SecAct5 = new Intent(getApplicationContext(), DataBa.class);
+                    startActivity(SecAct5);
                 }
             }
         });
