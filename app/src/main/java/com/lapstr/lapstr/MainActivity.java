@@ -8,16 +8,24 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.MediaController;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -30,21 +38,28 @@ public class MainActivity extends AppCompatActivity {
     private Button buttonStart;
     private Button newActivity;
     private Button singout;
+    //тут начинается перенос
 
-    private Button database;
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mFirebaseInstance;
+    private String userId;
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
     private static final int SELECT_VIDEO = 3;
 
-    private String path = "https://firebasestorage.googleapis.com/v0/b/lapstr-25ae6.appspot.com/o/Videos%2Fvideo%3A4672?alt=media&token=f3ec7f43-7423-4c96-9abc-a5f277650f95";
+    private String path = "https://firebasestorage.googleapis.com/v0/b/lapstr-25ae6.appspot.com/o/Videos%2F33486?alt=media&token=f007ec67-3c51-402c-913e-9ecab831a9af";
     private VideoView videoview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseDatabase = mFirebaseInstance.getReference("users");
+        mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
 
         mSrorage = FirebaseStorage.getInstance().getReference();
         mSelectImage = (Button) findViewById(R.id.select_image);
@@ -77,8 +92,6 @@ public class MainActivity extends AppCompatActivity {
         singout = (Button) findViewById(R.id.sign_out);
         ////////
 
-        database = (Button) findViewById(R.id.data_b);
-
         mSelectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,17 +120,6 @@ public class MainActivity extends AppCompatActivity {
                 if (view == newActivity) {
                     Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
                     startActivity(SecAct);
-                }
-            }
-        });
-
-        database.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                database.setOnClickListener(this);
-                if (view == database) {
-                    Intent SecAct5 = new Intent(getApplicationContext(), DataBa.class);
-                    startActivity(SecAct5);
                 }
             }
         });
@@ -154,9 +156,56 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Upload Done", Toast.LENGTH_LONG).show();
                 mProgressDialog.dismiss();
 
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                //and you can convert it to string like this:
+                String string_dwload = downloadUrl.toString();
+                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                createUser(user.getEmail(), string_dwload);
             }
         });
+
+
     }
+
+    private void createUser(String name, String url) {
+        // TODO
+        // In real apps this userId should be fetched
+        // by implementing firebase auth
+        userId = mFirebaseDatabase.push().getKey();
+        User user = new User(name, url);
+        mFirebaseDatabase.child(userId).setValue(user);
+       // addUserChangeListener();
+    }
+
+  /*  private void addUserChangeListener() {
+        // User data change listener
+        mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                User user = dataSnapshot.getValue(User.class);
+
+                // Check for null
+                if (user == null) {
+                    Log.e(TAG, "User data is null!");
+                    return;
+                }
+
+                Log.e(TAG, "User data is changed!" + user.name + ", " + user.email);
+
+                // Display newly updated name and email
+             //   txtDetails.setText(user.name + ", " + user.email);
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.e(TAG, "Failed to read user", error.toException());
+            }
+        });
+    }*/
+
+
 
     private void startVideo() {
         videoview.setVideoURI(Uri.parse(path));
