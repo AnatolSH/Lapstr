@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        /////////////5
+        /////////////55
         videoview = (VideoView)findViewById(R.id.surface_view);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
