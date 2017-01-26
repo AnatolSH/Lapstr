@@ -12,6 +12,8 @@ import com.google.firebase.storage.StorageReference;
 @IgnoreExtraProperties
 public class User {
 
+
+    //dsaas
     public String name;
     public String url;
 
