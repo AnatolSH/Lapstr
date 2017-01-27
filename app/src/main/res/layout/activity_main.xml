@@ -38,11 +38,19 @@
         android:layout_centerHorizontal="true" />
 
     <Button
+        android:text="Cabinet"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/cab"
+        android:layout_below="@+id/new_activity"
+        android:layout_centerHorizontal="true" />
+
+    <Button
         android:text="Sign Out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/sign_out"
-        android:layout_below="@+id/new_activity"
+        android:layout_below="@+id/cab"
         android:layout_centerHorizontal="true" />
     <TextView
         android:id="@+id/txt_user"

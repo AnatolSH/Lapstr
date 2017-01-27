@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ProgressDialog mProgressDialog;
     private Button buttonStart;
     private Button newActivity;
+    private Button myCabinet;
     private Button singout;
     private DatabaseReference mDatabase;
 
@@ -57,7 +58,6 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int SELECT_VIDEO = 3;
     private TextView txtDetails;
-    private String path = "";//"https://firebasestorage.googleapis.com/v0/b/lapstr-25ae6.appspot.com/o/Videos%2F33486?alt=media&token=f007ec67-3c51-402c-913e-9ecab831a9af";
     private VideoView videoview;
 
     @Override
@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
        // videoview.setVideoPath(path);
         buttonStart = (Button) findViewById(R.id.start_btn);
         newActivity = (Button) findViewById(R.id.new_activity);
+        myCabinet = (Button) findViewById(R.id.cab);
         singout = (Button) findViewById(R.id.sign_out);
         ////////
 
