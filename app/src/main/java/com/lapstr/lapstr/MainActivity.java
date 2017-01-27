@@ -145,6 +145,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+        addUserChangeListener();
     }
     public void signOut() {
         auth.signOut();
@@ -172,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
                 String string_dwload = downloadUrl.toString();
                 final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
                 createUser(usernameFromEmail(user.getEmail()), string_dwload);
-                addUserChangeListener();
+
                        }
         });
     }
@@ -187,15 +188,23 @@ public class MainActivity extends AppCompatActivity {
 
     private void addUserChangeListener() {//вызвать дето
         // User data change listener
-        mFirebaseDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                User user = dataSnapshot.getValue(User.class);
+                //     User user = dataSnapshot.getValue(User.class);
+                DataSnapshot contSnap = dataSnapshot.child("contacts");
+                Iterable<DataSnapshot> contShild = contSnap.getChildren();
+                ArrayList<User> us = new ArrayList<>();
+                for(DataSnapshot cont: contShild)
+                {
+                    User c = cont.getValue(User.class);
+                    us.add(c);
+                }
 
                 // Display newly updated name and email
-                txtDetails.setText(user.name);
-                videoview.setVideoPath(user.url);
-                videoview.setVideoURI(Uri.parse(user.url));
+                txtDetails.setText(us.get(0).getName());
+                videoview.setVideoPath(us.get(0).getUrl());
+                videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
             }
 
             @Override
@@ -224,8 +233,7 @@ public class MainActivity extends AppCompatActivity {
         // by implementing firebase auth
         userId = mFirebaseDatabase.push().getKey();
         User user = new User(name, url);
-        mFirebaseDatabase.child(userId).setValue(user);
-       // addUserChangeListener();
+        mFirebaseDatabase.child("contacts").child(userId).setValue(user);
     }
 
 
