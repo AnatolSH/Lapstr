@@ -137,6 +137,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        myCabinet.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                myCabinet.setOnClickListener(this);
+                if (view == myCabinet) {
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+
         singout.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
