@@ -45,10 +45,10 @@ public class EditCabinet extends AppCompatActivity{
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
 
-        addUserChangeListener();
+        addCabChangeListener();
     }
 
-    private void addUserChangeListener() {
+    private void addCabChangeListener() {
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -96,7 +96,7 @@ public class EditCabinet extends AppCompatActivity{
             String userId = equ.getUid();
             mFirebaseDatabase.child("users").child(userId).child("userName").setValue(name);
          //   mFirebaseDatabase.child("users").child(userId).child("email").setValue(email);
-            addUserChangeListener();
+            addCabChangeListener();
     }
 }
 

@@ -50,8 +50,11 @@ public class MainActivity extends AppCompatActivity {
     //тут начинается перенос
 
     private DatabaseReference mFirebaseDatabase;
+    private DatabaseReference mFirebaseDatabase2;
     private FirebaseDatabase mFirebaseInstance;
+    private FirebaseDatabase mFirebaseInstance2;
     private String userId;
+    private String nick;
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -66,7 +69,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         txtDetails = (TextView) findViewById(R.id.txt_user);
         mFirebaseInstance = FirebaseDatabase.getInstance();
+        mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("uploadedVideo");
+        mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
         mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -74,7 +79,6 @@ public class MainActivity extends AppCompatActivity {
         mSelectImage = (Button) findViewById(R.id.select_image);
         mProgressDialog = new ProgressDialog(this);
         auth = FirebaseAuth.getInstance();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -158,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         addUserChangeListener();
+        addCabChangeListener();
     }
     public void signOut() {
         auth.signOut();
@@ -183,22 +188,43 @@ public class MainActivity extends AppCompatActivity {
 
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 String string_dwload = downloadUrl.toString();
-                final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                createUser(usernameFromEmail(user.getEmail()), string_dwload);
+                createUser(nick, string_dwload);
 
                        }
         });
     }
 
-    private String usernameFromEmail(String email) {
-        if (email.contains("@")) {
-            return email.split("@")[0];
-        } else {
-            return email;
-        }
-    }
+    private void addCabChangeListener() {
+        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot contSnap = dataSnapshot.child("users");
+                Iterable<DataSnapshot> contShild = contSnap.getChildren();
+                ArrayList<Cabinet> co = new ArrayList<>();
+                for(DataSnapshot cont: contShild)
+                {
+                    //   co.clear();//??
+                    Cabinet c = cont.getValue(Cabinet.class);
+                    co.add(c);
+                }
 
-    private void addUserChangeListener() {//вызвать дето
+                FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
+
+                for (int i = 0; i < co.size(); i++) {
+                    if((co.get(i).getEmail()).equals(equ.getEmail()))
+                    {
+                        nick = co.get(i).getUserName();
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });}
+
+    private void addUserChangeListener() {//тут все ссылки для ленты + имена тех кто залил
 
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -213,9 +239,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Display newly updated name and email
-                txtDetails.setText(us.get(0).getName());
-                videoview.setVideoPath(us.get(0).getUrl());
-                videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
+               txtDetails.setText(us.get(1).getName());
+               videoview.setVideoPath(us.get(1).getUrl());
+                videoview.setVideoURI(Uri.parse(us.get(1).getUrl()));
             }
 
             @Override
