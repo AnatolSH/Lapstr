@@ -54,7 +54,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseInstance;
     private FirebaseDatabase mFirebaseInstance2;
     private String userId;
+    private String randId;
     private String nick;
+    private String val;
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -229,6 +231,11 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+         //       FirebaseUser ooo = FirebaseAuth.getInstance().getCurrentUser();
+       //         String jk = ooo.getUid();
+//DataSnapshot contSnap = dataSnapshot.child("contacts").child(jk); не удалять, для личного кабинета
+                //       val = Integer.toString(us.size()+2);
+
                 DataSnapshot contSnap = dataSnapshot.child("contacts");
                 Iterable<DataSnapshot> contShild = contSnap.getChildren();
                 ArrayList<User> us = new ArrayList<>();
@@ -239,9 +246,9 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Display newly updated name and email
-               txtDetails.setText(us.get(1).getName());
-               videoview.setVideoPath(us.get(1).getUrl());
-                videoview.setVideoURI(Uri.parse(us.get(1).getUrl()));
+                 txtDetails.setText(us.get(0).getName());
+                videoview.setVideoPath(us.get(0).getUrl());
+                videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
             }
 
             @Override
@@ -256,9 +263,13 @@ public class MainActivity extends AppCompatActivity {
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
-        userId = mFirebaseDatabase.push().getKey();
-        User user = new User(name, url);
-        mFirebaseDatabase.child("contacts").child(userId).setValue(user);
+          userId = mFirebaseDatabase.push().getKey();
+        //    FirebaseUser equq = FirebaseAuth.getInstance().getCurrentUser();
+          //  randId = equq.getUid();
+             User user = new User(name, url);
+
+             mFirebaseDatabase.child("contacts").child(userId).setValue(user);
+           // mFirebaseDatabase2.child("yourVideo").child(randId).child(val).setValue(usor);
     }
 
 
