@@ -199,11 +199,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addUserChangeListener() {//вызвать дето
-        // User data change listener
+
         mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //     User user = dataSnapshot.getValue(User.class);
                 DataSnapshot contSnap = dataSnapshot.child("contacts");
                 Iterable<DataSnapshot> contShild = contSnap.getChildren();
                 ArrayList<User> us = new ArrayList<>();
@@ -226,18 +225,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
-
-    /*final ValueEventListener sp = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-            Usors us = dataSnapshot.getValue(Usors.class);
-            String pole = us.name;
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {}};
-*/
 
         private void createUser(String name, String url) {
         // TODO

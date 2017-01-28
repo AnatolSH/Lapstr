@@ -25,12 +25,14 @@ public class SignupActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
+    private FirebaseDatabase mFirebaseInstance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mFirebaseInstance = FirebaseDatabase.getInstance();
+        mDatabase = mFirebaseInstance.getReference("cabinet");
         auth = FirebaseAuth.getInstance();
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);

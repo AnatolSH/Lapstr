@@ -26,7 +26,8 @@ public class Cabinet {
     public void setUserName(String userName) { this.userName = userName; }
     public String getUserName() { return this.userName; }
 
-   // public void setUrl(String url) { this.url = url; }
-   // public String getUrl() { return this.url; }
+    public void setEmail(String email) { this.email = email; }
+    public String getEmail() { return this.email; }
+
 }
 
