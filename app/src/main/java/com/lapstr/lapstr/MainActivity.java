@@ -102,8 +102,6 @@ public class MainActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-
-       // videoview.setVideoPath(path);
         buttonStart = (Button) findViewById(R.id.start_btn);
         newActivity = (Button) findViewById(R.id.new_activity);
         myCabinet = (Button) findViewById(R.id.cab);
@@ -171,30 +169,33 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
+            if (requestCode == SELECT_VIDEO && resultCode == RESULT_OK)
+        {
+            mProgressDialog.setMessage("Uploading ...");
+            mProgressDialog.show();
 
-        if(requestCode == SELECT_VIDEO && resultCode == RESULT_OK);
+            Uri uri = data.getData();
+            StorageReference filepath = mSrorage.child("Videos").child(uri.getLastPathSegment());
+            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-        mProgressDialog.setMessage("Uploading ...");
-        mProgressDialog.show();
+                    Toast.makeText(MainActivity.this, "Upload Done", Toast.LENGTH_LONG).show();
+                    mProgressDialog.dismiss();
 
-        Uri uri = data.getData();
-        StorageReference filepath = mSrorage.child("Videos").child(uri.getLastPathSegment());
-        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-            @Override
-            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                    String string_dwload = downloadUrl.toString();
+                    createUser(nick, string_dwload);
+                }
+            });
+        }
+        else{
+        Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(SecAct);}
+        }
 
-                Toast.makeText(MainActivity.this, "Upload Done", Toast.LENGTH_LONG).show();
-                mProgressDialog.dismiss();
-
-                Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                String string_dwload = downloadUrl.toString();
-                createUser(nick, string_dwload);
-
-                       }
-        });
-    }
 
     private void addCabChangeListener() {
         mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
@@ -245,7 +246,6 @@ public class MainActivity extends AppCompatActivity {
                     us.add(c);
                 }
 
-                // Display newly updated name and email
                  txtDetails.setText(us.get(0).getName());
                 videoview.setVideoPath(us.get(0).getUrl());
                 videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
