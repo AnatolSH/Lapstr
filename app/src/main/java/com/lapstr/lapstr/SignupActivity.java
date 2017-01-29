@@ -1,22 +1,35 @@
 package com.lapstr.lapstr;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.IOException;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -26,6 +39,11 @@ public class SignupActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
     private FirebaseDatabase mFirebaseInstance;
+    private static final int PICK_IMAGE_REQUEST = 234;
+    private Button buttonChoose;
+    private Uri filePath;
+    private ImageView imageView;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +52,7 @@ public class SignupActivity extends AppCompatActivity {
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mDatabase = mFirebaseInstance.getReference("cabinet");
         auth = FirebaseAuth.getInstance();
+        imageView = (ImageView) findViewById(R.id.imageView55);
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -42,6 +61,8 @@ public class SignupActivity extends AppCompatActivity {
         inputUsername = (EditText) findViewById(R.id.usname);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
         btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        buttonChoose = (Button) findViewById(R.id.buttonChoose);
+        storageReference = FirebaseStorage.getInstance().getReference();
 
         btnResetPassword.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +75,13 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        buttonChoose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showFileChooser();
             }
         });
 
@@ -91,21 +119,61 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "Authentication failed." + task.getException(),
                                             Toast.LENGTH_SHORT).show();
                                 } else {
+                                    uploadFile();
+                                //    createNewUser(task.getResult().getUser());
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                    createNewUser(task.getResult().getUser());
-                                    finish();
+                                   // finish();
                                 }
                             }
                         });
             }
         });
     }
-    private void createNewUser(FirebaseUser userFromRegistration) {
-        String username = inputUsername.getText().toString().trim();
-        String email = inputEmail.getText().toString().trim();
-        String userId = userFromRegistration.getUid();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            filePath = data.getData();
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
+                imageView.setImageBitmap(bitmap);
 
-        Cabinet user = new Cabinet(username, email);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    private void uploadFile() {
+        Uri uri = filePath;
+        StorageReference filepath = storageReference.child("images").child(uri.getLastPathSegment());
+        filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+
+                Toast.makeText(SignupActivity.this, "Upload Done", Toast.LENGTH_LONG).show();
+
+                Uri downloadUrl = taskSnapshot.getDownloadUrl();
+                String string_d = downloadUrl.toString();
+                String username = inputUsername.getText().toString().trim();
+                String email = inputEmail.getText().toString().trim();
+
+                createNewUser(username, email, string_d);
+            }
+        });
+
+    }
+
+    private void createNewUser(String n, String e, String d) {
+
+        String userId = mDatabase.push().getKey();
+        Cabinet user = new Cabinet(n, e, d);
 
         mDatabase.child("users").child(userId).setValue(user);
     }

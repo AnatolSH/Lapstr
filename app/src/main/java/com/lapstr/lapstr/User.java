@@ -16,13 +16,15 @@ public class User {
     //dsaas
     public String name;
     public String url;
+    public String awaurl;
 
     public User() {
     }
 
-    public User(String name, String url) {
+    public User(String name, String url, String awaurl) {
         this.name = name;
         this.url = url;
+        this.awaurl = awaurl;
     }
 
     public void setName(String name) { this.name = name; }
@@ -30,4 +32,7 @@ public class User {
 
     public void setUrl(String url) { this.url = url; }
     public String getUrl() { return this.url; }
+
+    public void setAwaurl(String awaurl) { this.awaurl = awaurl; }
+    public String getAwaurl() { return this.awaurl; }
 }

@@ -3,6 +3,8 @@ package com.lapstr.lapstr;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +36,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -45,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private Button myCabinet;
     private Button singout;
     private DatabaseReference mDatabase;
+    private ImageView awatarka;
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //тут начинается перенос
@@ -56,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private String userId;
     private String randId;
     private String nick;
+    private String urk;
     private String val;
 
     private FirebaseAuth.AuthStateListener authListener;
@@ -82,6 +90,8 @@ public class MainActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        awatarka = (ImageView) findViewById(R.id.imageView6);
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -187,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     String string_dwload = downloadUrl.toString();
-                    createUser(nick, string_dwload);
+                    createUser(nick, string_dwload, urk);
                 }
             });
         }
@@ -217,6 +227,7 @@ public class MainActivity extends AppCompatActivity {
                     if((co.get(i).getEmail()).equals(equ.getEmail()))
                     {
                         nick = co.get(i).getUserName();
+                        urk = co.get(i).getUrl();
                         break;
                     }
                 }
@@ -246,6 +257,8 @@ public class MainActivity extends AppCompatActivity {
                     us.add(c);
                 }
 
+                awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
+                Toast.makeText(MainActivity.this, "" + us.get(0).getAwaurl(), Toast.LENGTH_LONG).show();
                  txtDetails.setText(us.get(0).getName());
                 videoview.setVideoPath(us.get(0).getUrl());
                 videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
@@ -259,14 +272,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-        private void createUser(String name, String url) {
+        private void createUser(String name, String url, String imurl) {
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
           userId = mFirebaseDatabase.push().getKey();
         //    FirebaseUser equq = FirebaseAuth.getInstance().getCurrentUser();
           //  randId = equq.getUid();
-             User user = new User(name, url);
+             User user = new User(name, url, imurl);
 
              mFirebaseDatabase.child("contacts").child(userId).setValue(user);
            // mFirebaseDatabase2.child("yourVideo").child(randId).child(val).setValue(usor);
