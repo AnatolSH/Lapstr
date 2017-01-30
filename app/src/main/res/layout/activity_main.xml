@@ -60,16 +60,12 @@
         android:paddingTop="@dimen/activity_horizontal_margin"
         android:layout_below="@+id/sign_out"
         android:textSize="20dp" />
-    <ImageView
-        android:id="@+id/imageView6"
-        android:layout_below="@id/txt_user"
-        android:layout_width="50dp"
-        android:layout_height="50dp" />
+
 
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_below="@+id/imageView6"
+        android:layout_below="@+id/txt_user"
         >
 
         <VideoView
@@ -79,5 +75,6 @@
             android:layout_gravity="center"
             />
     </FrameLayout>
+
 
 </RelativeLayout>

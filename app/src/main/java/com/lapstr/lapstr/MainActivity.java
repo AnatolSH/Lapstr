@@ -2,32 +2,25 @@ package com.lapstr.lapstr;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.google.android.gms.tasks.OnCompleteListener;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,11 +30,6 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
@@ -54,7 +42,6 @@ public class MainActivity extends AppCompatActivity {
     private Button myCabinet;
     private Button singout;
     private DatabaseReference mDatabase;
-    private ImageView awatarka;
 
     private static final String TAG = MainActivity.class.getSimpleName();
     //тут начинается перенос
@@ -66,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private String userId;
     private String randId;
     private String nick;
-    private String urk;
     private String val;
 
     private FirebaseAuth.AuthStateListener authListener;
@@ -94,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        awatarka = (ImageView) findViewById(R.id.imageView6);
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -200,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
                     String string_dwload = downloadUrl.toString();
-                    createUser(nick, string_dwload, urk);
+                    createUser(nick, string_dwload);
                 }
             });
         }
@@ -230,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                     if((co.get(i).getEmail()).equals(equ.getEmail()))
                     {
                         nick = co.get(i).getUserName();
-                        urk = co.get(i).getUrl();
                         break;
                     }
                 }
@@ -260,9 +244,6 @@ public class MainActivity extends AppCompatActivity {
                     us.add(c);
                 }
 
-                //awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
-                awatarka.setImageBitmap(getBitmapFromURL(us.get(0).getAwaurl()));
-                Toast.makeText(MainActivity.this, "" + us.get(0).getAwaurl(), Toast.LENGTH_LONG).show();
                  txtDetails.setText(us.get(0).getName());
                 videoview.setVideoPath(us.get(0).getUrl());
                 videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
@@ -275,33 +256,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            Log.e("src",src);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-         //   connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.e("Exception",e.getMessage());
-            return null;
-        }
-    }
-        private void createUser(String name, String url, String imurl) {
+
+        private void createUser(String name, String url) {
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
           userId = mFirebaseDatabase.push().getKey();
         //    FirebaseUser equq = FirebaseAuth.getInstance().getCurrentUser();
           //  randId = equq.getUid();
-             User user = new User(name, url, imurl);
+             User user = new User(name, url);
 
              mFirebaseDatabase.child("contacts").child(userId).setValue(user);
            // mFirebaseDatabase2.child("yourVideo").child(randId).child(val).setValue(usor);
