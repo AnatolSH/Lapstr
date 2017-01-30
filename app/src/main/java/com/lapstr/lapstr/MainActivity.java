@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
         // by implementing firebase auth
           userId = mFirebaseDatabase.push().getKey();
         //    FirebaseUser equq = FirebaseAuth.getInstance().getCurrentUser();
-          //  randId = equq.getUid();
+          //  randId = equq.getUid();sa
              User user = new User(name, url, imurl);
 
              mFirebaseDatabase.child("contacts").child(userId).setValue(user);
