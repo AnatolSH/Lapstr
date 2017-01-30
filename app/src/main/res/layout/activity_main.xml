@@ -52,6 +52,7 @@
         android:id="@+id/sign_out"
         android:layout_below="@+id/cab"
         android:layout_centerHorizontal="true" />
+    <!-- -->
     <TextView
         android:id="@+id/txt_user"
         android:layout_width="wrap_content"
