@@ -120,7 +120,6 @@ public class SignupActivity extends AppCompatActivity {
                                             Toast.LENGTH_SHORT).show();
                                 } else {
                                     uploadFile();
-                                //    createNewUser(task.getResult().getUser());
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
                                    // finish();
                                 }
@@ -156,8 +155,6 @@ public class SignupActivity extends AppCompatActivity {
         filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                Toast.makeText(SignupActivity.this, "Upload Done", Toast.LENGTH_LONG).show();
 
                 Uri downloadUrl = taskSnapshot.getDownloadUrl();
                 String string_d = downloadUrl.toString();

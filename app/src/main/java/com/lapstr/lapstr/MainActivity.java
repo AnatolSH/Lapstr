@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -37,7 +38,9 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -257,7 +260,8 @@ public class MainActivity extends AppCompatActivity {
                     us.add(c);
                 }
 
-                awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
+                //awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
+                awatarka.setImageBitmap(getBitmapFromURL(us.get(0).getAwaurl()));
                 Toast.makeText(MainActivity.this, "" + us.get(0).getAwaurl(), Toast.LENGTH_LONG).show();
                  txtDetails.setText(us.get(0).getName());
                 videoview.setVideoPath(us.get(0).getUrl());
@@ -271,7 +275,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-
+    public static Bitmap getBitmapFromURL(String src) {
+        try {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            Log.e("src",src);
+            URL url = new URL(src);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+         //   connection.setDoInput(true);
+            connection.connect();
+            InputStream input = connection.getInputStream();
+            Bitmap myBitmap = BitmapFactory.decodeStream(input);
+            Log.e("Bitmap","returned");
+            return myBitmap;
+        } catch (IOException e) {
+            e.printStackTrace();
+            Log.e("Exception",e.getMessage());
+            return null;
+        }
+    }
         private void createUser(String name, String url, String imurl) {
         // TODO
         // In real apps this userId should be fetched
