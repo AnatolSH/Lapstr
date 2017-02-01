@@ -179,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void signOut() {
         auth.signOut();
+        finish();
     }
 
     @Override
@@ -262,7 +263,6 @@ public class MainActivity extends AppCompatActivity {
 
                 //awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
                 awatarka.setImageBitmap(getBitmapFromURL(us.get(0).getAwaurl()));
-                Toast.makeText(MainActivity.this, "" + us.get(0).getAwaurl(), Toast.LENGTH_LONG).show();
                  txtDetails.setText(us.get(0).getName());
                 videoview.setVideoPath(us.get(0).getUrl());
                 videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
@@ -279,18 +279,14 @@ public class MainActivity extends AppCompatActivity {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
-            Log.e("src",src);
             URL url = new URL(src);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-         //   connection.setDoInput(true);
             connection.connect();
             InputStream input = connection.getInputStream();
             Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            Log.e("Bitmap","returned");
             return myBitmap;
         } catch (IOException e) {
             e.printStackTrace();
-            Log.e("Exception",e.getMessage());
             return null;
         }
     }
