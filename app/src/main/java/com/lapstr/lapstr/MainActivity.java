@@ -11,6 +11,8 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
@@ -53,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     private Button newActivity;
     private Button myCabinet;
     private Button singout;
+    private RecyclerView mBloglist;
     private DatabaseReference mDatabase;
     private ImageView awatarka;
 
@@ -80,12 +84,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtDetails = (TextView) findViewById(R.id.txt_user);
-        mFirebaseInstance = FirebaseDatabase.getInstance();
+        //  txtDetails = (TextView) findViewById(R.id.txt_user);
+        // awatarka = (ImageView) findViewById(R.id.imageView6);
+        // videoview = (VideoView)findViewById(R.id.surface_view);
+        mBloglist = (RecyclerView) findViewById(R.id.blog_list2);
+        mBloglist.setHasFixedSize(true);
+        mBloglist.setLayoutManager(new LinearLayoutManager(this));
+
+        //mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("uploadedVideo");
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
-        mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
+        //  mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mSrorage = FirebaseStorage.getInstance().getReference();
@@ -93,8 +103,6 @@ public class MainActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-
-        awatarka = (ImageView) findViewById(R.id.imageView6);
 
         authListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -110,8 +118,6 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        /////////////55
-        videoview = (VideoView)findViewById(R.id.surface_view);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -159,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 myCabinet.setOnClickListener(this);
                 if (view == myCabinet) {
-                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);//верни кабинет
                     startActivity(SecAct);
                 }
             }
@@ -174,7 +180,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        addUserChangeListener();
+        //  addUserChangeListener();
         addCabChangeListener();
     }
     public void signOut() {
@@ -185,7 +191,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == SELECT_VIDEO && resultCode == RESULT_OK)
+        if (requestCode == SELECT_VIDEO && resultCode == RESULT_OK)
         {
             mProgressDialog.setMessage("Uploading ...");
             mProgressDialog.show();
@@ -206,9 +212,9 @@ public class MainActivity extends AppCompatActivity {
             });
         }
         else{
-        Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(SecAct);}
-        }
+            Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+            startActivity(SecAct);}
+    }
 
 
     private void addCabChangeListener() {
@@ -241,40 +247,32 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });}
-
-    private void addUserChangeListener() {//тут все ссылки для ленты + имена тех кто залил
-
-        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-         //       FirebaseUser ooo = FirebaseAuth.getInstance().getCurrentUser();
-       //         String jk = ooo.getUid();
-//DataSnapshot contSnap = dataSnapshot.child("contacts").child(jk); не удалять, для личного кабинета
-                //       val = Integer.toString(us.size()+2);
-
-                DataSnapshot contSnap = dataSnapshot.child("contacts");
-                Iterable<DataSnapshot> contShild = contSnap.getChildren();
-                ArrayList<User> us = new ArrayList<>();
-                for(DataSnapshot cont: contShild)
-                {
-                    User c = cont.getValue(User.class);
-                    us.add(c);
+    /*
+        private void addUserChangeListener() {//тут все ссылки для ленты + имена тех кто залил
+            mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    DataSnapshot contSnap = dataSnapshot.child("contacts");
+                    Iterable<DataSnapshot> contShild = contSnap.getChildren();
+                    ArrayList<User> us = new ArrayList<>();
+                    for(DataSnapshot cont: contShild)
+                    {
+                        User c = cont.getValue(User.class);
+                        us.add(c);
+                    }
+                    //awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
+                    awatarka.setImageBitmap(getBitmapFromURL(us.get(0).getAwaurl()));
+                     txtDetails.setText(us.get(0).getName());
+                    videoview.setVideoPath(us.get(0).getUrl());
+                    videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
                 }
-
-                //awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
-                awatarka.setImageBitmap(getBitmapFromURL(us.get(0).getAwaurl()));
-                 txtDetails.setText(us.get(0).getName());
-                videoview.setVideoPath(us.get(0).getUrl());
-                videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.e(TAG, "Failed to read user", error.toException());
-            }
-        });
-    }
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    // Failed to read value
+                    Log.e(TAG, "Failed to read user", error.toException());
+                }
+            });
+        }*/
     public static Bitmap getBitmapFromURL(String src) {
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -290,24 +288,22 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-        private void createUser(String name, String url, String imurl) {
+    private void createUser(String name, String url, String imurl) {
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
-          userId = mFirebaseDatabase.push().getKey();
-        //    FirebaseUser equq = FirebaseAuth.getInstance().getCurrentUser();
-          //  randId = equq.getUid();sas
-             User user = new User(name, url, imurl);
+        userId = mFirebaseDatabase.push().getKey();
+        User user = new User(name, url, imurl);
 
-             mFirebaseDatabase.child("contacts").child(userId).setValue(user);
-           // mFirebaseDatabase2.child("yourVideo").child(randId).child(val).setValue(usor);
+        mFirebaseDatabase.child(userId).setValue(user);//ТУТ МЕНЯТЬ
+
     }
 
 
     private void startVideo() {
-        videoview.setMediaController(new MediaController(this));
-        videoview.requestFocus();
-        videoview.start();
+        // videoview.setMediaController(new MediaController(this));
+        //  videoview.requestFocus();
+        //    videoview.start();
     }
 
 
@@ -315,6 +311,65 @@ public class MainActivity extends AppCompatActivity {
     public void onStart() {
         super.onStart();
         auth.addAuthStateListener(authListener);
+
+        FirebaseRecyclerAdapter<User, BlogViweHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, BlogViweHolder>(
+
+                User.class,
+                R.layout.blog_row,
+                BlogViweHolder.class,
+                mFirebaseDatabase
+
+        ) {
+            @Override
+            protected void populateViewHolder(BlogViweHolder viewHolder, User model, int position) {
+
+                viewHolder.setTitle(model.getAwaurl());
+                viewHolder.setDesc(model.getName());
+                viewHolder.setImage(model.getUrl());
+
+            }
+
+        };
+
+        mBloglist.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class BlogViweHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+
+        public BlogViweHolder(View itemView) {
+            super(itemView);
+
+            mView = itemView;
+        }
+
+        public void setTitle(String imgur){
+
+            ImageView im_d = (ImageView) mView.findViewById(R.id.awko);
+            im_d.setImageBitmap(getBitmapFromURL(imgur));
+
+            //  TextView post_desc = (TextView) mView.findViewById(R.id.post_desc);
+            //    post_desc.setText(desc);
+        }
+
+        public void setDesc(String desc){
+
+            TextView post_desc = (TextView) mView.findViewById(R.id.post_desc);
+            post_desc.setText(desc);
+        }
+
+        public void setImage(String video){
+
+            VideoView post_video = (VideoView) mView.findViewById(R.id.post_video);
+            post_video.setVideoPath(video);
+            post_video.setVideoURI(Uri.parse(video));
+
+            post_video.start();
+            //post_video.setMediaController(new MediaController(this));
+            post_video.requestFocus();
+
+        }
     }
 
     @Override
