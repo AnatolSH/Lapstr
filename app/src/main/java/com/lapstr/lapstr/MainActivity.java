@@ -84,14 +84,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //  txtDetails = (TextView) findViewById(R.id.txt_user);
-        // awatarka = (ImageView) findViewById(R.id.imageView6);
-        // videoview = (VideoView)findViewById(R.id.surface_view);
         mBloglist = (RecyclerView) findViewById(R.id.blog_list2);
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
 
-        //mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
@@ -104,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        authListener = new FirebaseAuth.AuthStateListener() {
+        authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
@@ -127,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         singout = (Button) findViewById(R.id.sign_out);
         ////////
 
-        mSelectImage.setOnClickListener(new View.OnClickListener() {
+        mSelectImage.setOnClickListener(new View.OnClickListener() {//Выбор видео для заливки
             @Override
             public void onClick(View view) {
 
@@ -138,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        buttonStart.setOnClickListener(new View.OnClickListener(){
+        buttonStart.setOnClickListener(new View.OnClickListener(){ //кнопка старт которая теперь не нужна
             @Override
             public void onClick(View view) {
                 buttonStart.setOnClickListener(this);
@@ -149,7 +145,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        newActivity.setOnClickListener(new View.OnClickListener(){
+        newActivity.setOnClickListener(new View.OnClickListener(){//открывает КАМЕРУ
             @Override
             public void onClick(View view) {
                 newActivity.setOnClickListener(this);
@@ -160,18 +156,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        myCabinet.setOnClickListener(new View.OnClickListener(){
+        myCabinet.setOnClickListener(new View.OnClickListener(){ //открывает КАБИНЕТ
             @Override
             public void onClick(View view) {
                 myCabinet.setOnClickListener(this);
                 if (view == myCabinet) {
-                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);//верни кабинет
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
                     startActivity(SecAct);
                 }
             }
         });
 
-        singout.setOnClickListener(new View.OnClickListener(){
+        singout.setOnClickListener(new View.OnClickListener(){ //Разлогинивается
             @Override
             public void onClick(View view) {
                 singout.setOnClickListener(this);
@@ -183,12 +179,12 @@ public class MainActivity extends AppCompatActivity {
         //  addUserChangeListener();
         addCabChangeListener();
     }
-    public void signOut() {
+    public void signOut() { //метод на разлогинивание
         auth.signOut();
         finish();
     }
 
-    @Override
+    @Override//после выбора видео сразу срабатывает этот метод
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == SELECT_VIDEO && resultCode == RESULT_OK)
@@ -206,8 +202,8 @@ public class MainActivity extends AppCompatActivity {
                     mProgressDialog.dismiss();
 
                     Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    String string_dwload = downloadUrl.toString();
-                    createUser(nick, string_dwload, urk);
+                    String string_dwload = downloadUrl.toString(); //формируем ссылку на выгруженное видео
+                    createUser(nick, string_dwload, urk); //вызываем метод чтобы добавить записи в бд Contacts
                 }
             });
         }
@@ -217,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void addCabChangeListener() {
+    private void addCabChangeListener() { //метод чтения из бд Users
         mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -236,8 +232,8 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < co.size(); i++) {
                     if((co.get(i).getEmail()).equals(equ.getEmail()))
                     {
-                        nick = co.get(i).getUserName();
-                        urk = co.get(i).getUrl();
+                        nick = co.get(i).getUserName(); //получаем текущий ник пользователя
+                        urk = co.get(i).getUrl(); //получаем текущую ссылку на аватарку
                         break;
                     }
                 }
@@ -273,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }*/
-    public static Bitmap getBitmapFromURL(String src) {
+    public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -288,14 +284,14 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-    private void createUser(String name, String url, String imurl) {
+    private void createUser(String name, String url, String imurl) { //метод добавляет записи в Contacts
         // TODO
         // In real apps this userId should be fetched
         // by implementing firebase auth
         userId = mFirebaseDatabase.push().getKey();
         User user = new User(name, url, imurl);
 
-        mFirebaseDatabase.child(userId).setValue(user);//ТУТ МЕНЯТЬ
+        mFirebaseDatabase.child(userId).setValue(user);
 
     }
 
@@ -306,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         //    videoview.start();
     }
 
-
+        // ВСЁ ЧТО НИЖЕ ТВОЙ КОД
     @Override
     public void onStart() {
         super.onStart();
