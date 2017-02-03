@@ -58,27 +58,18 @@ public class MainActivity extends AppCompatActivity {
     private Button singout;
     private RecyclerView mBloglist;
     private DatabaseReference mDatabase;
-    private ImageView awatarka;
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-    //тут начинается перенос
 
     private DatabaseReference mFirebaseDatabase;
     private DatabaseReference mFirebaseDatabase2;
-    private FirebaseDatabase mFirebaseInstance;
     private FirebaseDatabase mFirebaseInstance2;
     private String userId;
-    private String randId;
     private String nick;
     private String urk;
-    private String val;
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
 
     private static final int SELECT_VIDEO = 3;
-    private TextView txtDetails;
-    private VideoView videoview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -243,32 +234,7 @@ public class MainActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });}
-    /*
-        private void addUserChangeListener() {//тут все ссылки для ленты + имена тех кто залил
-            mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    DataSnapshot contSnap = dataSnapshot.child("contacts");
-                    Iterable<DataSnapshot> contShild = contSnap.getChildren();
-                    ArrayList<User> us = new ArrayList<>();
-                    for(DataSnapshot cont: contShild)
-                    {
-                        User c = cont.getValue(User.class);
-                        us.add(c);
-                    }
-                    //awatarka.setImageURI(Uri.parse(us.get(0).getAwaurl()));
-                    awatarka.setImageBitmap(getBitmapFromURL(us.get(0).getAwaurl()));
-                     txtDetails.setText(us.get(0).getName());
-                    videoview.setVideoPath(us.get(0).getUrl());
-                    videoview.setVideoURI(Uri.parse(us.get(0).getUrl()));
-                }
-                @Override
-                public void onCancelled(DatabaseError error) {
-                    // Failed to read value
-                    Log.e(TAG, "Failed to read user", error.toException());
-                }
-            });
-        }*/
+
     public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -345,8 +311,6 @@ public class MainActivity extends AppCompatActivity {
             ImageView im_d = (ImageView) mView.findViewById(R.id.awko);
             im_d.setImageBitmap(getBitmapFromURL(imgur));
 
-            //  TextView post_desc = (TextView) mView.findViewById(R.id.post_desc);
-            //    post_desc.setText(desc);
         }
 
         public void setDesc(String desc){

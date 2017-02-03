@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/editcab_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -60,6 +61,17 @@
             android:text="@string/action_save5"
             android:textColor="@android:color/white"
             android:textStyle="bold" />
+
+        <android.support.v7.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/blog_list99"
+            android:layout_below="@+id/btn_save5"
+            android:clipToPadding="false"
+            android:clipChildren="false"
+            app:reverseLayout="true">
+
+        </android.support.v7.widget.RecyclerView>
 
     </LinearLayout>
 

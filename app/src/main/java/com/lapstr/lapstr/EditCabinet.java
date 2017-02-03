@@ -14,7 +14,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import java.util.ArrayList;
+import java.util.List;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -39,9 +47,16 @@ public class EditCabinet extends AppCompatActivity{
     private EditText inputName;
     private Button btnSave;
     private DatabaseReference mFirebaseDatabase;
+    private DatabaseReference mFirebaseDatabase2;
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
     private ImageView awa;
+    private String nick;
+
+    private List<User> persons;
+    private RecyclerView rv;
+    private ArrayList<User> us = new ArrayList<>();
+    private ArrayList<User> yourList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +69,48 @@ public class EditCabinet extends AppCompatActivity{
         btnSave = (Button) findViewById(R.id.btn_save5);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
+        mFirebaseDatabase2 = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
+
+        rv=(RecyclerView)findViewById(R.id.blog_list99);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+        rv.setHasFixedSize(true);
 
         addCabChangeListener();
+        addUserChangeListener();
+        initializeAdapter();
+    }
+
+
+    private void initializeAdapter(){
+        RVAdapter adapter = new RVAdapter(yourList);
+        rv.setAdapter(adapter);
+    }
+
+    private void addUserChangeListener() {//тут все ссылки для ленты + имена тех кто залил
+        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot contSnap = dataSnapshot;
+                Iterable<DataSnapshot> contShild = contSnap.getChildren();
+                for(DataSnapshot cont: contShild)
+                {
+                    User c = cont.getValue(User.class);
+                    us.add(c);
+                }
+
+                for (int i = 0; i < us.size(); i++) {
+                    if((us.get(i).getName()).equals(nick))
+                    {
+                        yourList.add(us.get(i));
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });
     }
 
     private void addCabChangeListener() {
@@ -80,6 +135,7 @@ public class EditCabinet extends AppCompatActivity{
                         awa.setImageBitmap(getBitmapFromURL(co.get(i).getUrl()));
                         lineUserName.setText(co.get(i).getUserName());
                         lineUserEmail.setText(co.get(i).getEmail());
+                        nick = co.get(i).getUserName();
                         break;
                     }
                 }
