@@ -2,50 +2,34 @@ package com.lapstr.lapstr;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.StrictMode;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.UserProfileChangeRequest;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -60,11 +44,8 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private DatabaseReference mFirebaseDatabase;
-    private DatabaseReference mFirebaseDatabase2;
-    private FirebaseDatabase mFirebaseInstance2;
+
     private String userId;
-    private String nick;
-    private String urk;
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
@@ -79,10 +60,8 @@ public class MainActivity extends AppCompatActivity {
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
 
-        mFirebaseInstance2 = FirebaseDatabase.getInstance();
+
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
-        mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
-        //  mFirebaseInstance.getReference("app_title").setValue("Realtime Database");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mSrorage = FirebaseStorage.getInstance().getReference();
@@ -117,11 +96,11 @@ public class MainActivity extends AppCompatActivity {
         mSelectImage.setOnClickListener(new View.OnClickListener() {//Выбор видео для заливки
             @Override
             public void onClick(View view) {
-
-                Intent intent = new Intent();
-                intent.setType("video/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select a Video "), SELECT_VIDEO);
+                mSelectImage.setOnClickListener(this);
+                if (view == mSelectImage) {
+                    Intent SecAct99 = new Intent(getApplicationContext(), PostActivity.class);
+                    startActivity(SecAct99);
+                }
             }
         });
 
@@ -167,73 +146,12 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        //  addUserChangeListener();
-        addCabChangeListener();
     }
     public void signOut() { //метод на разлогинивание
         auth.signOut();
         finish();
     }
 
-    @Override//после выбора видео сразу срабатывает этот метод
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == SELECT_VIDEO && resultCode == RESULT_OK)
-        {
-            mProgressDialog.setMessage("Uploading ...");
-            mProgressDialog.show();
-
-            Uri uri = data.getData();
-            StorageReference filepath = mSrorage.child("Videos").child(uri.getLastPathSegment());
-            filepath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                    Toast.makeText(MainActivity.this, "Upload Done", Toast.LENGTH_LONG).show();
-                    mProgressDialog.dismiss();
-
-                    Uri downloadUrl = taskSnapshot.getDownloadUrl();
-                    String string_dwload = downloadUrl.toString(); //формируем ссылку на выгруженное видео
-                    createUser(nick, string_dwload, urk); //вызываем метод чтобы добавить записи в бд Contacts
-                }
-            });
-        }
-        else{
-            Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
-            startActivity(SecAct);}
-    }
-
-
-    private void addCabChangeListener() { //метод чтения из бд Users
-        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot contSnap = dataSnapshot.child("users");
-                Iterable<DataSnapshot> contShild = contSnap.getChildren();
-                ArrayList<Cabinet> co = new ArrayList<>();
-                for(DataSnapshot cont: contShild)
-                {
-                    //   co.clear();//??
-                    Cabinet c = cont.getValue(Cabinet.class);
-                    co.add(c);
-                }
-
-                FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
-
-                for (int i = 0; i < co.size(); i++) {
-                    if((co.get(i).getEmail()).equals(equ.getEmail()))
-                    {
-                        nick = co.get(i).getUserName(); //получаем текущий ник пользователя
-                        urk = co.get(i).getUrl(); //получаем текущую ссылку на аватарку
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });}
 
     public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
         try {
@@ -249,16 +167,6 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
-    }
-    private void createUser(String name, String url, String imurl) { //метод добавляет записи в Contacts
-        // TODO
-        // In real apps this userId should be fetched
-        // by implementing firebase auth
-        userId = mFirebaseDatabase.push().getKey();
-        User user = new User(name, url, imurl);
-
-        mFirebaseDatabase.child(userId).setValue(user);
-
     }
 
 
@@ -285,10 +193,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(BlogViweHolder viewHolder, User model, int position) {
 
-                viewHolder.setTitle(model.getAwaurl());
+                viewHolder.setAwa(model.getAwaurl());
                 viewHolder.setDesc(model.getName());
                 viewHolder.setImage(model.getUrl());
-
+                viewHolder.setTitle(model.getTitle());
             }
 
         };
@@ -306,10 +214,17 @@ public class MainActivity extends AppCompatActivity {
             mView = itemView;
         }
 
-        public void setTitle(String imgur){
+        public void setAwa(String imgur){
 
             ImageView im_d = (ImageView) mView.findViewById(R.id.awko);
             im_d.setImageBitmap(getBitmapFromURL(imgur));
+
+        }
+
+        public void setTitle(String tit){
+
+            TextView title = (TextView) mView.findViewById(R.id.title66);
+            title.setText(tit);
 
         }
 

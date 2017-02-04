@@ -17,14 +17,16 @@ public class User {
     public String name;
     public String url;
     public String awaurl;
+    public String title;
 
     public User() {
     }
 
-    public User(String name, String url, String awaurl) {
+    public User(String name, String url, String awaurl, String title) {
         this.name = name;
         this.url = url;
         this.awaurl = awaurl;
+        this.title = title;
     }
 
     public void setName(String name) { this.name = name; }
@@ -35,4 +37,7 @@ public class User {
 
     public void setAwaurl(String awaurl) { this.awaurl = awaurl; }
     public String getAwaurl() { return this.awaurl; }
+
+    public void setTitle(String title) { this.title = title; }
+    public String getTitle() { return this.title; }
 }

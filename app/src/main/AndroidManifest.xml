@@ -53,6 +53,9 @@ package="com.lapstr.lapstr">
         android:name=".EditCabinet"
          />
     <activity
+        android:name=".PostActivity"
+        />
+    <activity
         android:name=".ResetPasswordActivity"
         android:label="@string/title_activity_reset_password"
         android:theme="@style/AppTheme.NoActionBar" />

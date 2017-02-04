@@ -20,6 +20,16 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/title66"
+            android:padding="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/post_desc"
+            android:layout_toEndOf="@+id/post_desc"
+            android:textStyle="bold" />
+
         <ImageView
             android:id="@+id/awko"
             android:layout_width="50dp"
