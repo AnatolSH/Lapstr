@@ -75,7 +75,9 @@
         android:layout_below="@+id/sign_out"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:reverseLayout="true">
+        app:reverseLayout="true"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp">
 
     </android.support.v7.widget.RecyclerView>
 
