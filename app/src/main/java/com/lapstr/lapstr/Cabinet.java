@@ -15,14 +15,16 @@ public class Cabinet {
     public String userName;
     public String email;
     public String url;
+    public String uid;
 
     public Cabinet() {
     }
 
-    public Cabinet(String userName, String email, String url) {
+    public Cabinet(String userName, String email, String url, String uid) {
         this.userName = userName;
         this.email = email;
         this.url = url;
+        this.uid = uid;
     }
 
     public void setUserName(String userName) { this.userName = userName; }
@@ -33,5 +35,7 @@ public class Cabinet {
 
     public void setUrl(String url) { this.url = url; }
     public String getUrl() { return this.url; }
-}
 
+    public void setUid(String uid) { this.uid = uid; }
+    public String getUid() { return this.uid; }
+}

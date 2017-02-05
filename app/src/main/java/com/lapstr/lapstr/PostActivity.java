@@ -41,6 +41,7 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabase2;
     private FirebaseDatabase mFirebaseInstance2;
     private String nick;
+    private FirebaseAuth mAuth;
     private String urk;
 
     private static final int GALLERY_REQUEST = 1;
@@ -61,6 +62,7 @@ public class PostActivity extends AppCompatActivity {
         mPostTitle=(EditText) findViewById(R.id.titleField5);
         mSubmitBtn=(Button) findViewById(R.id.button3);
         mProgress = new ProgressDialog(this);
+        mAuth = FirebaseAuth.getInstance();
 
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,12 +104,13 @@ public class PostActivity extends AppCompatActivity {
                 newPost.child("name").setValue(nick);
                 newPost.child("url").setValue(downloadUrl.toString());
                 newPost.child("title").setValue(title_val);
+                newPost.child("uid").setValue(mAuth.getCurrentUser().getUid());
             }
         });
 
         Intent SecAct99 = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(SecAct99);
-        finish();
+      //  finish(); после done
     }
 
     private void addCabChangeListener() { //метод чтения из бд Users

@@ -121,7 +121,7 @@ public class SignupActivity extends AppCompatActivity {
                                 } else {
                                     uploadFile();
                                     startActivity(new Intent(SignupActivity.this, MainActivity.class));
-                                   // finish();
+                                    // finish();
                                 }
                             }
                         });
@@ -170,7 +170,8 @@ public class SignupActivity extends AppCompatActivity {
     private void createNewUser(String n, String e, String d) {
 
         String userId = mDatabase.push().getKey();
-        Cabinet user = new Cabinet(n, e, d);
+        String uid = auth.getCurrentUser().getUid();
+        Cabinet user = new Cabinet(n, e, d, uid);
 
         mDatabase.child("users").child(userId).setValue(user);
     }

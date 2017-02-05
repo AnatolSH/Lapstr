@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
+    private DatabaseReference mDatabaseLike;
 
     private static final int SELECT_VIDEO = 3;
 
@@ -59,7 +60,8 @@ public class MainActivity extends AppCompatActivity {
         mBloglist = (RecyclerView) findViewById(R.id.blog_list2);
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
-
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+        mDatabaseLike.keepSynced(true);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mDatabase = FirebaseDatabase.getInstance().getReference();
@@ -193,10 +195,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void populateViewHolder(BlogViweHolder viewHolder, User model, int position) {
 
+                final String post_key = getRef(position).getKey();
+
                 viewHolder.setAwa(model.getAwaurl());
                 viewHolder.setDesc(model.getName());
                 viewHolder.setImage(model.getUrl());
                 viewHolder.setTitle(model.getTitle());
+
+                mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).setValue("Blabla");
             }
 
         };

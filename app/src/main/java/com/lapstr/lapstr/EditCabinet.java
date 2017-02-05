@@ -48,6 +48,7 @@ public class EditCabinet extends AppCompatActivity{
     private Button btnSave;
     private DatabaseReference mFirebaseDatabase;
     private DatabaseReference mFirebaseDatabase2;
+
     private FirebaseDatabase mFirebaseInstance;
     private String userId;
     private ImageView awa;
@@ -71,6 +72,7 @@ public class EditCabinet extends AppCompatActivity{
         mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
         mFirebaseDatabase2 = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
 
+
         rv=(RecyclerView)findViewById(R.id.blog_list99);
 
         LinearLayoutManager llm = new LinearLayoutManager(this);
@@ -80,6 +82,7 @@ public class EditCabinet extends AppCompatActivity{
         addCabChangeListener();
         addUserChangeListener();
         initializeAdapter();
+
     }
 
 
