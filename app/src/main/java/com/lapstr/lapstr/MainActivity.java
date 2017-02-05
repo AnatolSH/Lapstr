@@ -14,6 +14,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
@@ -21,8 +22,11 @@ import android.widget.VideoView;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -50,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseLike;
+    private boolean mProcessLike;
 
     private static final int SELECT_VIDEO = 3;
 
@@ -201,8 +206,43 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setDesc(model.getName());
                 viewHolder.setImage(model.getUrl());
                 viewHolder.setTitle(model.getTitle());
+                viewHolder.setmLikebtn(post_key);
 
-                mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).setValue("Blabla");
+                viewHolder.mLikebtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        mProcessLike = true;
+
+                            mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                                    if (mProcessLike) {
+
+                                        if (dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())) {
+
+                                            mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).removeValue();
+                                            mProcessLike = false;
+
+                                        } else {
+
+                                            mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).setValue("Liked");
+                                            mProcessLike = false;
+
+                                        }
+                                    }
+
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                });
+
             }
 
         };
@@ -214,10 +254,46 @@ public class MainActivity extends AppCompatActivity {
 
         View mView;
 
+        ImageButton mLikebtn;
+        DatabaseReference mDatabaseLike;
+        FirebaseAuth auth;
+
         public BlogViweHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
+
+            mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
+            mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+            auth = FirebaseAuth.getInstance();
+
+            mDatabaseLike.keepSynced(true);
+        }
+
+        public void setmLikebtn(final String post_key){
+
+            mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){
+
+                        mLikebtn.setImageResource(R.mipmap.ic_favorite_red_48dp);
+
+                    } else {
+
+                        mLikebtn.setImageResource(R.mipmap.ic_favorite_border_grey_48dp);
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
         public void setAwa(String imgur){
