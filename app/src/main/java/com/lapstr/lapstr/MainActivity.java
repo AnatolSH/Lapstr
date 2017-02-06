@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -34,6 +35,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -217,22 +220,25 @@ public class MainActivity extends AppCompatActivity {
                             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
+                                    int maxNum = (int) dataSnapshot.child(post_key).getChildrenCount();
 
                                     if (mProcessLike) {
 
                                         if (dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())) {
 
                                             mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).removeValue();
+                                            mDatabaseLike.child("count").child(post_key).setValue(maxNum-1);
+
                                             mProcessLike = false;
 
                                         } else {
 
                                             mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).setValue("Liked");
+                                            mDatabaseLike.child("count").child(post_key).setValue(maxNum+1);
                                             mProcessLike = false;
 
                                         }
                                     }
-
                                 }
 
                                 @Override
@@ -255,6 +261,7 @@ public class MainActivity extends AppCompatActivity {
         View mView;
 
         ImageButton mLikebtn;
+        TextView countLikes;
         DatabaseReference mDatabaseLike;
         FirebaseAuth auth;
 
@@ -264,6 +271,7 @@ public class MainActivity extends AppCompatActivity {
             mView = itemView;
 
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
+            countLikes = (TextView) mView.findViewById(R.id.countlike);
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
             auth = FirebaseAuth.getInstance();
 
@@ -275,6 +283,9 @@ public class MainActivity extends AppCompatActivity {
             mDatabaseLike.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
+                    //вот тут
+                    countLikes.setText(mDatabaseLike.child("count").child(post_key).getKey());
+                   // countLikes.setText(dataSnapshot.child("count").child(post_key).getKey());
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){
 
