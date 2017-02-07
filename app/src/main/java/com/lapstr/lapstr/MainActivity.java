@@ -284,8 +284,12 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //вот тут
-                    countLikes.setText(mDatabaseLike.child("count").child(post_key).getKey());
-                   // countLikes.setText(dataSnapshot.child("count").child(post_key).getKey());
+                    Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
+
+                    String name1 = String.valueOf(value.get(post_key));
+                    if(name1.equals("null") || name1.equals("0")){ countLikes.setText("");}
+                    else
+                    {countLikes.setText(name1);}
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){
 
