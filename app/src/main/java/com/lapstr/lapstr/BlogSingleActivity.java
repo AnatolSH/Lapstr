@@ -37,6 +37,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
+
 public class BlogSingleActivity extends AppCompatActivity {
 
     private String mPost_key = null;
@@ -77,8 +79,6 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBlogSingleLike = (ImageButton) findViewById(R.id.like_btn);
         mSinleDelBtn = (Button) findViewById(R.id.delBtn);
         mFirebaseStorage = FirebaseStorage.getInstance();
-        mStorageReference = mFirebaseStorage.getReferenceFromUrl("gs://latstr-c8e2c.appspot.com");
-        mStorageReferenceVideo = mStorageReference.child("Videos");
 
         //Toast.makeText(BlogSingleActivity.this, post_key, Toast.LENGTH_LONG).show();
 
@@ -92,7 +92,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
 
-                if(post_avatar!=null & post_video!=null) {
+                try {
                     mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
                     mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
 
@@ -108,7 +108,7 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                     }
                 }
-                else{finish();Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
+                catch (Exception e){finish();Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                     startActivity(mainIntent);}
             }
 
@@ -133,19 +133,4 @@ public class BlogSingleActivity extends AppCompatActivity {
 
     }
 
-    public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
 }

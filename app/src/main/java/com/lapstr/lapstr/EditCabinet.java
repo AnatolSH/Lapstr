@@ -37,6 +37,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
+import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
+
 /**
  * Created by Anatole on 27.01.2017.
  */
@@ -169,20 +171,6 @@ public class EditCabinet extends AppCompatActivity{
             addCabChangeListener();
     }
 
-    public static Bitmap getBitmapFromURL(String src) {
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 }
 

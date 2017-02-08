@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "468918710782",
-    "firebase_url": "https://latstr-c8e2c.firebaseio.com",
-    "project_id": "latstr-c8e2c",
-    "storage_bucket": "latstr-c8e2c.appspot.com"
+    "project_number": "464689036536",
+    "firebase_url": "https://lapstr-4f5b3.firebaseio.com",
+    "project_id": "lapstr-4f5b3",
+    "storage_bucket": "lapstr-4f5b3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:468918710782:android:c2f9b58424d9e6be",
+        "mobilesdk_app_id": "1:464689036536:android:c2f9b58424d9e6be",
         "android_client_info": {
           "package_name": "com.lapstr.lapstr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "468918710782-pgnvrn4ceu4aq234ig2tj45d3kfos7dp.apps.googleusercontent.com",
+          "client_id": "464689036536-4o9ralqb7fjuml1l4sv9g2oqbve8pnbe.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDCzNx_DJjRFlwwjknYT7V1nH5paiEVluo"
+          "current_key": "AIzaSyAwO0_CAgncBZRJw5jGcaGDzPuMNNkpWwI"
         }
       ],
       "services": {
