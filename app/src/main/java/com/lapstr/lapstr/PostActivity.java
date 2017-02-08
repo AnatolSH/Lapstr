@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -29,6 +30,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class PostActivity extends AppCompatActivity {
@@ -110,7 +112,6 @@ public class PostActivity extends AppCompatActivity {
 
         Intent SecAct99 = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(SecAct99);
-      //  finish(); после done
     }
 
     private void addCabChangeListener() { //метод чтения из бд Users
@@ -149,7 +150,6 @@ public class PostActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
-
             mVideoUri= data.getData();
             mselectImage.setImageURI(mVideoUri);
         }

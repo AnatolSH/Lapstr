@@ -218,6 +218,7 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
                         singleBlogIntent.putExtra("blog_id", post_key);
+                        finish();
                         startActivity(singleBlogIntent);
 
                     }
