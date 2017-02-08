@@ -92,20 +92,24 @@ public class BlogSingleActivity extends AppCompatActivity {
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
 
-                mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
-                mBlogSingleVideo.start();
-                mBlogSingleVideo.requestFocus();
-                mBlogSingleName.setText(post_name);
-                mBlogSingleTitle.setText(post_title);
-                mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
-                mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
+                if(post_avatar!=null & post_video!=null) {
+                    mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
+                    mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
 
-                if(mAuth.getCurrentUser().getUid().equals(post_uid)){
+                    mBlogSingleVideo.start();
+                    mBlogSingleVideo.requestFocus();
+                    mBlogSingleName.setText(post_name);
+                    mBlogSingleTitle.setText(post_title);
+                    mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
 
-                    mSinleDelBtn.setVisibility(View.VISIBLE);
+                    if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
 
+                        mSinleDelBtn.setVisibility(View.VISIBLE);
+
+                    }
                 }
-
+                else{finish();Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
+                    startActivity(mainIntent);}
             }
 
             @Override
