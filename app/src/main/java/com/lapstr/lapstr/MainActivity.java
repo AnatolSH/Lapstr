@@ -214,11 +214,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View view) {
 
-                        Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_LONG).show();
-
                         Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
                         singleBlogIntent.putExtra("blog_id", post_key);
-                        finish();
                         startActivity(singleBlogIntent);
 
                     }
@@ -302,7 +299,10 @@ public class MainActivity extends AppCompatActivity {
                     String name1 = String.valueOf(value.get(post_key));
                     if(name1.equals("null") || name1.equals("0")){ countLikes.setText("");}
                     else
-                    {countLikes.setText(name1);}
+                    {try {
+                        countLikes.setText(name1);
+                    }catch (Exception e){}
+                    }
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){
 
