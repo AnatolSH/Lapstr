@@ -1,7 +1,6 @@
 package com.lapstr.lapstr;
 
 import android.net.Uri;
-import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +23,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
 
         PersonViewHolder(View itemView) {
             super(itemView);
-            personName = (TextView)itemView.findViewById(R.id.post_desc);
+            personName = (TextView)itemView.findViewById(R.id.post_name);
             im_dd = (ImageView) itemView.findViewById(R.id.awko);
             post_videoo = (VideoView) itemView.findViewById(R.id.post_video);
 

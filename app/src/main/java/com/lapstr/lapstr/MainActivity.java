@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
@@ -206,10 +205,23 @@ public class MainActivity extends AppCompatActivity {
                 final String post_key = getRef(position).getKey();
 
                 viewHolder.setAwa(model.getAwaurl());
-                viewHolder.setDesc(model.getName());
+                viewHolder.setName(model.getName());
                 viewHolder.setImage(model.getUrl());
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setmLikebtn(post_key);
+
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Toast.makeText(MainActivity.this, post_key, Toast.LENGTH_LONG).show();
+
+                        Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id", post_key);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
 
                 viewHolder.mLikebtn.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -320,15 +332,15 @@ public class MainActivity extends AppCompatActivity {
 
         public void setTitle(String tit){
 
-            TextView title = (TextView) mView.findViewById(R.id.title66);
+            TextView title = (TextView) mView.findViewById(R.id.post_title);
             title.setText(tit);
 
         }
 
-        public void setDesc(String desc){
+        public void setName(String desc){
 
-            TextView post_desc = (TextView) mView.findViewById(R.id.post_desc);
-            post_desc.setText(desc);
+            TextView post_name = (TextView) mView.findViewById(R.id.post_name);
+            post_name.setText(desc);
         }
 
         public void setImage(String video){
