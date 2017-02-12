@@ -36,6 +36,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Map;
 
 import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
 
@@ -47,6 +48,7 @@ public class BlogSingleActivity extends AppCompatActivity {
     private VideoView mBlogSingleVideo;
     private TextView mBlogSingleName;
     private TextView mBlogSingleTitle;
+    private TextView mBlogLikes;
     private ImageView mBlogSingleAvatar;
     private ImageButton mBlogSingleLike;
     private DatabaseReference getmDatabaseCount;
@@ -56,6 +58,8 @@ public class BlogSingleActivity extends AppCompatActivity {
     private StorageReference mStorageReferenceVideo;
     private FirebaseStorage mFirebaseStorage;
     private String post_video;
+    private ImageButton mLikebtn;
+    private boolean mProcessLike;
 
 
     private FirebaseAuth mAuth;
@@ -78,6 +82,8 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko);
         mBlogSingleLike = (ImageButton) findViewById(R.id.like_btn);
         mSinleDelBtn = (Button) findViewById(R.id.delBtn);
+        mBlogLikes = (TextView) findViewById(R.id.countlike);
+        mLikebtn = (ImageButton) findViewById(R.id.like_btn);
         mFirebaseStorage = FirebaseStorage.getInstance();
 
         //Toast.makeText(BlogSingleActivity.this, post_key, Toast.LENGTH_LONG).show();
@@ -91,6 +97,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 String post_name = (String) dataSnapshot.child("name").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
+
 
                 try {
                     mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
@@ -115,6 +122,76 @@ public class BlogSingleActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        mDatabaseLike.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
+
+                String name1 = String.valueOf(value.get(mPost_key));
+                if(name1.equals("null") || name1.equals("0")){ mBlogLikes.setText("");}
+                else
+                {try {
+                    mBlogLikes.setText(name1);
+                }catch (Exception e){}
+                }
+
+                if(dataSnapshot.child(mPost_key).hasChild(mAuth.getCurrentUser().getUid())){
+
+                    mLikebtn.setImageResource(R.mipmap.ic_favorite_red_48dp);
+
+                } else {
+
+                    mLikebtn.setImageResource(R.mipmap.ic_favorite_border_grey_48dp);
+
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mLikebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                mProcessLike = true;
+
+                mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int maxNum = (int) dataSnapshot.child(mPost_key).getChildrenCount();
+
+                        if (mProcessLike) {
+
+                            if (dataSnapshot.child(mPost_key).hasChild(mAuth.getCurrentUser().getUid())) {
+
+                                mDatabaseLike.child(mPost_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                mDatabaseLike.child("count").child(mPost_key).setValue(maxNum-1);
+
+                                mProcessLike = false;
+
+                            } else {
+
+                                mDatabaseLike.child(mPost_key).child(mAuth.getCurrentUser().getUid()).setValue("Liked");
+                                mDatabaseLike.child("count").child(mPost_key).setValue(maxNum+1);
+                                mProcessLike = false;
+
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 
