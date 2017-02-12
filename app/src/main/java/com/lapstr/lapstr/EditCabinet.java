@@ -56,7 +56,6 @@ public class EditCabinet extends AppCompatActivity{
     private ImageView awa;
     private String nick;
 
-    private List<User> persons;
     private RecyclerView rv;
     private ArrayList<User> us = new ArrayList<>();
     private ArrayList<User> yourList = new ArrayList<>();
@@ -68,8 +67,8 @@ public class EditCabinet extends AppCompatActivity{
         lineUserName = (TextView) findViewById(R.id.txt_user5);
         lineUserEmail = (TextView) findViewById(R.id.lineuseremail);
         awa = (ImageView) findViewById(R.id.imageView11);
-        inputName = (EditText) findViewById(R.id.name5);
-        btnSave = (Button) findViewById(R.id.btn_save5);
+      //  inputName = (EditText) findViewById(R.id.name5);
+      //  btnSave = (Button) findViewById(R.id.btn_save5);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
         mFirebaseDatabase2 = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
@@ -82,8 +81,6 @@ public class EditCabinet extends AppCompatActivity{
         rv.setHasFixedSize(true);
 
         addCabChangeListener();
-        addUserChangeListener();
-        initializeAdapter();
 
     }
 
@@ -111,6 +108,7 @@ public class EditCabinet extends AppCompatActivity{
                         yourList.add(us.get(i));
                     }
                 }
+                initializeAdapter();
             }
             @Override
             public void onCancelled(DatabaseError error) {
@@ -127,7 +125,6 @@ public class EditCabinet extends AppCompatActivity{
                 ArrayList<Cabinet> co = new ArrayList<>();
                 for(DataSnapshot cont: contShild)
                 {
-                 //   co.clear();//??
                     Cabinet c = cont.getValue(Cabinet.class);
                     co.add(c);
                 }
@@ -144,6 +141,7 @@ public class EditCabinet extends AppCompatActivity{
                         break;
                     }
                 }
+                addUserChangeListener();
             }
 
             @Override
@@ -152,14 +150,14 @@ public class EditCabinet extends AppCompatActivity{
         });
 
 
-      btnSave.setOnClickListener(new View.OnClickListener() {
+/*      btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = inputName.getText().toString();
             //    String email = inputEmail.getText().toString();
                 updateCabinet(name);
             }
-        });
+        });*/
 
     }
 
@@ -171,6 +169,10 @@ public class EditCabinet extends AppCompatActivity{
             addCabChangeListener();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
 
+    }
 }
 

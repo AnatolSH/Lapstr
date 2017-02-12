@@ -204,11 +204,11 @@ public class MainActivity extends AppCompatActivity {
 
                 final String post_key = getRef(position).getKey();
 
-                viewHolder.setAwa(model.getAwaurl());
-                viewHolder.setName(model.getName());
-                viewHolder.setImage(model.getUrl());
-                viewHolder.setTitle(model.getTitle());
-                viewHolder.setmLikebtn(post_key);
+                    viewHolder.setAwa(model.getAwaurl());
+                    viewHolder.setName(model.getName());
+                    viewHolder.setImage(model.getUrl());
+                    viewHolder.setTitle(model.getTitle());
+                    viewHolder.setmLikebtn(post_key);
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -351,7 +351,6 @@ public class MainActivity extends AppCompatActivity {
             post_video.setVideoURI(Uri.parse(video));
 
             post_video.start();
-            //post_video.setMediaController(new MediaController(this));
             post_video.requestFocus();
 
         }

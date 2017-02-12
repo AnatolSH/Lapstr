@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import org.w3c.dom.Text;
+
 import java.util.List;
 
 import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
@@ -18,6 +20,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     public static class PersonViewHolder extends RecyclerView.ViewHolder {
 
         TextView personName;
+        TextView tit;
         ImageView im_dd;
         VideoView post_videoo;
 
@@ -26,6 +29,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
             personName = (TextView)itemView.findViewById(R.id.post_name);
             im_dd = (ImageView) itemView.findViewById(R.id.awko);
             post_videoo = (VideoView) itemView.findViewById(R.id.post_video);
+            tit = (TextView)itemView.findViewById(R.id.post_title);
 
         }
     }
@@ -52,6 +56,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
         personViewHolder.personName.setText(persons.get(i).getName());
         personViewHolder.im_dd.setImageBitmap(getBitmapFromURL(persons.get(i).getAwaurl()));
+        personViewHolder.tit.setText(persons.get(i).getTitle());
 
 
         personViewHolder.post_videoo.setVideoPath(persons.get(i).getUrl());

@@ -18,15 +18,17 @@ public class User {
     public String url;
     public String awaurl;
     public String title;
+    public String uid;
 
     public User() {
     }
 
-    public User(String name, String url, String awaurl, String title) {
+    public User(String name, String url, String awaurl, String title, String uid) {
         this.name = name;
         this.url = url;
         this.awaurl = awaurl;
         this.title = title;
+        this.uid = uid;
     }
 
     public void setName(String name) { this.name = name; }
@@ -40,4 +42,7 @@ public class User {
 
     public void setTitle(String title) { this.title = title; }
     public String getTitle() { return this.title; }
+
+    public void setUid(String uid) { this.uid = uid; }
+    public String getUid() { return this.uid; }
 }
