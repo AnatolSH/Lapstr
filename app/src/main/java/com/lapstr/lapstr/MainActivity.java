@@ -58,8 +58,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseLike;
     private boolean mProcessLike;
 
-    private static final int SELECT_VIDEO = 3;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

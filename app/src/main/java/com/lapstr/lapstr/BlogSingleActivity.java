@@ -1,5 +1,6 @@
 package com.lapstr.lapstr;
 
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -10,9 +11,13 @@ import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
@@ -20,9 +25,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,17 +37,30 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Map;
 
 import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
 
 public class BlogSingleActivity extends AppCompatActivity {
+
+    private EditText mPostComment;
+    private Button mSubmitBtn;
+    private String nick;
+    private String urk;
+    private StorageReference mStorage;
+    private DatabaseReference mFirebaseDatabase;
+    private RecyclerView mBloglist;
+    private FirebaseAuth.AuthStateListener authListener;
+    private DatabaseReference mFirebaseDatabase2;
+    private FirebaseDatabase mFirebaseInstance2;
 
     private String mPost_key = null;
     private DatabaseReference mDatabase;
@@ -50,13 +70,9 @@ public class BlogSingleActivity extends AppCompatActivity {
     private TextView mBlogSingleTitle;
     private TextView mBlogLikes;
     private ImageView mBlogSingleAvatar;
-    private ImageButton mBlogSingleLike;
     private DatabaseReference getmDatabaseCount;
     private DatabaseReference mDatabaseLike;
-    private StorageReference mStorageReference;
     private Button mSinleDelBtn;
-    private StorageReference mStorageReferenceVideo;
-    private FirebaseStorage mFirebaseStorage;
     private String post_video;
     private ImageButton mLikebtn;
     private boolean mProcessLike;
@@ -72,21 +88,46 @@ public class BlogSingleActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         getmDatabaseCount = FirebaseDatabase.getInstance().getReference().child("Likes").child("count");
+        mFirebaseInstance2 = FirebaseDatabase.getInstance();
+        mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
         mAuth = FirebaseAuth.getInstance();
 
         mPost_key = getIntent().getExtras().getString("blog_id");
-
         mBlogSingleVideo = (VideoView) findViewById(R.id.post_video);
         mBlogSingleName = (TextView) findViewById(R.id.post_name);
         mBlogSingleTitle = (TextView) findViewById(R.id.post_title);
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko);
-        mBlogSingleLike = (ImageButton) findViewById(R.id.like_btn);
         mSinleDelBtn = (Button) findViewById(R.id.delBtn);
         mBlogLikes = (TextView) findViewById(R.id.countlike);
         mLikebtn = (ImageButton) findViewById(R.id.like_btn);
-        mFirebaseStorage = FirebaseStorage.getInstance();
+        //отображение
+        mBloglist = (RecyclerView) findViewById(R.id.blog_list3);
+        mBloglist.setHasFixedSize(true);
+        mBloglist.setLayoutManager(new LinearLayoutManager(this));
 
-        //Toast.makeText(BlogSingleActivity.this, post_key, Toast.LENGTH_LONG).show();
+
+        authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+            }
+        };
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        mStorage = FirebaseStorage.getInstance().getReference();
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference().child("Likes").child("comments");
+
+        mPostComment=(EditText) findViewById(R.id.vvodcomment);
+        mSubmitBtn=(Button) findViewById(R.id.buttcomm);
+        mSubmitBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startPosting();
+            }
+        });
+        addCabChangeListener();
+
 
         mDatabase.child(mPost_key).addValueEventListener(new ValueEventListener() {
             @Override
@@ -97,7 +138,6 @@ public class BlogSingleActivity extends AppCompatActivity {
                 String post_name = (String) dataSnapshot.child("name").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
-
 
                 try {
                     mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
@@ -207,6 +247,109 @@ public class BlogSingleActivity extends AppCompatActivity {
                 startActivity(mainIntent);
             }
         });
+
+    }
+
+    private void addCabChangeListener() { //метод чтения из бд Users
+        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot contSnap = dataSnapshot.child("users");
+                Iterable<DataSnapshot> contShild = contSnap.getChildren();
+                ArrayList<Cabinet> co = new ArrayList<>();
+                for(DataSnapshot cont: contShild)
+                {
+                    Cabinet c = cont.getValue(Cabinet.class);
+                    co.add(c);
+                }
+
+                FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
+
+                for (int i = 0; i < co.size(); i++) {
+                    if((co.get(i).getEmail()).equals(equ.getEmail()))
+                    {
+                        nick = co.get(i).getUserName(); //получаем текущий ник пользователя
+                        urk = co.get(i).getUrl(); //получаем текущую ссылку на аватарку
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });}
+
+    private void startPosting() {
+
+        final String title_val = mPostComment.getText().toString().trim();
+
+                DatabaseReference newPost = mFirebaseDatabase.child(mPost_key).push();
+                newPost.child("awaurl").setValue(urk);
+                newPost.child("name").setValue(nick);
+                newPost.child("title").setValue(title_val);
+
+            }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(authListener);
+
+        FirebaseRecyclerAdapter<User, BlogSingleActivity.BlogViweHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, BlogSingleActivity.BlogViweHolder>(
+                User.class,
+                R.layout.comments_activity,
+                BlogSingleActivity.BlogViweHolder.class,
+                mFirebaseDatabase.child(mPost_key)
+
+        ) {
+            @Override
+            protected void populateViewHolder(BlogSingleActivity.BlogViweHolder viewHolder, User model, int position) {
+
+                viewHolder.setAwa(model.getAwaurl());
+                viewHolder.setName(model.getName());
+                viewHolder.setTitle(model.getTitle());
+
+            }
+
+        };
+
+        mBloglist.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class BlogViweHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+
+        FirebaseAuth auth;
+
+        public BlogViweHolder(View itemView) {
+            super(itemView);
+
+            mView = itemView;
+            auth = FirebaseAuth.getInstance();
+
+        }
+
+        public void setAwa(String imgur){
+
+            ImageView im_d = (ImageView) mView.findViewById(R.id.authorawatar);
+            im_d.setImageBitmap(getBitmapFromURL(imgur));
+
+        }
+
+        public void setTitle(String tit){
+
+            TextView title = (TextView) mView.findViewById(R.id.samcomment);
+            title.setText(tit);
+
+        }
+
+        public void setName(String desc){
+
+            TextView post_name = (TextView) mView.findViewById(R.id.nameauthor);
+            post_name.setText(desc);
+        }
 
     }
 
