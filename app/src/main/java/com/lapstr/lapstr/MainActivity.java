@@ -270,6 +270,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton mLikebtn;
         TextView countLikes;
+        TextView countComments;
         DatabaseReference mDatabaseLike;
         FirebaseAuth auth;
 
@@ -279,7 +280,8 @@ public class MainActivity extends AppCompatActivity {
             mView = itemView;
 
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
-            countLikes = (TextView) mView.findViewById(R.id.countlike);
+            countLikes = (TextView) mView.findViewById(R.id.countlike2);
+            countComments = (TextView) mView.findViewById(R.id.countcomments);
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
             auth = FirebaseAuth.getInstance();
 
@@ -293,13 +295,25 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //вот тут
                     Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
-
                     String name1 = String.valueOf(value.get(post_key));
+
+                    Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
+                    String name2 = String.valueOf(value2.get(post_key));
+
                     if(name1.equals("null") || name1.equals("0")){ countLikes.setText("");}
                     else
-                    {try {
+                    {
+                        try {
                         countLikes.setText(name1);
                     }catch (Exception e){}
+                    }
+
+                    if(name2.equals("null") || name2.equals("0")){ countComments.setText("");}
+                    else
+                    {
+                        try {
+                            countComments.setText(name2);
+                        }catch (Exception e){}
                     }
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){

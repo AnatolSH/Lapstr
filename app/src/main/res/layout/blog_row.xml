@@ -73,11 +73,20 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/countlike"
+            android:id="@+id/countlike2"
             android:layout_below="@+id/post_video"
             android:layout_toRightOf="@+id/like_btn"
             android:layout_toEndOf="@+id/like_btn"
             android:layout_marginTop="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/countcomments"
+            android:layout_below="@+id/post_video"
+            android:layout_toRightOf="@+id/countlike2"
+            android:layout_toEndOf="@+id/countlike2"
+            android:layout_marginLeft="10dp" />
 
 
     </RelativeLayout>

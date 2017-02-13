@@ -69,8 +69,10 @@ public class BlogSingleActivity extends AppCompatActivity {
     private TextView mBlogSingleName;
     private TextView mBlogSingleTitle;
     private TextView mBlogLikes;
+    private TextView mComm;
     private ImageView mBlogSingleAvatar;
     private DatabaseReference getmDatabaseCount;
+    private DatabaseReference getmDatabaseCount2;
     private DatabaseReference mDatabaseLike;
     private Button mSinleDelBtn;
     private String post_video;
@@ -88,6 +90,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         getmDatabaseCount = FirebaseDatabase.getInstance().getReference().child("Likes").child("count");
+        getmDatabaseCount2 = FirebaseDatabase.getInstance().getReference().child("Likes").child("countComments");
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
         mAuth = FirebaseAuth.getInstance();
@@ -99,6 +102,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko);
         mSinleDelBtn = (Button) findViewById(R.id.delBtn);
         mBlogLikes = (TextView) findViewById(R.id.countlike);
+        mComm = (TextView) findViewById(R.id.countcom);
         mLikebtn = (ImageButton) findViewById(R.id.like_btn);
         //отображение
         mBloglist = (RecyclerView) findViewById(R.id.blog_list3);
@@ -170,14 +174,27 @@ public class BlogSingleActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
-
                 String name1 = String.valueOf(value.get(mPost_key));
+
+                Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
+                String name2 = String.valueOf(value2.get(mPost_key));
+
                 if(name1.equals("null") || name1.equals("0")){ mBlogLikes.setText("");}
                 else
-                {try {
-                    mBlogLikes.setText(name1);
-                }catch (Exception e){}
+                {
+                    try {
+                        mBlogLikes.setText(name1);
+                    }catch (Exception e){}
                 }
+
+                if(name2.equals("null") || name2.equals("0")){ mComm.setText("");}
+                else
+                {
+                    try {
+                        mComm.setText(name2);
+                    }catch (Exception e){}
+                }
+
 
                 if(dataSnapshot.child(mPost_key).hasChild(mAuth.getCurrentUser().getUid())){
 
@@ -242,9 +259,11 @@ public class BlogSingleActivity extends AppCompatActivity {
                 mDatabase.child(mPost_key).removeValue();
                 mDatabaseLike.child(mPost_key).removeValue();
                 getmDatabaseCount.child(mPost_key).removeValue();
+                mDatabaseLike.child("comments").child(mPost_key).removeValue();
 
                 Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
+                getmDatabaseCount2.child(mPost_key).removeValue();
             }
         });
 
@@ -281,6 +300,19 @@ public class BlogSingleActivity extends AppCompatActivity {
         });}
 
     private void startPosting() {
+
+        mDatabaseLike.child("comments").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int maxNum = (int) dataSnapshot.child(mPost_key).getChildrenCount();
+                        mDatabaseLike.child("countComments").child(mPost_key).setValue(maxNum);
+                    }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
         final String title_val = mPostComment.getText().toString().trim();
 
