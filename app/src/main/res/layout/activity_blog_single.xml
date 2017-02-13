@@ -10,7 +10,10 @@
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:background="@drawable/input_outline">
+        android:background="@drawable/input_outline"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
         <VideoView
             android:layout_width="match_parent"
@@ -81,61 +84,92 @@
             android:layout_toEndOf="@+id/like_btn"
             android:layout_marginTop="10dp" />
 
+        <ImageButton
+            app:srcCompat="@mipmap/ic_coment_48dp"
+            android:id="@+id/comment_btn"
+            android:layout_weight="1"
+            android:background="#00ffffff"
+            android:padding="5dp"
+            android:scaleType="fitStart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/post_video"
+            android:layout_toRightOf="@+id/awko"
+            android:layout_toEndOf="@+id/awko"
+            android:layout_marginTop="1dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/countcom"
-            android:layout_below="@+id/post_video"
-            android:layout_toRightOf="@+id/countlike"
-            android:layout_toEndOf="@+id/countlike"
-            android:layout_marginLeft="10dp" />
-
-        <Button
-            android:text="Delete"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/like_btn"
-            android:id="@+id/delBtn"
-            android:layout_centerHorizontal="true"
-            android:visibility="invisible"
-            android:background="@color/colorPrimary" />
-
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:layout_below="@+id/delBtn"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/vvodcomment"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/input_outline"
-            android:padding="10dp"
-            android:singleLine="true" />
-
-        <Button
-            android:text="Submit comment"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@+id/vvodcomment"
-            android:id="@+id/buttcomm"
-            android:background="@color/colorPrimary"
-            android:textColor="@android:color/white" />
+            android:layout_alignBaseline="@+id/countlike"
+            android:layout_alignBottom="@+id/countlike"
+            android:layout_toRightOf="@+id/comment_btn"
+            android:layout_toEndOf="@+id/comment_btn"
+            android:layout_marginTop="10dp" />
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/blog_list3"
             android:clipToPadding="false"
-            android:layout_below="@+id/buttcomm"
             android:clipChildren="false"
             app:reverseLayout="true"
             android:paddingTop="5dp"
-            android:paddingBottom="5dp">
+            android:paddingBottom="5dp"
+            android:layout_below="@+id/comment_btn"
+            android:layout_toEndOf="@+id/linearLayout2"
+            android:layout_above="@+id/delBtn"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true">
         </android.support.v7.widget.RecyclerView>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/vvodcomment"
+            android:background="@drawable/input_outline"
+            android:padding="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="false"
+            android:hint="Добавьте коментарий..."
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="0dp"
+            android:layout_toLeftOf="@+id/buttcomm"
+            android:layout_toStartOf="@+id/buttcomm" />
+
+        <Button
+            android:text="OK"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/buttcomm"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/delBtn"
+            android:textColor="@color/white" />
+
+        <Button
+            android:text="Delete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/delBtn"
+            android:visibility="invisible"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:layout_above="@+id/vvodcomment"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp" />
+        --
+
     </RelativeLayout>
 
 </RelativeLayout>

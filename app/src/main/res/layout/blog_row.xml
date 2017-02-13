@@ -79,14 +79,29 @@
             android:layout_toEndOf="@+id/like_btn"
             android:layout_marginTop="10dp" />
 
+        <ImageButton
+            app:srcCompat="@mipmap/ic_coment_48dp"
+            android:id="@+id/comment_btn"
+            android:layout_weight="1"
+            android:background="#00ffffff"
+            android:padding="5dp"
+            android:scaleType="fitStart"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_below="@+id/post_video"
+            android:layout_toRightOf="@+id/awko"
+            android:layout_toEndOf="@+id/awko"
+            android:layout_marginTop="1dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/countcomments"
-            android:layout_below="@+id/post_video"
-            android:layout_toRightOf="@+id/countlike2"
-            android:layout_toEndOf="@+id/countlike2"
-            android:layout_marginLeft="10dp" />
+            android:layout_alignBaseline="@+id/countlike2"
+            android:layout_alignBottom="@+id/countlike2"
+            android:layout_toRightOf="@+id/comment_btn"
+            android:layout_toEndOf="@+id/comment_btn"
+            android:layout_marginTop="10dp" />
 
 
     </RelativeLayout>
