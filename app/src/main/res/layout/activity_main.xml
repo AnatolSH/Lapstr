@@ -13,57 +13,71 @@
 
 
     <Button
-        android:text="Select"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/select_image"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-
-    <Button
-        android:text="Start"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/start_btn"
-        android:layout_below="@+id/select_image"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Camera"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/new_activity"
-        android:layout_below="@+id/start_btn"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:text="Cabinet"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/cab"
-        android:layout_below="@+id/new_activity"
-        android:layout_centerHorizontal="true" />
-
-    <Button
         android:text="Sign Out"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/sign_out"
-        android:layout_below="@+id/cab"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white" />
 
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:id="@+id/blog_list2"
-        android:layout_below="@+id/sign_out"
         android:clipToPadding="false"
         android:clipChildren="false"
-        app:reverseLayout="true"
+        app:reverseLayout="false"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp">
+        android:paddingBottom="5dp"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentStart="false">
     </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:text="Cabinet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/cab"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/sign_out"
+        android:layout_toStartOf="@+id/sign_out"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white" />
+
+    <Button
+        android:text="Camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/new_activity"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/cab"
+        android:layout_toStartOf="@+id/cab"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white" />
+
+    <Button
+        android:text="Select"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/select_image"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white" />
+
+    <Button
+        android:text="Start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/start_btn"
+        android:layout_above="@+id/new_activity"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible" />
 
 </RelativeLayout>

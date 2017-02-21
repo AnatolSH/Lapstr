@@ -18,7 +18,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="@color/colorPrimaryDark"
+        android:background="@color/colorPrimary"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
@@ -26,7 +26,9 @@
         <ImageView
             android:id="@+id/imageView55"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_margin="10dp" />
+
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
@@ -37,8 +39,9 @@
                 android:id="@+id/buttonChoose"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Choose"
-                android:layout_width="wrap_content" />
+                android:text="Choose Avatar"
+                android:layout_width="wrap_content"
+                android:background="@color/colorAccent" />
 
         </LinearLayout>
 

@@ -16,7 +16,7 @@
         android:layout_marginTop="10dp"
         android:id="@+id/videoSelect5"
         android:background="#00ffffff"
-        android:src="@mipmap/add_btn"
+        android:src="@mipmap/add_btn1"
         android:adjustViewBounds="true" />
 
     <EditText
