@@ -107,6 +107,7 @@ FirebaseInstanceIdService performs security checks at runtime,
         </service>
 
         <activity android:name=".BlogSingleActivity"></activity>
+        <activity android:name=".UserSingleActivity"></activity>
     </application>
 
 </manifest>

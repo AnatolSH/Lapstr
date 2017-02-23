@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -27,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -50,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private DatabaseReference mFirebaseDatabase;
+    private FirebaseDatabase mRootDatabase;
 
     private String userId;
 
@@ -69,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mDatabaseLike.keepSynced(true);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
+        mRootDatabase = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mSrorage = FirebaseStorage.getInstance().getReference();
@@ -183,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
         //    videoview.start();
     }
 
-        // ВСЁ ЧТО НИЖЕ ТВОЙ КОД
+
     @Override
     public void onStart() {
         super.onStart();
@@ -198,9 +202,21 @@ public class MainActivity extends AppCompatActivity {
 
         ) {
             @Override
-            protected void populateViewHolder(BlogViweHolder viewHolder, User model, int position) {
+            protected void populateViewHolder(BlogViweHolder viewHolder, User model, final int position) {
 
                 final String post_key = getRef(position).getKey();
+                final String[] blbabla = new String[1];
+
+                mFirebaseDatabase.child(getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        blbabla[0] = dataSnapshot.child("name").getValue().toString();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
 
                     viewHolder.setAwa(model.getAwaurl());
                     viewHolder.setName(model.getName());
@@ -214,6 +230,19 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
                         singleBlogIntent.putExtra("blog_id", post_key);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+
+                viewHolder.awaClick.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(MainActivity.this, UserSingleActivity.class);
+                      //  singleBlogIntent.putExtra("blog_id", post_key);
+
+                        singleBlogIntent.putExtra("userName", blbabla[0]);
                         startActivity(singleBlogIntent);
 
                     }
@@ -269,6 +298,7 @@ public class MainActivity extends AppCompatActivity {
         View mView;
 
         ImageButton mLikebtn;
+        ImageView awaClick;
         TextView countLikes;
         TextView countComments;
         DatabaseReference mDatabaseLike;
@@ -278,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
 
             mView = itemView;
-
+            awaClick = (ImageView) mView.findViewById(R.id.awko);
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
             countLikes = (TextView) mView.findViewById(R.id.countlike2);
             countComments = (TextView) mView.findViewById(R.id.countcomments);
@@ -295,25 +325,21 @@ public class MainActivity extends AppCompatActivity {
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //вот тут
                     Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
-                    String name1 = String.valueOf(value.get(post_key));
-
-                    Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
-                    String name2 = String.valueOf(value2.get(post_key));
-
-                    if(name1.equals("null") || name1.equals("0")){ countLikes.setText("");}
-                    else
-                    {
-                        try {
+                    try
+                    {String name1 = String.valueOf(value.get(post_key));
                         countLikes.setText(name1);
-                    }catch (Exception e){}
                     }
-
-                    if(name2.equals("null") || name2.equals("0")){ countComments.setText("");}
-                    else
+                    catch (Exception e){
+                        countLikes.setText("0");
+                    }
+                    Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
+                    try
                     {
-                        try {
-                            countComments.setText(name2);
-                        }catch (Exception e){}
+                        String name2 = String.valueOf(value2.get(post_key));
+                        countComments.setText(name2);
+                    }
+                    catch (Exception e){
+                        countComments.setText("0");
                     }
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){

@@ -78,7 +78,7 @@ public class BlogSingleActivity extends AppCompatActivity {
     private String post_video;
     private ImageButton mLikebtn;
     private boolean mProcessLike;
-
+    private String post_name;
 
     private FirebaseAuth mAuth;
 
@@ -91,6 +91,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
         getmDatabaseCount = FirebaseDatabase.getInstance().getReference().child("Likes").child("count");
         getmDatabaseCount2 = FirebaseDatabase.getInstance().getReference().child("Likes").child("countComments");
+
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
         mAuth = FirebaseAuth.getInstance();
@@ -139,7 +140,7 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                 String post_title = (String) dataSnapshot.child("title").getValue();
                 String post_avatar = (String) dataSnapshot.child("awaurl").getValue();
-                String post_name = (String) dataSnapshot.child("name").getValue();
+                post_name = (String) dataSnapshot.child("name").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
 
@@ -174,27 +175,24 @@ public class BlogSingleActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
-                String name1 = String.valueOf(value.get(mPost_key));
+                try
+                {
+                    String name1 = String.valueOf(value.get(mPost_key));
+                    mBlogLikes.setText(name1);
+                }
+                catch (Exception e){
+                    mBlogLikes.setText("");
+                }
 
                 Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
-                String name2 = String.valueOf(value2.get(mPost_key));
-
-                if(name1.equals("null") || name1.equals("0")){ mBlogLikes.setText("");}
-                else
+                try
                 {
-                    try {
-                        mBlogLikes.setText(name1);
-                    }catch (Exception e){}
+                    String name2 = String.valueOf(value2.get(mPost_key));
+                    mComm.setText(name2);
                 }
-
-                if(name2.equals("null") || name2.equals("0")){ mComm.setText("");}
-                else
-                {
-                    try {
-                        mComm.setText(name2);
-                    }catch (Exception e){}
+                catch (Exception e){
+                    mComm.setText("");
                 }
-
 
                 if(dataSnapshot.child(mPost_key).hasChild(mAuth.getCurrentUser().getUid())){
 
@@ -260,6 +258,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 mDatabaseLike.child(mPost_key).removeValue();
                 getmDatabaseCount.child(mPost_key).removeValue();
                 mDatabaseLike.child("comments").child(mPost_key).removeValue();
+                mDatabaseLike.child("UsersVideo").child(post_name).child(mPost_key).removeValue();
 
                 Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
