@@ -161,6 +161,17 @@ public class UserSingleActivity extends AppCompatActivity {
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setmLikebtn(post_key);
 
+                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(UserSingleActivity.this, BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id", post_key);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+
 
                 viewHolder.mLikebtn.setOnClickListener(new View.OnClickListener() {
                     @Override

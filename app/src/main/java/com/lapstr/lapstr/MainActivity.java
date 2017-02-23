@@ -240,8 +240,17 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         Intent singleBlogIntent = new Intent(MainActivity.this, UserSingleActivity.class);
-                      //  singleBlogIntent.putExtra("blog_id", post_key);
+                        singleBlogIntent.putExtra("userName", blbabla[0]);
+                        startActivity(singleBlogIntent);
 
+                    }
+                });
+
+                viewHolder.nickClick.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(MainActivity.this, UserSingleActivity.class);
                         singleBlogIntent.putExtra("userName", blbabla[0]);
                         startActivity(singleBlogIntent);
 
@@ -299,6 +308,7 @@ public class MainActivity extends AppCompatActivity {
 
         ImageButton mLikebtn;
         ImageView awaClick;
+        TextView nickClick;
         TextView countLikes;
         TextView countComments;
         DatabaseReference mDatabaseLike;
@@ -309,6 +319,7 @@ public class MainActivity extends AppCompatActivity {
 
             mView = itemView;
             awaClick = (ImageView) mView.findViewById(R.id.awko);
+            nickClick = (TextView) mView.findViewById(R.id.post_name);
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
             countLikes = (TextView) mView.findViewById(R.id.countlike2);
             countComments = (TextView) mView.findViewById(R.id.countcomments);

@@ -266,7 +266,18 @@ public class BlogSingleActivity extends AppCompatActivity {
             }
         });
 
+        mBlogSingleAvatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent singleBlogIntent = new Intent(BlogSingleActivity.this, UserSingleActivity.class);
+                singleBlogIntent.putExtra("userName", mBlogSingleName.getText());
+                startActivity(singleBlogIntent);
+
+            }
+        });
     }
+
 
     private void addCabChangeListener() { //метод чтения из бд Users
         mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
