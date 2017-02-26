@@ -82,6 +82,8 @@ public class BlogSingleActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
 
+    MediaController mediaC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,6 +111,8 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBloglist = (RecyclerView) findViewById(R.id.blog_list3);
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
+
+        mediaC = new MediaController(this);
 
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
@@ -147,6 +151,12 @@ public class BlogSingleActivity extends AppCompatActivity {
                 try {
                     mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
                     mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
+
+                    mBlogSingleVideo.setMediaController(mediaC);
+                    mediaC.setAnchorView(mBlogSingleVideo);
+
+                   // mediaC.setAnchorView(findViewById(R.id.post_video));
+                    mediaC.setPadding(0, 0, 0, 0);
 
                     mBlogSingleVideo.start();
                     mBlogSingleVideo.requestFocus();

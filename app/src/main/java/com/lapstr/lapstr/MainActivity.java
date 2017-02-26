@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
@@ -61,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabaseLike;
     private boolean mProcessLike;
 
+
+    static MediaController mediaC;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
         mProgressDialog = new ProgressDialog(this);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
+        mediaC = new MediaController(this);
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
             @Override
@@ -395,13 +402,19 @@ public class MainActivity extends AppCompatActivity {
 
         public void setImage(String video){
 
-            VideoView post_video = (VideoView) mView.findViewById(R.id.post_video);
+            final VideoView post_video = (VideoView) mView.findViewById(R.id.post_video);
             post_video.setVideoPath(video);
             post_video.setVideoURI(Uri.parse(video));
 
-            post_video.start();
-            post_video.requestFocus();
+            post_video.setMediaController(mediaC);
+            mediaC.setAnchorView(mView);
 
+           // mediaC.setAnchorView(findViewById(R.id.post_video));
+            // mediaC.setPadding(0, 0, 0, 0);
+
+
+          //  post_video.start();
+          //  post_video.requestFocus();
         }
     }
 

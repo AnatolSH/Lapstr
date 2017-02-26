@@ -32,9 +32,10 @@
         app:reverseLayout="false"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
-        android:layout_alignParentTop="false"
         android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="false">
+        android:layout_alignParentStart="false"
+        android:layout_above="@+id/sign_out"
+        android:layout_alignParentTop="true">
     </android.support.v7.widget.RecyclerView>
 
     <Button

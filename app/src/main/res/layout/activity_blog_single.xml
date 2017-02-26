@@ -15,35 +15,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <VideoView
-            android:layout_width="match_parent"
-            android:layout_height="232dp"
-            android:id="@+id/post_video"
-            android:contextClickable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_below="@+id/awko"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_title"
-            android:padding="15dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/post_name"
-            android:layout_toEndOf="@+id/post_name"
-            android:textStyle="bold"
-            android:text="Titile" />
-
         <ImageView
             android:id="@+id/awko"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,11 +34,43 @@
             android:layout_toEndOf="@+id/awko"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:id="@+id/post_title"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/post_name"
+            android:layout_toEndOf="@+id/post_name"
+            android:textStyle="bold"
+            android:text="Titile"
+            android:layout_alignParentTop="true" />
+
+        <Button
+            android:text="Delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/delBtn"
+            android:visibility="invisible"
+            android:background="@color/colorPrimary"
+            android:textColor="@color/white"
+            android:layout_above="@+id/post_video"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true" />
+
+        <LinearLayout
+            android:id="@+id/media_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/delBtn">
+
+        <VideoView
+            android:layout_width="match_parent"
+            android:layout_height="232dp"
+            android:id="@+id/post_video"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         </LinearLayout>
 
@@ -69,7 +79,7 @@
             android:id="@+id/like_btn"
             android:layout_weight="1"
             android:background="#00ffffff"
-            android:layout_below="@+id/post_video"
+            android:layout_below="@+id/media_layout"
             android:padding="5dp"
             android:scaleType="fitStart"
             android:layout_width="40dp"
@@ -79,7 +89,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/countlike"
-            android:layout_below="@+id/post_video"
+            android:layout_below="@+id/media_layout"
             android:layout_toRightOf="@+id/like_btn"
             android:layout_toEndOf="@+id/like_btn"
             android:layout_marginTop="10dp" />
@@ -93,7 +103,7 @@
             android:scaleType="fitStart"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/post_video"
+            android:layout_below="@+id/media_layout"
             android:layout_toRightOf="@+id/awko"
             android:layout_toEndOf="@+id/awko"
             android:layout_marginTop="1dp" />
@@ -107,6 +117,7 @@
             android:layout_toRightOf="@+id/comment_btn"
             android:layout_toEndOf="@+id/comment_btn"
             android:layout_marginTop="10dp" />
+
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"
@@ -152,21 +163,14 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:layout_below="@+id/delBtn"
-            android:textColor="@color/white" />
-
-        <Button
-            android:text="Delete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/delBtn"
-            android:visibility="invisible"
-            android:background="@color/colorPrimary"
             android:textColor="@color/white"
-            android:layout_above="@+id/vvodcomment"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_below="@+id/blog_list3" />
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"></LinearLayout>
 
 </RelativeLayout>

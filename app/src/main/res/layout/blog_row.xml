@@ -10,28 +10,6 @@
         android:layout_height="wrap_content"
         android:background="@drawable/input_outline">
 
-        <VideoView
-            android:layout_width="match_parent"
-            android:layout_height="232dp"
-            android:id="@+id/post_video"
-            android:contextClickable="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_below="@+id/awko"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/post_title"
-            android:padding="15dp"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/post_name"
-            android:layout_toEndOf="@+id/post_name"
-            android:textStyle="bold"
-            android:text="Title" />
-
         <ImageView
             android:id="@+id/awko"
             android:layout_width="50dp"
@@ -49,13 +27,38 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/awko"
             android:layout_toEndOf="@+id/awko"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_above="@+id/media_layout" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:id="@+id/post_title"
+            android:padding="15dp"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/post_name"
+            android:layout_toEndOf="@+id/post_name"
+            android:textStyle="bold"
+            android:text="Title"
+            android:layout_above="@+id/media_layout" />
+
+        <LinearLayout
+            android:id="@+id/media_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="false"
+            android:layout_below="@+id/awko">
+
+        <VideoView
+            android:layout_width="match_parent"
+            android:layout_height="232dp"
+            android:id="@+id/post_video"
+            android:contextClickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:layout_below="@+id/awko"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
         </LinearLayout>
 
@@ -64,7 +67,7 @@
             android:id="@+id/like_btn"
             android:layout_weight="1"
             android:background="#00ffffff"
-            android:layout_below="@+id/post_video"
+            android:layout_below="@+id/media_layout"
             android:padding="5dp"
             android:scaleType="fitStart"
             android:layout_width="40dp"
@@ -74,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/countlike2"
-            android:layout_below="@+id/post_video"
+            android:layout_below="@+id/media_layout"
             android:layout_toRightOf="@+id/like_btn"
             android:layout_toEndOf="@+id/like_btn"
             android:layout_marginTop="10dp" />
@@ -88,7 +91,7 @@
             android:scaleType="fitStart"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_below="@+id/post_video"
+            android:layout_below="@+id/media_layout"
             android:layout_toRightOf="@+id/awko"
             android:layout_toEndOf="@+id/awko"
             android:layout_marginTop="1dp" />
@@ -107,9 +110,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_media_play"
+            android:id="@+id/playButton"
+            android:background="@android:color/transparent"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true"
-            android:id="@+id/playButton" />
+            android:layout_centerHorizontal="true" />
 
 
     </RelativeLayout>
