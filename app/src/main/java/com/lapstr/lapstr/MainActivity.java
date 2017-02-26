@@ -409,12 +409,8 @@ public class MainActivity extends AppCompatActivity {
             post_video.setMediaController(mediaC);
             mediaC.setAnchorView(mView);
 
-           // mediaC.setAnchorView(findViewById(R.id.post_video));
-            // mediaC.setPadding(0, 0, 0, 0);
-
-
-          //  post_video.start();
-          //  post_video.requestFocus();
+            post_video.start();
+            post_video.requestFocus();
         }
     }
 

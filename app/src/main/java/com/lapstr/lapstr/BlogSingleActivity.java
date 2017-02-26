@@ -155,7 +155,6 @@ public class BlogSingleActivity extends AppCompatActivity {
                     mBlogSingleVideo.setMediaController(mediaC);
                     mediaC.setAnchorView(mBlogSingleVideo);
 
-                   // mediaC.setAnchorView(findViewById(R.id.post_video));
                     mediaC.setPadding(0, 0, 0, 0);
 
                     mBlogSingleVideo.start();
