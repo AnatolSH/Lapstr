@@ -1,6 +1,7 @@
 package com.lapstr.lapstr;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.VideoView;
 
@@ -71,6 +73,7 @@ public class UserSingleActivity extends AppCompatActivity {
     private String userVideos;
 
     private FirebaseAuth mAuth;
+    static MediaController mediaC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,7 +98,7 @@ public class UserSingleActivity extends AppCompatActivity {
         mBloglist = (RecyclerView) findViewById(R.id.blog_list30);
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
-
+        mediaC = new MediaController(this);
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
             @Override
@@ -227,6 +230,8 @@ public class UserSingleActivity extends AppCompatActivity {
         TextView countComments;
         DatabaseReference mDatabaseLike;
         FirebaseAuth auth;
+        VideoView post_video;
+        ImageButton play;
 
         public BlogViweHolder(View itemView) {
             super(itemView);
@@ -236,10 +241,30 @@ public class UserSingleActivity extends AppCompatActivity {
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn11);
             countLikes = (TextView) mView.findViewById(R.id.countlike211);
             countComments = (TextView) mView.findViewById(R.id.countcomments11);
+            play = (ImageButton) mView.findViewById(R.id.playButton11);
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+            post_video= (VideoView) mView.findViewById(R.id.post_video11);
             auth = FirebaseAuth.getInstance();
 
             mDatabaseLike.keepSynced(true);
+
+            play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    play.setVisibility(View.GONE);
+                    post_video.setMediaController(mediaC);
+                    mediaC.setAnchorView(mView);
+                    post_video.start();
+                    post_video.requestFocus();
+                }
+            });
+
+            post_video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    play.setVisibility(View.VISIBLE);
+                }
+            });
         }
 
         public void setmLikebtn(final String post_key){
@@ -299,12 +324,11 @@ public class UserSingleActivity extends AppCompatActivity {
 
         public void setImage(String video){
 
-            VideoView post_video = (VideoView) mView.findViewById(R.id.post_video11);
             post_video.setVideoPath(video);
             post_video.setVideoURI(Uri.parse(video));
 
-            post_video.start();
-            post_video.requestFocus();
+            //post_video.start();
+           // post_video.requestFocus();
 
         }
     }

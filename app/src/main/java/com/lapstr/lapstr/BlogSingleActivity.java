@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
@@ -217,6 +218,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         play.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                play.setVisibility(View.GONE);
                 mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
                 mBlogSingleVideo.setMediaController(mediaC);
                 mediaC.setAnchorView(mBlogSingleVideo);
@@ -224,6 +226,13 @@ public class BlogSingleActivity extends AppCompatActivity {
                 mBlogSingleVideo.start();
                 mBlogSingleVideo.requestFocus();
                 mBlogSingleName.setText(post_name);
+            }
+        });
+
+        mBlogSingleVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                play.setVisibility(View.VISIBLE);
             }
         });
 

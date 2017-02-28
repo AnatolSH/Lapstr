@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -327,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
             super(itemView);
 
             mView = itemView;
+            post_video = (VideoView) mView.findViewById(R.id.post_video);
             awaClick = (ImageView) mView.findViewById(R.id.awko);
             nickClick = (TextView) mView.findViewById(R.id.post_name);
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
@@ -346,6 +348,13 @@ public class MainActivity extends AppCompatActivity {
                     mediaC.setAnchorView(mView);
                     post_video.start();
                     post_video.requestFocus();
+                }
+            });
+
+            post_video.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                @Override
+                public void onCompletion(MediaPlayer mp) {
+                    play.setVisibility(View.VISIBLE);
                 }
             });
         }
@@ -415,12 +424,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void setImage(String video){
-
-            post_video = (VideoView) mView.findViewById(R.id.post_video);
             post_video.setVideoPath(video);
             post_video.setVideoURI(Uri.parse(video));
-
-
         }
 
     }
