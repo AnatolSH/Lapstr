@@ -320,6 +320,8 @@ public class MainActivity extends AppCompatActivity {
         TextView countComments;
         DatabaseReference mDatabaseLike;
         FirebaseAuth auth;
+        ImageButton play;
+        VideoView post_video;
 
         public BlogViweHolder(View itemView) {
             super(itemView);
@@ -330,10 +332,22 @@ public class MainActivity extends AppCompatActivity {
             mLikebtn = (ImageButton) mView.findViewById(R.id.like_btn);
             countLikes = (TextView) mView.findViewById(R.id.countlike2);
             countComments = (TextView) mView.findViewById(R.id.countcomments);
+            play = (ImageButton) mView.findViewById(R.id.playButton);
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
             auth = FirebaseAuth.getInstance();
 
             mDatabaseLike.keepSynced(true);
+
+            play.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    post_video.setMediaController(mediaC);
+                    mediaC.setAnchorView(mView);
+
+                    post_video.start();
+                    post_video.requestFocus();
+                }
+            });
         }
 
         public void setmLikebtn(final String post_key){
@@ -402,16 +416,13 @@ public class MainActivity extends AppCompatActivity {
 
         public void setImage(String video){
 
-            final VideoView post_video = (VideoView) mView.findViewById(R.id.post_video);
+            post_video = (VideoView) mView.findViewById(R.id.post_video);
             post_video.setVideoPath(video);
             post_video.setVideoURI(Uri.parse(video));
 
-            post_video.setMediaController(mediaC);
-            mediaC.setAnchorView(mView);
 
-            post_video.start();
-            post_video.requestFocus();
         }
+
     }
 
     @Override
