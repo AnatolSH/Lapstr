@@ -53,6 +53,7 @@ public class BlogSingleActivity extends AppCompatActivity {
 
     private EditText mPostComment;
     private Button mSubmitBtn;
+    private ImageButton play;
     private String nick;
     private String urk;
     private StorageReference mStorage;
@@ -104,6 +105,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBlogSingleTitle = (TextView) findViewById(R.id.post_title);
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko);
         mSinleDelBtn = (Button) findViewById(R.id.delBtn);
+        play = (ImageButton) findViewById(R.id.playButton2);
         mBlogLikes = (TextView) findViewById(R.id.countlike);
         mComm = (TextView) findViewById(R.id.countcom);
         mLikebtn = (ImageButton) findViewById(R.id.like_btn);
@@ -149,17 +151,8 @@ public class BlogSingleActivity extends AppCompatActivity {
                 post_video = (String) dataSnapshot.child("url").getValue();
 
                 try {
-                    mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
+
                     mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
-
-                    mBlogSingleVideo.setMediaController(mediaC);
-                    mediaC.setAnchorView(mBlogSingleVideo);
-
-                    mediaC.setPadding(0, 0, 0, 0);
-
-                    mBlogSingleVideo.start();
-                    mBlogSingleVideo.requestFocus();
-                    mBlogSingleName.setText(post_name);
                     mBlogSingleTitle.setText(post_title);
                     mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
 
@@ -218,6 +211,19 @@ public class BlogSingleActivity extends AppCompatActivity {
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+            }
+        });
+
+        play.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
+                mBlogSingleVideo.setMediaController(mediaC);
+                mediaC.setAnchorView(mBlogSingleVideo);
+                mediaC.setPadding(0, 0, 0, 0);
+                mBlogSingleVideo.start();
+                mBlogSingleVideo.requestFocus();
+                mBlogSingleName.setText(post_name);
             }
         });
 

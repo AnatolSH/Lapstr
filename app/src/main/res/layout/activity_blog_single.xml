@@ -165,6 +165,14 @@
             android:layout_alignParentEnd="true"
             android:textColor="@color/white"
             android:layout_below="@+id/blog_list3" />
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:drawable/ic_media_play"
+            android:id="@+id/playButton2"
+            android:background="@android:color/transparent"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 
