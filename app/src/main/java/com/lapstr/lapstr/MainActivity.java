@@ -341,9 +341,9 @@ public class MainActivity extends AppCompatActivity {
             play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    play.setVisibility(View.GONE);
                     post_video.setMediaController(mediaC);
                     mediaC.setAnchorView(mView);
-
                     post_video.start();
                     post_video.requestFocus();
                 }
