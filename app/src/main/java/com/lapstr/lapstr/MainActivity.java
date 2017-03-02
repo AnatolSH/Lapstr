@@ -45,9 +45,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
 
     private Button mSelectImage;
-    private StorageReference mSrorage;
-    private ProgressDialog mProgressDialog;
-    private Button buttonStart;
     private Button newActivity;
     private Button myCabinet;
     private Button singout;
@@ -81,9 +78,7 @@ public class MainActivity extends AppCompatActivity {
         mRootDatabase = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mSrorage = FirebaseStorage.getInstance().getReference();
         mSelectImage = (Button) findViewById(R.id.select_image);
-        mProgressDialog = new ProgressDialog(this);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -106,11 +101,9 @@ public class MainActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        buttonStart = (Button) findViewById(R.id.start_btn);
         newActivity = (Button) findViewById(R.id.new_activity);
         myCabinet = (Button) findViewById(R.id.cab);
         singout = (Button) findViewById(R.id.sign_out);
-        ////////
 
         mSelectImage.setOnClickListener(new View.OnClickListener() {//Выбор видео для заливки
             @Override
@@ -119,16 +112,6 @@ public class MainActivity extends AppCompatActivity {
                 if (view == mSelectImage) {
                     Intent SecAct99 = new Intent(getApplicationContext(), PostActivity.class);
                     startActivity(SecAct99);
-                }
-            }
-        });
-
-        buttonStart.setOnClickListener(new View.OnClickListener(){ //кнопка старт которая теперь не нужна
-            @Override
-            public void onClick(View view) {
-                buttonStart.setOnClickListener(this);
-                if (view == buttonStart) {
-                    startVideo();
                 }
             }
         });
@@ -187,14 +170,6 @@ public class MainActivity extends AppCompatActivity {
             return null;
         }
     }
-
-
-    private void startVideo() {
-        // videoview.setMediaController(new MediaController(this));
-        //  videoview.requestFocus();
-        //    videoview.start();
-    }
-
 
     @Override
     public void onStart() {
