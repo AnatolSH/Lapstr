@@ -32,6 +32,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -59,7 +61,7 @@ public class PostActivity extends AppCompatActivity {
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
-        baza = FirebaseDatabase.getInstance().getReference("Likes").child("UsersVideo");
+        baza = FirebaseDatabase.getInstance().getReference().child("UsersVideo").child("Uploaded");
         mselectImage = (ImageButton) findViewById(R.id.videoSelect5);
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
@@ -95,6 +97,9 @@ public class PostActivity extends AppCompatActivity {
         final String title_val = mPostTitle.getText().toString().trim();
 
         StorageReference filepath = mStorage.child("Videos").child(mVideoUri.getLastPathSegment());
+        final String dt;
+        Date cal = (Date) Calendar.getInstance().getTime();
+        dt = cal.toLocaleString();
 
         filepath.putFile(mVideoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -105,18 +110,20 @@ public class PostActivity extends AppCompatActivity {
                 Uri downloadUrl=taskSnapshot.getDownloadUrl();
                 DatabaseReference newPost = mFirebaseDatabase.push();
                 String str = newPost.getKey();
+                String uid = mAuth.getCurrentUser().getUid();
                 DatabaseReference dataForUserBd = baza.child(nick).child(str);
 
                 newPost.child("awaurl").setValue(urk);
                 newPost.child("name").setValue(nick);
                 newPost.child("url").setValue(downloadUrl.toString());
                 newPost.child("title").setValue(title_val);
-                newPost.child("uid").setValue(mAuth.getCurrentUser().getUid());
+                newPost.child("uid").setValue(uid);
 
                 dataForUserBd.child("name").setValue(nick);
                 dataForUserBd.child("awaurl").setValue(urk);
                 dataForUserBd.child("url").setValue(downloadUrl.toString());
                 dataForUserBd.child("title").setValue(title_val);
+                dataForUserBd.child("time").setValue(dt);
             }
         });
 

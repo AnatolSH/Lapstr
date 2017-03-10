@@ -39,31 +39,17 @@ import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
  */
 
 public class UserSingleActivity extends AppCompatActivity {
-    private EditText mPostComment;
-    private Button mSubmitBtn;
-    private String nick;
-    private String urk;
-    private StorageReference mStorage;
-    private DatabaseReference mFirebaseDatabase;
+
     private RecyclerView mBloglist;
     private FirebaseAuth.AuthStateListener authListener;
-    private DatabaseReference mFirebaseDatabase2;
     private FirebaseDatabase mFirebaseInstance2;
 
-    private String mPost_key = null;
-    private DatabaseReference mDatabase;
-
-    private VideoView mBlogSingleVideo;
     private TextView mBlogSingleName;
 
-    private TextView mBlogLikes;
-    private TextView mComm;
     private ImageView mBlogSingleAvatar;
-    private DatabaseReference getmDatabaseCount;
-    private DatabaseReference getmDatabaseCount2;
+
     private DatabaseReference mDatabaseLike;
     private boolean mProcessLike;
-    private DatabaseReference baza;
     private String post_name;
 
     public void setUserVideos(String userVideos) {
@@ -80,16 +66,10 @@ public class UserSingleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_single);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
-        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
-        getmDatabaseCount = FirebaseDatabase.getInstance().getReference().child("Likes").child("count");
-        getmDatabaseCount2 = FirebaseDatabase.getInstance().getReference().child("Likes").child("countComments");
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
-        mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
-        baza = FirebaseDatabase.getInstance().getReference("Likes").child("UsersVideo");
         mAuth = FirebaseAuth.getInstance();
 
-       // mPost_key = getIntent().getExtras().getString("blog_id");
         userVideos = getIntent().getExtras().getString("userName");
         mBlogSingleName = (TextView) findViewById(R.id.post_name0);
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko0);
@@ -109,11 +89,7 @@ public class UserSingleActivity extends AppCompatActivity {
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        mStorage = FirebaseStorage.getInstance().getReference();
-        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference().child("Likes").child("comments");
-
-//nenkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-        baza.child(userVideos).addValueEventListener(new ValueEventListener() {
+        mDatabaseLike.child("Uploaded").child(userVideos).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 ArrayList<User> us = new ArrayList<>();
@@ -145,7 +121,7 @@ public class UserSingleActivity extends AppCompatActivity {
         super.onStart();
         mAuth.addAuthStateListener(authListener);
 
-        DatabaseReference usersVideoDB = mFirebaseInstance2.getReference("Likes").child("UsersVideo").child(userVideos);
+        DatabaseReference usersVideoDB = mFirebaseInstance2.getReference("UsersVideo").child("Uploaded").child(userVideos);
 
         FirebaseRecyclerAdapter<User, BlogViweHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<User, BlogViweHolder>(
 
@@ -182,7 +158,7 @@ public class UserSingleActivity extends AppCompatActivity {
 
                         mProcessLike = true;
 
-                        mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                        mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(DataSnapshot dataSnapshot) {
                                 int maxNum = (int) dataSnapshot.child(post_key).getChildrenCount();
@@ -191,15 +167,15 @@ public class UserSingleActivity extends AppCompatActivity {
 
                                     if (dataSnapshot.child(post_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
-                                        mDatabaseLike.child("count").child(post_key).setValue(maxNum-1);
+                                        mDatabaseLike.child("Likes").child(post_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                        mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum-1);
 
                                         mProcessLike = false;
 
                                     } else {
 
-                                        mDatabaseLike.child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Liked");
-                                        mDatabaseLike.child("count").child(post_key).setValue(maxNum+1);
+                                        mDatabaseLike.child("Likes").child(post_key).child(mAuth.getCurrentUser().getUid()).setValue("Liked");
+                                        mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum+1);
                                         mProcessLike = false;
 
                                     }
@@ -242,11 +218,9 @@ public class UserSingleActivity extends AppCompatActivity {
             countLikes = (TextView) mView.findViewById(R.id.countlike211);
             countComments = (TextView) mView.findViewById(R.id.countcomments11);
             play = (ImageButton) mView.findViewById(R.id.playButton11);
-            mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+            mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
             post_video= (VideoView) mView.findViewById(R.id.post_video11);
             auth = FirebaseAuth.getInstance();
-
-            mDatabaseLike.keepSynced(true);
 
             play.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -269,30 +243,35 @@ public class UserSingleActivity extends AppCompatActivity {
 
         public void setmLikebtn(final String post_key){
 
-            mDatabaseLike.addValueEventListener(new ValueEventListener() {
+            mDatabaseLike.child("Comments").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
+                    try {
+                        String name2 = String.valueOf(value2.get(post_key));
+                        countComments.setText(name2);
+                    }catch (Exception e){
+                        countComments.setText("0");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     //вот тут
                     Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
-                    String name1 = String.valueOf(value.get(post_key));
-
-                    Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
-                    String name2 = String.valueOf(value2.get(post_key));
-
-                    if(name1.equals("null") || name1.equals("0")){ countLikes.setText("");}
-                    else
-                    {
-                        try {
-                            countLikes.setText(name1);
-                        }catch (Exception e){}
-                    }
-
-                    if(name2.equals("null") || name2.equals("0")){ countComments.setText("");}
-                    else
-                    {
-                        try {
-                            countComments.setText(name2);
-                        }catch (Exception e){}
+                    try {
+                        String name1 = String.valueOf(value.get(post_key));
+                        countLikes.setText(name1);
+                    }catch (Exception e){
+                        countLikes.setText("0");
                     }
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){

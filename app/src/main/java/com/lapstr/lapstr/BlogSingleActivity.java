@@ -73,8 +73,6 @@ public class BlogSingleActivity extends AppCompatActivity {
     private TextView mBlogLikes;
     private TextView mComm;
     private ImageView mBlogSingleAvatar;
-    private DatabaseReference getmDatabaseCount;
-    private DatabaseReference getmDatabaseCount2;
     private DatabaseReference mDatabaseLike;
     private Button mSinleDelBtn;
     private String post_video;
@@ -92,9 +90,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_blog_single);
 
         mDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
-        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
-        getmDatabaseCount = FirebaseDatabase.getInstance().getReference().child("Likes").child("count");
-        getmDatabaseCount2 = FirebaseDatabase.getInstance().getReference().child("Likes").child("countComments");
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
 
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
@@ -128,7 +124,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         mStorage = FirebaseStorage.getInstance().getReference();
-        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference().child("Likes").child("comments");
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference().child("UsersVideo").child("Comments");
 
         mPostComment=(EditText) findViewById(R.id.vvodcomment);
         mSubmitBtn=(Button) findViewById(R.id.buttcomm);
@@ -150,6 +146,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 post_name = (String) dataSnapshot.child("name").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
+                mBlogSingleName.setText(post_name);
 
                 try {
 
@@ -173,7 +170,28 @@ public class BlogSingleActivity extends AppCompatActivity {
             }
         });
 
-        mDatabaseLike.addValueEventListener(new ValueEventListener() {
+        mDatabaseLike.child("Comments").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
+                try
+                {
+                    String name2 = String.valueOf(value2.get(mPost_key));
+                    mComm.setText(name2);
+                }
+                catch (Exception e){
+                    mComm.setText("");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -185,16 +203,6 @@ public class BlogSingleActivity extends AppCompatActivity {
                 }
                 catch (Exception e){
                     mBlogLikes.setText("");
-                }
-
-                Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
-                try
-                {
-                    String name2 = String.valueOf(value2.get(mPost_key));
-                    mComm.setText(name2);
-                }
-                catch (Exception e){
-                    mComm.setText("");
                 }
 
                 if(dataSnapshot.child(mPost_key).hasChild(mAuth.getCurrentUser().getUid())){
@@ -225,7 +233,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 mediaC.setPadding(0, 0, 0, 0);
                 mBlogSingleVideo.start();
                 mBlogSingleVideo.requestFocus();
-                mBlogSingleName.setText(post_name);
+
             }
         });
 
@@ -242,7 +250,7 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                 mProcessLike = true;
 
-                mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         int maxNum = (int) dataSnapshot.child(mPost_key).getChildrenCount();
@@ -251,15 +259,15 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                             if (dataSnapshot.child(mPost_key).hasChild(mAuth.getCurrentUser().getUid())) {
 
-                                mDatabaseLike.child(mPost_key).child(mAuth.getCurrentUser().getUid()).removeValue();
-                                mDatabaseLike.child("count").child(mPost_key).setValue(maxNum-1);
+                                mDatabaseLike.child("Likes").child(mPost_key).child(mAuth.getCurrentUser().getUid()).removeValue();
+                                mDatabaseLike.child("Likes").child("count").child(mPost_key).setValue(maxNum-1);
 
                                 mProcessLike = false;
 
                             } else {
 
-                                mDatabaseLike.child(mPost_key).child(mAuth.getCurrentUser().getUid()).setValue("Liked");
-                                mDatabaseLike.child("count").child(mPost_key).setValue(maxNum+1);
+                                mDatabaseLike.child("Likes").child(mPost_key).child(mAuth.getCurrentUser().getUid()).setValue("Liked");
+                                mDatabaseLike.child("Likes").child("count").child(mPost_key).setValue(maxNum+1);
                                 mProcessLike = false;
 
                             }
@@ -279,14 +287,14 @@ public class BlogSingleActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 mDatabase.child(mPost_key).removeValue();
-                mDatabaseLike.child(mPost_key).removeValue();
-                getmDatabaseCount.child(mPost_key).removeValue();
-                mDatabaseLike.child("comments").child(mPost_key).removeValue();
-                mDatabaseLike.child("UsersVideo").child(post_name).child(mPost_key).removeValue();
+                mDatabaseLike.child("Likes").child(mPost_key).removeValue();
+                mDatabaseLike.child("Likes").child("count").child(mPost_key).removeValue();
+                mDatabaseLike.child("Comments").child(mPost_key).removeValue();
+                mDatabaseLike.child("Uploaded").child(post_name).child(mPost_key).removeValue();
 
                 Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
-                getmDatabaseCount2.child(mPost_key).removeValue();
+                mDatabaseLike.child("Comments").child("countComments").child(mPost_key).removeValue();
             }
         });
 
@@ -335,11 +343,11 @@ public class BlogSingleActivity extends AppCompatActivity {
 
     private void startPosting() {
 
-        mDatabaseLike.child("comments").addValueEventListener(new ValueEventListener() {
+        mDatabaseLike.child("Comments").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 int maxNum = (int) dataSnapshot.child(mPost_key).getChildrenCount();
-                        mDatabaseLike.child("countComments").child(mPost_key).setValue(maxNum);
+                mDatabaseLike.child("Comments").child("countComments").child(mPost_key).setValue(maxNum);
                     }
 
             @Override

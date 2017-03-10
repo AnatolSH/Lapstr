@@ -52,10 +52,6 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
 
     private DatabaseReference mFirebaseDatabase;
-    private FirebaseDatabase mRootDatabase;
-
-    private String userId;
-
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseLike;
@@ -71,11 +67,9 @@ public class MainActivity extends AppCompatActivity {
         mBloglist = (RecyclerView) findViewById(R.id.blog_list2);
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
-        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
-        mDatabaseLike.keepSynced(true);
+        mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
 
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
-        mRootDatabase = FirebaseDatabase.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         mSelectImage = (Button) findViewById(R.id.select_image);
@@ -246,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
 
                         mProcessLike = true;
 
-                            mDatabaseLike.addValueEventListener(new ValueEventListener() {
+                            mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     int maxNum = (int) dataSnapshot.child(post_key).getChildrenCount();
@@ -255,15 +249,15 @@ public class MainActivity extends AppCompatActivity {
 
                                         if (dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())) {
 
-                                            mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).removeValue();
-                                            mDatabaseLike.child("count").child(post_key).setValue(maxNum-1);
+                                            mDatabaseLike.child("Likes").child(post_key).child(auth.getCurrentUser().getUid()).removeValue();
+                                            mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum-1);
 
                                             mProcessLike = false;
 
                                         } else {
 
-                                            mDatabaseLike.child(post_key).child(auth.getCurrentUser().getUid()).setValue("Liked");
-                                            mDatabaseLike.child("count").child(post_key).setValue(maxNum+1);
+                                            mDatabaseLike.child("Likes").child(post_key).child(auth.getCurrentUser().getUid()).setValue("Liked");
+                                            mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum+1);
                                             mProcessLike = false;
 
                                         }
@@ -310,10 +304,8 @@ public class MainActivity extends AppCompatActivity {
             countLikes = (TextView) mView.findViewById(R.id.countlike2);
             countComments = (TextView) mView.findViewById(R.id.countcomments);
             play = (ImageButton) mView.findViewById(R.id.playButton);
-            mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("Likes");
+            mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
             auth = FirebaseAuth.getInstance();
-
-            mDatabaseLike.keepSynced(true);
 
             play.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -336,18 +328,10 @@ public class MainActivity extends AppCompatActivity {
 
         public void setmLikebtn(final String post_key){
 
-            mDatabaseLike.addValueEventListener(new ValueEventListener() {
+            mDatabaseLike.child("Comments").addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
-                    //вот тут
-                    Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
-                    try
-                    {String name1 = String.valueOf(value.get(post_key));
-                        countLikes.setText(name1);
-                    }
-                    catch (Exception e){
-                        countLikes.setText("0");
-                    }
+
                     Map<String,Object> value2 = (Map<String, Object>) dataSnapshot.child("countComments").getValue();
                     try
                     {
@@ -356,6 +340,28 @@ public class MainActivity extends AppCompatActivity {
                     }
                     catch (Exception e){
                         countComments.setText("0");
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+
+            mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //вот тут
+                    Map<String,Object> value = (Map<String, Object>) dataSnapshot.child("count").getValue();
+                    try
+                    {
+                        String name1 = String.valueOf(value.get(post_key));
+                        countLikes.setText(name1);
+                    }
+                    catch (Exception e){
+                        countLikes.setText("0");
                     }
 
                     if(dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())){
