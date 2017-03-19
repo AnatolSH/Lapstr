@@ -1,13 +1,22 @@
 package com.lapstr.lapstr;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
+import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -32,6 +41,7 @@ import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
 import java.io.IOException;
+import java.util.Locale;
 
 public class SignupActivity extends AppCompatActivity {
 
@@ -46,15 +56,114 @@ public class SignupActivity extends AppCompatActivity {
     private Uri resultUri;
     private ImageView imageView;
     private StorageReference storageReference;
+    private Button btn_ru,btn_en;
+    private Locale myLocale;
+    private String lang;
+
+    AlertDialog.Builder ad;
+    AlertDialog.Builder eng;
+    Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+
+
+        context = SignupActivity.this;
+        String title = "Для смены языка необходимо перезапустить приложение";
+        String message = "Вы согласны?";
+        String button2String = "Принять";
+        String button1String = "Отмена";
+        ad = new AlertDialog.Builder(context);
+
+        ad.setTitle(title);  // заголовок
+        ad.setMessage(message); // сообщение
+        ad.setPositiveButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="en";
+                restartApplication();
+            }
+        });
+
+        ad.setNegativeButton(button1String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="ru";
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
+
+        String title1 = "To change the language, you must restart the application";
+        String message1 = "Do you agree?";
+        String button1String1 = "Ok";
+        String button2String1 = "Cancel";
+        eng = new AlertDialog.Builder(context);
+
+        eng.setTitle(title1);  // заголовок
+        eng.setMessage(message1); // сообщение
+        eng.setPositiveButton(button1String1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="ru";
+                restartApplication();
+            }
+        });
+
+        eng.setNegativeButton(button2String1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="en";
+            }
+        });
+        eng.setCancelable(true);
+        eng.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
+
+
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mDatabase = mFirebaseInstance.getReference("cabinet");
         auth = FirebaseAuth.getInstance();
         imageView = (ImageView) findViewById(R.id.imageView55);
+        this.btn_en = (Button)findViewById(R.id.btn_en);
+        this.btn_ru = (Button)findViewById(R.id.btn_ru);
+
+        View.OnClickListener clickBtn = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                switch (v.getId()) {
+                    case R.id.btn_en:
+                        //lang = "en";
+                        if(lang.equals("en"))
+                        {
+                            eng.show();
+                        }
+                        else{
+                            ad.show();
+                        }
+                        break;
+                    case R.id.btn_ru:
+                        //lang = "ru";
+                        if(lang.equals("en"))
+                        {
+                            eng.show();
+                        }
+                        else{
+                            ad.show();
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        };
+
+        this.btn_en.setOnClickListener(clickBtn);
+        this.btn_ru.setOnClickListener(clickBtn);
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -129,6 +238,7 @@ public class SignupActivity extends AppCompatActivity {
                         });
             }
         });
+        loadLocale();
     }
 
     private void showFileChooser() {
@@ -193,5 +303,63 @@ public class SignupActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         progressBar.setVisibility(View.GONE);
+    }
+
+    public void loadLocale()
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
+        lang = language;
+    }
+
+    public void saveLocale(String lang)
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void changeLang(String lang)
+    {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        updateTexts();
+    }
+
+
+    private void updateTexts()
+    {
+        btn_en.setText(R.string.btn_en);
+        btn_ru.setText(R.string.btn_ru);
+        buttonChoose.setText(R.string.choose_awa);
+        inputUsername.setHint(R.string.usn);
+        inputPassword.setHint(R.string.hint_password);
+        btnSignUp.setText(R.string.action_sign_in_short);
+        btnResetPassword.setText(R.string.btn_forgot_password);
+        btnSignIn.setText(R.string.btn_link_to_login);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.crop_image_menu, menu);
+        return true;
+    }
+
+    public void restartApplication(){
+                changeLang(lang);
+                Intent i = getBaseContext().getPackageManager()
+                        .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(i);
     }
 }

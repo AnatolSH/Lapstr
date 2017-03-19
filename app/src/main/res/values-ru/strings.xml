@@ -1,0 +1,12 @@
+<resources>
+    <string name="choose_awa">Выберите аватар</string>
+    <string name="usn">Никнейм</string>
+    <string name="action_sign_in_short">Зарегистрироваться</string>
+    <string name="btn_forgot_password">Забыли ваш пароль?Нажмите для восстановления</string>
+    <string name="btn_link_to_login">Вы уже зарегистрированы?</string>
+    <string name="btn_link_to_registerr">Не зарегистрированы?Нажмите для регистрации </string>
+    <string name="btn_en">англ</string>
+    <string name="btn_ru">рус</string>
+    <string name="hint_password">Пароль</string>
+    <string name="btn_login">ВОЙТИ</string>
+</resources>

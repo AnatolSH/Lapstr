@@ -23,6 +23,19 @@
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
 
+        <Button
+            android:id="@+id/btn_en"
+            android:text="@string/btn_en"
+            android:layout_width="40dp"
+            android:layout_height="40dp" />
+
+
+        <Button
+            android:id="@+id/btn_ru"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="@string/btn_ru" />
+
         <ImageView
             android:id="@+id/imageView55"
             android:layout_width="120dp"
@@ -39,7 +52,7 @@
                 android:id="@+id/buttonChoose"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Choose Avatar"
+                android:text="@string/choose_awa"
                 android:layout_width="wrap_content"
                 android:background="@color/colorAccent" />
 

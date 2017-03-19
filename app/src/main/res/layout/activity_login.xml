@@ -77,12 +77,12 @@
         <!-- Link to Login Screen -->
 
         <Button
-            android:id="@+id/btn_signup"
+            android:id="@+id/btn_signupp"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
             android:background="@null"
-            android:text="@string/btn_link_to_register"
+            android:text="@string/btn_link_to_registerr"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15dp" />
