@@ -1,5 +1,7 @@
 package com.lapstr.lapstr;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -8,11 +10,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Locale;
 
 public class ResetPasswordActivity extends AppCompatActivity {
 
@@ -20,6 +25,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private Button btnReset, btnBack;
     private FirebaseAuth auth;
     private ProgressBar progressBar;
+    private Locale myLocale;
+    private TextView lab, lab2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +37,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
         btnReset = (Button) findViewById(R.id.btn_reset_password);
         btnBack = (Button) findViewById(R.id.btn_back);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
+        lab = (TextView)findViewById(R.id.label);
+        lab2=(TextView)findViewById(R.id.labelPass);
 
         auth = FirebaseAuth.getInstance();
 
@@ -67,6 +76,46 @@ public class ResetPasswordActivity extends AppCompatActivity {
                         });
             }
         });
+        loadLocale();
+    }
+
+    public void changeLang(String lang)
+    {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        updateTexts();
+    }
+
+
+    private void updateTexts()
+    {
+        lab.setText(R.string.lbl_forgot_password);
+        lab2.setText(R.string.forgot_password_msg);
+        btnReset.setText(R.string.btn_reset_password);
+        btnBack.setText(R.string.btn_back);
+    }
+
+    public void saveLocale(String lang)
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void loadLocale()
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
     }
 
 }

@@ -9,4 +9,8 @@
     <string name="btn_ru">рус</string>
     <string name="hint_password">Пароль</string>
     <string name="btn_login">ВОЙТИ</string>
+    <string name="lbl_forgot_password">Забыли пароль?</string>
+    <string name="forgot_password_msg">Введите адрес электронной почты, который вы использовали при регистрации</string>
+    <string name="btn_reset_password">Сбросить пароль</string>
+    <string name="btn_back"><![CDATA[<< Назад]]></string>
 </resources>
