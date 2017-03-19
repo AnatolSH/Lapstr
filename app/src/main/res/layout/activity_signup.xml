@@ -36,6 +36,14 @@
             android:layout_height="40dp"
             android:text="@string/btn_ru" />
 
+
+        <Button
+            android:text="Язык"
+            android:layout_width="66dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/button2"
+            android:onClick="selectLanguage"/>
+
         <ImageView
             android:id="@+id/imageView55"
             android:layout_width="120dp"

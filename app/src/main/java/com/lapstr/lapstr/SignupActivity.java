@@ -16,7 +16,9 @@ import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.ContextMenu;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -336,6 +338,19 @@ public class SignupActivity extends AppCompatActivity {
         updateTexts();
     }
 
+    ////// Меню смены языка
+    public void selectLanguage(View view)
+    {
+        registerForContextMenu(view);
+        openContextMenu(view);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.lang_menu, menu);
+    }
 
     private void updateTexts()
     {
