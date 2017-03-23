@@ -131,42 +131,6 @@ public class SignupActivity extends AppCompatActivity {
         mDatabase = mFirebaseInstance.getReference("cabinet");
         auth = FirebaseAuth.getInstance();
         imageView = (ImageView) findViewById(R.id.imageView55);
-        this.btn_en = (Button)findViewById(R.id.btn_en);
-        this.btn_ru = (Button)findViewById(R.id.btn_ru);
-
-        View.OnClickListener clickBtn = new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                switch (v.getId()) {
-                    case R.id.btn_en:
-                        //lang = "en";
-                        if(lang.equals("en"))
-                        {
-                            eng.show();
-                        }
-                        else{
-                            ad.show();
-                        }
-                        break;
-                    case R.id.btn_ru:
-                        //lang = "ru";
-                        if(lang.equals("en"))
-                        {
-                            eng.show();
-                        }
-                        else{
-                            ad.show();
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            }
-        };
-
-        this.btn_en.setOnClickListener(clickBtn);
-        this.btn_ru.setOnClickListener(clickBtn);
 
         btnSignIn = (Button) findViewById(R.id.sign_in_button);
         btnSignUp = (Button) findViewById(R.id.sign_up_button);
@@ -360,13 +324,24 @@ public class SignupActivity extends AppCompatActivity {
 
             case R.id.ru:
 
-                Toast.makeText(getApplicationContext(), "Русский язык", Toast.LENGTH_LONG).show();
+                if(lang.equals("en"))
+                {
+                    eng.show();
+                }
+                else{
+                    ad.show();
+                }
                 item.setChecked(true);
                 return true;
 
             case R.id.en:
-
-                Toast.makeText(getApplicationContext(), "English language", Toast.LENGTH_LONG).show();
+                if(lang.equals("en"))
+                {
+                    eng.show();
+                }
+                else{
+                    ad.show();
+                }
                 item.setChecked(true);
                 return true;
         }
@@ -377,8 +352,6 @@ public class SignupActivity extends AppCompatActivity {
 
     private void updateTexts()
     {
-        btn_en.setText(R.string.btn_en);
-        btn_ru.setText(R.string.btn_ru);
         buttonChoose.setText(R.string.choose_awa);
         inputUsername.setHint(R.string.usn);
         inputPassword.setHint(R.string.hint_password);

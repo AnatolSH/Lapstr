@@ -1,6 +1,9 @@
 package com.lapstr.lapstr;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -31,6 +34,10 @@ public class LoginActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private Button btnSignup, btnLogin, btnReset;
     private Locale myLocale;
+    AlertDialog.Builder ad;
+    AlertDialog.Builder eng;
+    Context context;
+    private String lang;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +51,59 @@ public class LoginActivity extends AppCompatActivity {
             finish();
         }
         setContentView(R.layout.activity_login);
+
+        context = LoginActivity.this;
+        String title = "Для смены языка необходимо перезапустить приложение";
+        String message = "Вы согласны?";
+        String button2String = "Принять";
+        String button1String = "Отмена";
+        ad = new AlertDialog.Builder(context);
+
+        ad.setTitle(title);  // заголовок
+        ad.setMessage(message); // сообщение
+        ad.setPositiveButton(button2String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="en";
+                restartApplication();
+            }
+        });
+
+        ad.setNegativeButton(button1String, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="ru";
+            }
+        });
+        ad.setCancelable(true);
+        ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
+
+        String title1 = "To change the language, you must restart the application";
+        String message1 = "Do you agree?";
+        String button1String1 = "Ok";
+        String button2String1 = "Cancel";
+        eng = new AlertDialog.Builder(context);
+
+        eng.setTitle(title1);  // заголовок
+        eng.setMessage(message1); // сообщение
+        eng.setPositiveButton(button1String1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="ru";
+                restartApplication();
+            }
+        });
+
+        eng.setNegativeButton(button2String1, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int arg1) {
+                lang="en";
+            }
+        });
+        eng.setCancelable(true);
+        eng.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            public void onCancel(DialogInterface dialog) {
+            }
+        });
 
         //TYT
         inputEmail = (EditText) findViewById(R.id.email);
@@ -151,13 +211,26 @@ public class LoginActivity extends AppCompatActivity {
 
             case R.id.ru:
 
-                Toast.makeText(getApplicationContext(), "Русский язык", Toast.LENGTH_LONG).show();
+                if(lang.equals("en"))
+                {
+                    eng.show();
+                }
+                else{
+                    ad.show();
+                }
                 item.setChecked(true);
                 return true;
 
             case R.id.en:
 
-                Toast.makeText(getApplicationContext(), "English language", Toast.LENGTH_LONG).show();
+                if(lang.equals("en"))
+                {
+                    eng.show();
+                }
+                else{
+                    ad.show();
+                }
+
                 item.setChecked(true);
                 return true;
         }
@@ -188,5 +261,13 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
         String language = prefs.getString(langPref, "");
         changeLang(language);
+        lang = language;
+    }
+    public void restartApplication(){
+        changeLang(lang);
+        Intent i = getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(i);
     }
 }
