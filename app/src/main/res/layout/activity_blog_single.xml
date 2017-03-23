@@ -65,7 +65,7 @@
             android:layout_alignParentTop="false"
             android:layout_below="@+id/delBtn">
 
-        <VideoView
+            <VideoView
             android:layout_width="match_parent"
             android:layout_height="232dp"
             android:id="@+id/post_video"
@@ -165,20 +165,20 @@
             android:layout_alignParentEnd="true"
             android:textColor="@color/white"
             android:layout_below="@+id/blog_list3" />
+
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@android:drawable/ic_media_play"
             android:id="@+id/playButton2"
             android:background="@android:color/transparent"
-            android:layout_centerVertical="true"
+            android:paddingBottom="1dp"
+            android:cropToPadding="false"
+            android:scaleType="fitStart"
+            android:layout_marginTop="94dp"
+            android:layout_below="@+id/awko"
             android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></LinearLayout>
 
 </RelativeLayout>

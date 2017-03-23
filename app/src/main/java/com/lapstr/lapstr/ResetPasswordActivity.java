@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.ContextMenu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -100,11 +101,32 @@ public class ResetPasswordActivity extends AppCompatActivity {
         registerForContextMenu(view);
         openContextMenu(view);
     }
+
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.lang_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case R.id.ru:
+
+                Toast.makeText(getApplicationContext(), "Русский язык", Toast.LENGTH_LONG).show();
+                item.setChecked(true);
+                return true;
+
+            case R.id.en:
+
+                Toast.makeText(getApplicationContext(), "English language", Toast.LENGTH_LONG).show();
+                item.setChecked(true);
+                return true;
+        }
+        return super.onContextItemSelected(item);
     }
     /////////
 
