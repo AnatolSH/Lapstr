@@ -351,6 +351,7 @@ public class SignupActivity extends AppCompatActivity {
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.lang_menu, menu);
     }
+    //////////////////
 
     private void updateTexts()
     {
