@@ -33,10 +33,10 @@
         android:background="@drawable/input_outline"
         android:padding="10dp"
         android:singleLine="true"
-        android:hint="Post Title" />
+        android:hint="@string/post_title" />
 
     <Button
-        android:text="Submit Post"
+        android:text="@string/subm_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

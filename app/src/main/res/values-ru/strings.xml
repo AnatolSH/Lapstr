@@ -13,4 +13,6 @@
     <string name="forgot_password_msg">Введите адрес электронной почты, который вы использовали при регистрации</string>
     <string name="btn_reset_password">Сбросить пароль</string>
     <string name="btn_back"><![CDATA[<< Назад]]></string>
+    <string name="post_title">Заголовок поста</string>
+    <string name="subm_post">Запостить на стену</string>
 </resources>

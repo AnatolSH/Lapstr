@@ -4,8 +4,12 @@ package com.lapstr.lapstr;
  * Created by Anatole on 04.02.2017.
  */
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,6 +38,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 public class PostActivity extends AppCompatActivity {
 
@@ -47,6 +52,9 @@ public class PostActivity extends AppCompatActivity {
     private String nick;
     private FirebaseAuth mAuth;
     private String urk;
+    private Locale myLocale;
+    Context context;
+    private String lang;
 
     private static final int GALLERY_REQUEST = 1;
 
@@ -86,6 +94,7 @@ public class PostActivity extends AppCompatActivity {
             }
         });
         addCabChangeListener();
+        loadLocale();
     }
 
 
@@ -170,5 +179,42 @@ public class PostActivity extends AppCompatActivity {
             mVideoUri= data.getData();
             mselectImage.setImageURI(mVideoUri);
         }
+    }
+
+    private void updateTexts()
+    {
+        mSubmitBtn.setText(R.string.subm_post);
+        mPostTitle.setHint(R.string.post_title);
+
+    }
+
+    public void saveLocale(String lang)
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(langPref, lang);
+        editor.commit();
+    }
+
+    public void loadLocale()
+    {
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", Activity.MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+        changeLang(language);
+        lang = language;
+    }
+    public void changeLang(String lang)
+    {
+        if (lang.equalsIgnoreCase(""))
+            return;
+        myLocale = new Locale(lang);
+        saveLocale(lang);
+        Locale.setDefault(myLocale);
+        android.content.res.Configuration config = new android.content.res.Configuration();
+        config.locale = myLocale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        updateTexts();
     }
 }
