@@ -27,6 +27,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,16 +43,21 @@
             android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"></activity>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_profile"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignupActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_login"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EditCabinet" />
-        <activity android:name=".PostActivity" />
+        <activity android:name=".EditCabinet"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PostActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ResetPasswordActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_reset_password"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
@@ -106,8 +112,12 @@ FirebaseInstanceIdService performs security checks at runtime,
             </intent-filter>
         </service>
 
-        <activity android:name=".BlogSingleActivity"></activity>
-        <activity android:name=".UserSingleActivity"></activity>
+        <activity android:name=".BlogSingleActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".UserSingleActivity"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>
