@@ -2,9 +2,9 @@
     <string name="choose_awa">Выберите аватар</string>
     <string name="usn">Никнейм</string>
     <string name="action_sign_in_short">Зарегистрироваться</string>
-    <string name="btn_forgot_password">Забыли ваш пароль?Нажмите для восстановления</string>
+    <string name="btn_forgot_password">Забыли ваш пароль? Нажмите для восстановления</string>
     <string name="btn_link_to_login">Вы уже зарегистрированы?</string>
-    <string name="btn_link_to_registerr">Не зарегистрированы?Нажмите для регистрации </string>
+    <string name="btn_link_to_registerr">Не зарегистрированы? Нажмите для регистрации </string>
     <string name="btn_en">англ</string>
     <string name="btn_ru">рус</string>
     <string name="hint_password">Пароль</string>
@@ -13,6 +13,6 @@
     <string name="forgot_password_msg">Введите адрес электронной почты, который вы использовали при регистрации</string>
     <string name="btn_reset_password">Сбросить пароль</string>
     <string name="btn_back"><![CDATA[<< Назад]]></string>
-    <string name="post_title">Заголовок поста</string>
-    <string name="subm_post">Запостить на стену</string>
+    <string name="post_title">Название видео</string>
+    <string name="subm_post">Загрузить</string>
 </resources>
