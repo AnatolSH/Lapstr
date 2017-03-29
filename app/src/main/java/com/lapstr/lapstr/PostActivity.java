@@ -69,7 +69,7 @@ public class PostActivity extends AppCompatActivity {
 
         mStorage = FirebaseStorage.getInstance().getReference();
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
-        baza = FirebaseDatabase.getInstance().getReference().child("UsersVideo").child("Uploaded");
+        baza = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
         mselectImage = (ImageButton) findViewById(R.id.videoSelect5);
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
@@ -120,7 +120,9 @@ public class PostActivity extends AppCompatActivity {
                 DatabaseReference newPost = mFirebaseDatabase.push();
                 String str = newPost.getKey();
                 String uid = mAuth.getCurrentUser().getUid();
-                DatabaseReference dataForUserBd = baza.child(nick).child(str);
+                DatabaseReference dataForUserBd = baza.child("Uploaded").child(nick).child(str);
+                DatabaseReference comm = baza.child("Comments").child("countComments").child(str);
+                DatabaseReference loice = baza.child("Likes").child("count").child(str);
 
                 newPost.child("awaurl").setValue(urk);
                 newPost.child("name").setValue(nick);
@@ -133,6 +135,9 @@ public class PostActivity extends AppCompatActivity {
                 dataForUserBd.child("url").setValue(downloadUrl.toString());
                 dataForUserBd.child("title").setValue(title_val);
                 dataForUserBd.child("time").setValue(dt);
+
+                comm.setValue(0);
+                loice.setValue(0);
             }
         });
 
