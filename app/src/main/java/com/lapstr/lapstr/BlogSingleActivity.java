@@ -3,12 +3,16 @@ package com.lapstr.lapstr;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -112,7 +116,6 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
 
         mediaC = new MediaController(this);
-
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
             @Override
@@ -237,6 +240,8 @@ public class BlogSingleActivity extends AppCompatActivity {
 
             }
         });
+
+
 
         mBlogSingleVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
@@ -363,7 +368,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 newPost.child("awaurl").setValue(urk);
                 newPost.child("name").setValue(nick);
                 newPost.child("title").setValue(title_val);
-
+                mPostComment.setText("");
             }
 
     @Override

@@ -10,7 +10,10 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
@@ -20,6 +23,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -79,6 +83,8 @@ public class PostActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
 
+
+
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +101,9 @@ public class PostActivity extends AppCompatActivity {
         });
         addCabChangeListener();
         loadLocale();
+
     }
+
 
 
     private void startPosting() {

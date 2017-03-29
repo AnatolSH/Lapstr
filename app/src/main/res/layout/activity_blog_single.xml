@@ -135,25 +135,6 @@
             android:layout_above="@+id/vvodcomment">
         </android.support.v7.widget.RecyclerView>
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:ems="10"
-            android:id="@+id/vvodcomment"
-            android:background="@drawable/input_outline"
-            android:padding="10dp"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:singleLine="false"
-            android:hint="Добавьте коментарий..."
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="0dp"
-            android:layout_toLeftOf="@+id/buttcomm"
-            android:layout_toStartOf="@+id/buttcomm" />
-
         <Button
             android:text="OK"
             android:layout_width="50dp"
@@ -178,6 +159,22 @@
             android:layout_marginTop="94dp"
             android:layout_below="@+id/awko"
             android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/vvodcomment"
+            android:background="@drawable/input_outline"
+            android:padding="10dp"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:singleLine="false"
+            android:hint="Добавьте коментарий..."
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 
