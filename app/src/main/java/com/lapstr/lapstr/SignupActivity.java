@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -43,7 +45,15 @@ import com.google.firebase.storage.UploadTask;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Locale;
 
 public class SignupActivity extends AppCompatActivity {
@@ -232,6 +242,7 @@ public class SignupActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 resultUri = result.getUri();
                 imageView.setImageURI(resultUri);
+
             } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
                 Exception error = result.getError();
             }

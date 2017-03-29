@@ -1,6 +1,7 @@
 package com.lapstr.lapstr;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +36,7 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -149,7 +151,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
+  /*  public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
         try {
             StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
             StrictMode.setThreadPolicy(policy);
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
 
     @Override
     public void onStart() {
@@ -387,7 +389,7 @@ public class MainActivity extends AppCompatActivity {
         public void setAwa(String imgur){
 
             ImageView im_d = (ImageView) mView.findViewById(R.id.awko);
-            im_d.setImageBitmap(getBitmapFromURL(imgur));
+            Picasso.with(itemView.getContext()).load(imgur).into(im_d);
 
         }
 

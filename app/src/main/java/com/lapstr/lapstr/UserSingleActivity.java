@@ -28,11 +28,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
+
 
 /**
  * Created by Anatole on 22.02.2017.
@@ -105,7 +106,9 @@ public class UserSingleActivity extends AppCompatActivity {
                     post_name = us.get(0).getName();
 
                     mBlogSingleName.setText(post_name);
-                    mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
+                    //mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
+                Picasso.with(getApplicationContext()).load(post_avatar).into(mBlogSingleAvatar);
+
 
             }
 

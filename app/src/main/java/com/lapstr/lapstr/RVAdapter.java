@@ -9,11 +9,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.VideoView;
 
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
 
-import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
 
 public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> {
 
@@ -55,7 +56,8 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
     @Override
     public void onBindViewHolder(PersonViewHolder personViewHolder, int i) {
         personViewHolder.personName.setText(persons.get(i).getName());
-        personViewHolder.im_dd.setImageBitmap(getBitmapFromURL(persons.get(i).getAwaurl()));
+       // personViewHolder.im_dd.setImageBitmap(getBitmapFromURL(persons.get(i).getAwaurl()));
+        Picasso.with(personViewHolder.itemView.getContext()).load(persons.get(i).getAwaurl()).into(personViewHolder.im_dd);
         personViewHolder.tit.setText(persons.get(i).getTitle());
 
 

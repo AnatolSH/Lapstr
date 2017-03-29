@@ -39,6 +39,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -48,7 +49,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
 
 public class BlogSingleActivity extends AppCompatActivity {
 
@@ -150,9 +150,10 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                 try {
 
-                    mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
+                  //  mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
                     mBlogSingleTitle.setText(post_title);
-                    mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
+                  //  mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
+                    Picasso.with(getApplicationContext()).load(post_avatar).into(mBlogSingleAvatar);
 
                     if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
 
@@ -408,7 +409,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         public void setAwa(String imgur){
 
             ImageView im_d = (ImageView) mView.findViewById(R.id.authorawatar);
-            im_d.setImageBitmap(getBitmapFromURL(imgur));
+            Picasso.with(itemView.getContext()).load(imgur).into(im_d);
 
         }
 

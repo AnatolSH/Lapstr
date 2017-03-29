@@ -30,6 +30,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +38,6 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
-import static com.lapstr.lapstr.MainActivity.getBitmapFromURL;
 
 /**
  * Created by Anatole on 27.01.2017.
@@ -134,7 +134,8 @@ public class EditCabinet extends AppCompatActivity{
                 for (int i = 0; i < co.size(); i++) {
                     if((co.get(i).getEmail()).equals(equ.getEmail()))
                     {
-                        awa.setImageBitmap(getBitmapFromURL(co.get(i).getUrl()));
+                       // awa.setImageBitmap(getBitmapFromURL(co.get(i).getUrl()));
+                        Picasso.with(getApplicationContext()).load(co.get(i).getUrl()).into(awa);
                         lineUserName.setText(co.get(i).getUserName());
                         lineUserEmail.setText(co.get(i).getEmail());
                         nick = co.get(i).getUserName();
