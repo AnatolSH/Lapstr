@@ -75,6 +75,8 @@ public class UserSingleActivity extends AppCompatActivity {
         mBlogSingleName = (TextView) findViewById(R.id.post_name0);
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko0);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         //отображение
         mBloglist = (RecyclerView) findViewById(R.id.blog_list30);
         mBloglist.setHasFixedSize(true);
@@ -117,6 +119,12 @@ public class UserSingleActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     @Override

@@ -115,6 +115,8 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBloglist.setHasFixedSize(true);
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         mediaC = new MediaController(this);
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
@@ -314,6 +316,12 @@ public class BlogSingleActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
 

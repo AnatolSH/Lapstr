@@ -83,7 +83,7 @@ public class PostActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
 
-
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         mselectImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,6 +183,12 @@ public class PostActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });}
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -73,6 +73,7 @@ public class EditCabinet extends AppCompatActivity{
         mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
         mFirebaseDatabase2 = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         rv=(RecyclerView)findViewById(R.id.blog_list99);
 
@@ -168,6 +169,12 @@ public class EditCabinet extends AppCompatActivity{
             mFirebaseDatabase.child("users").child(userId).child("userName").setValue(name);
          //   mFirebaseDatabase.child("users").child(userId).child("email").setValue(email);
             addCabChangeListener();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
     }
 
     @Override

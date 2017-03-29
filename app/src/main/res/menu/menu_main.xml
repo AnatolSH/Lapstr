@@ -2,8 +2,5 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.user.courseproject.MainActivity" >
-    <item android:id="@+id/action_settings"
-        android:name="@string/action_settings"
-        android:orderInCategory="100"
-        app:showAsAction="never" />
+
 </menu>

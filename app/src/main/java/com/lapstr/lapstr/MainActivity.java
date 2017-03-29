@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         mBloglist.setLayoutManager(layoutManager);
         /////////
 
+
         mediaC = new MediaController(this);
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
