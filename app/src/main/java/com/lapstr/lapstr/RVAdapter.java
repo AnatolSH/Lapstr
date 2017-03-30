@@ -62,7 +62,7 @@ public class RVAdapter extends RecyclerView.Adapter<RVAdapter.PersonViewHolder> 
 
 
         personViewHolder.post_videoo.setVideoPath(persons.get(i).getUrl());
-        personViewHolder.post_videoo.setVideoURI(Uri.parse(persons.get(i).getUrl()));
+        //personViewHolder.post_videoo.setVideoURI(Uri.parse(persons.get(i).getUrl()));
 
         personViewHolder.post_videoo.start();
         personViewHolder.post_videoo.requestFocus();

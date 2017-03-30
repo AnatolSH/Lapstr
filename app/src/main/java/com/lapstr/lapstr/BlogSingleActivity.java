@@ -233,7 +233,8 @@ public class BlogSingleActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 play.setVisibility(View.GONE);
-                mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
+               // mBlogSingleVideo.setVideoURI(Uri.parse(post_video));
+                mBlogSingleVideo.setVideoPath(post_video);
                 mBlogSingleVideo.setMediaController(mediaC);
                 mediaC.setAnchorView(mBlogSingleVideo);
                 mediaC.setPadding(0, 0, 0, 0);

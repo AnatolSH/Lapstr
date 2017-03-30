@@ -323,8 +323,8 @@ public class MainActivity extends AppCompatActivity {
                     play.setVisibility(View.GONE);
                     post_video.setMediaController(mediaC);
                     mediaC.setAnchorView(mView);
-                    post_video.start();
                     post_video.requestFocus();
+                    post_video.start();
                 }
             });
 
@@ -415,8 +415,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         public void setImage(String video){
+
             post_video.setVideoPath(video);
-            post_video.setVideoURI(Uri.parse(video));
         }
 
     }
