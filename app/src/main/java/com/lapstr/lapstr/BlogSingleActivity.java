@@ -61,6 +61,8 @@ public class BlogSingleActivity extends AppCompatActivity {
     private ImageButton play;
     private String nick;
     private String urk;
+    private String t;
+    private String d;
     private StorageReference mStorage;
     private DatabaseReference mFirebaseDatabase;
     private RecyclerView mBloglist;
@@ -74,6 +76,8 @@ public class BlogSingleActivity extends AppCompatActivity {
     private VideoView mBlogSingleVideo;
     private TextView mBlogSingleName;
     private TextView mBlogSingleTitle;
+    private TextView mBlogSingleTime;
+    private TextView mBlogSingleDate;
     private TextView mBlogLikes;
     private TextView mComm;
     private ImageView mBlogSingleAvatar;
@@ -104,6 +108,8 @@ public class BlogSingleActivity extends AppCompatActivity {
         mBlogSingleVideo = (VideoView) findViewById(R.id.post_video);
         mBlogSingleName = (TextView) findViewById(R.id.post_name);
         mBlogSingleTitle = (TextView) findViewById(R.id.post_title);
+        mBlogSingleTime = (TextView) findViewById(R.id.videoTime);
+        mBlogSingleDate = (TextView) findViewById(R.id.videoDate);
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko);
         mSinleDelBtn = (Button) findViewById(R.id.delBtn);
         play = (ImageButton) findViewById(R.id.playButton2);
@@ -148,16 +154,18 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                 String post_title = (String) dataSnapshot.child("title").getValue();
                 String post_avatar = (String) dataSnapshot.child("awaurl").getValue();
+                String post_Time = (String) dataSnapshot.child("time").getValue();
+                String post_Date = (String) dataSnapshot.child("date").getValue();
                 post_name = (String) dataSnapshot.child("name").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
                 mBlogSingleName.setText(post_name);
 
                 try {
-
-                  //  mBlogSingleAvatar.setImageURI(Uri.parse(post_avatar));
                     mBlogSingleTitle.setText(post_title);
-                  //  mBlogSingleAvatar.setImageBitmap(getBitmapFromURL(post_avatar));
+                    mBlogSingleDate.setText(post_Date);
+                    mBlogSingleTime.setText(post_Time);
+
                     Picasso.with(getApplicationContext()).load(post_avatar).into(mBlogSingleAvatar);
 
                     if (mAuth.getCurrentUser().getUid().equals(post_uid)) {
@@ -377,6 +385,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 newPost.child("awaurl").setValue(urk);
                 newPost.child("name").setValue(nick);
                 newPost.child("title").setValue(title_val);
+
                 mPostComment.setText("");
             }
 
@@ -398,7 +407,6 @@ public class BlogSingleActivity extends AppCompatActivity {
                 viewHolder.setAwa(model.getAwaurl());
                 viewHolder.setName(model.getName());
                 viewHolder.setTitle(model.getTitle());
-
             }
 
         };
@@ -439,6 +447,8 @@ public class BlogSingleActivity extends AppCompatActivity {
             TextView post_name = (TextView) mView.findViewById(R.id.nameauthor);
             post_name.setText(desc);
         }
+
+
 
     }
 

@@ -150,6 +150,8 @@ public class UserSingleActivity extends AppCompatActivity {
                 viewHolder.setImage(model.getUrl());
                 viewHolder.setTitle(model.getTitle());
                 viewHolder.setmLikebtn(post_key);
+                viewHolder.setDate(model.getDate());
+                viewHolder.setTime(model.getTime());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -310,6 +312,18 @@ public class UserSingleActivity extends AppCompatActivity {
             TextView title = (TextView) mView.findViewById(R.id.post_title11);
             title.setText(tit);
 
+        }
+
+        public void setDate(String vD){
+
+            TextView date = (TextView) mView.findViewById(R.id.videoDate);
+            date.setText(vD);
+        }
+
+        public void setTime(String vT){
+
+            TextView tim = (TextView) mView.findViewById(R.id.videoTime);
+            tim.setText(vT);
         }
 
         public void setImage(String video){

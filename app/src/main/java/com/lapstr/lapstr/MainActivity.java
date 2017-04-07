@@ -210,6 +210,8 @@ public class MainActivity extends AppCompatActivity {
                     viewHolder.setImage(model.getUrl());
                     viewHolder.setTitle(model.getTitle());
                     viewHolder.setmLikebtn(post_key);
+                    viewHolder.setDate(model.getDate());
+                    viewHolder.setTime(model.getTime());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -412,6 +414,18 @@ public class MainActivity extends AppCompatActivity {
 
             TextView post_name = (TextView) mView.findViewById(R.id.post_name);
             post_name.setText(desc);
+        }
+
+        public void setDate(String vD){
+
+            TextView date = (TextView) mView.findViewById(R.id.videoDate);
+            date.setText(vD);
+        }
+
+        public void setTime(String vT){
+
+            TextView tim = (TextView) mView.findViewById(R.id.videoTime);
+            tim.setText(vT);
         }
 
         public void setImage(String video){

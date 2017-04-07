@@ -39,6 +39,8 @@ import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -114,9 +116,13 @@ public class PostActivity extends AppCompatActivity {
         final String title_val = mPostTitle.getText().toString().trim();
 
         StorageReference filepath = mStorage.child("Videos").child(mVideoUri.getLastPathSegment());
-        final String dt;
-        Date cal = (Date) Calendar.getInstance().getTime();
-        dt = cal.toLocaleString();
+
+        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        final String dd = df.format(Calendar.getInstance().getTime());
+
+        DateFormat dq = new SimpleDateFormat("HH:mm:ss");
+        final String dt = dq.format(Calendar.getInstance().getTime());
+
 
         filepath.putFile(mVideoUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
@@ -137,11 +143,14 @@ public class PostActivity extends AppCompatActivity {
                 newPost.child("url").setValue(downloadUrl.toString());
                 newPost.child("title").setValue(title_val);
                 newPost.child("uid").setValue(uid);
+                newPost.child("date").setValue(dd);
+                newPost.child("time").setValue(dt);
 
                 dataForUserBd.child("name").setValue(nick);
                 dataForUserBd.child("awaurl").setValue(urk);
                 dataForUserBd.child("url").setValue(downloadUrl.toString());
                 dataForUserBd.child("title").setValue(title_val);
+                dataForUserBd.child("date").setValue(dd);
                 dataForUserBd.child("time").setValue(dt);
 
                 comm.setValue(0);

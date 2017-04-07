@@ -18,6 +18,28 @@
             android:textStyle="bold"
             android:text="Title" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoDate"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/post_title11"
+            android:layout_toEndOf="@+id/post_title11"
+            android:textStyle="bold"
+            android:text="Date"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoTime"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/videoDate"
+            android:layout_toEndOf="@+id/videoDate"
+            android:textStyle="bold"
+            android:text="Time"
+            android:layout_alignParentTop="true" />
+
         <LinearLayout
             android:id="@+id/media_layout"
             android:layout_width="match_parent"

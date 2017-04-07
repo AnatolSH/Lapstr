@@ -19,16 +19,20 @@ public class User {
     public String awaurl;
     public String title;
     public String uid;
+    public String date;
+    public String time;
 
     public User() {
     }
 
-    public User(String name, String url, String awaurl, String title, String uid) {
+    public User(String name, String url, String awaurl, String title, String uid, String date, String time) {
         this.name = name;
         this.url = url;
         this.awaurl = awaurl;
         this.title = title;
         this.uid = uid;
+        this.date = date;
+        this.time = time;
     }
 
     public void setName(String name) { this.name = name; }
@@ -45,4 +49,10 @@ public class User {
 
     public void setUid(String uid) { this.uid = uid; }
     public String getUid() { return this.uid; }
+
+    public void setDate(String date) { this.date = date; }
+    public String getDate() { return this.date; }
+
+    public void setTime(String time) { this.time = time; }
+    public String getTime() { return this.time; }
 }

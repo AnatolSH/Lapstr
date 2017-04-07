@@ -42,7 +42,29 @@
             android:layout_toRightOf="@+id/post_name"
             android:layout_toEndOf="@+id/post_name"
             android:textStyle="bold"
-            android:text="Titile"
+            android:text="Title"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoDate"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/post_title"
+            android:layout_toEndOf="@+id/post_title"
+            android:textStyle="bold"
+            android:text="Date"
+            android:layout_alignParentTop="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoTime"
+            android:padding="15dp"
+            android:layout_toRightOf="@+id/videoDate"
+            android:layout_toEndOf="@+id/videoDate"
+            android:textStyle="bold"
+            android:text="Time"
             android:layout_alignParentTop="true" />
 
         <Button
