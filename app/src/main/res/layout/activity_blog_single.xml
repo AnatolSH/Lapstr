@@ -45,28 +45,6 @@
             android:text="Title"
             android:layout_alignParentTop="true" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/videoDate"
-            android:padding="15dp"
-            android:layout_toRightOf="@+id/post_title"
-            android:layout_toEndOf="@+id/post_title"
-            android:textStyle="bold"
-            android:text="Date"
-            android:layout_alignParentTop="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/videoTime"
-            android:padding="15dp"
-            android:layout_toRightOf="@+id/videoDate"
-            android:layout_toEndOf="@+id/videoDate"
-            android:textStyle="bold"
-            android:text="Time"
-            android:layout_alignParentTop="true" />
-
         <Button
             android:text="Delete"
             android:layout_width="wrap_content"
@@ -197,6 +175,30 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/videoDate"
+            android:text="Date"
+            android:textStyle="normal|bold"
+            android:padding="5dp"
+            android:layout_alignBaseline="@+id/countcom"
+            android:layout_alignBottom="@+id/countcom"
+            android:layout_toLeftOf="@+id/videoTime"
+            android:layout_toStartOf="@+id/videoTime" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/videoTime"
+            android:textStyle="bold"
+            android:text="Time"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_alignBaseline="@+id/videoDate"
+            android:layout_alignBottom="@+id/videoDate"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
 
     </RelativeLayout>
 

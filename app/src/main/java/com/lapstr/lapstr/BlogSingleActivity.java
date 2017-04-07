@@ -252,7 +252,11 @@ public class BlogSingleActivity extends AppCompatActivity {
             }
         });
 
-
+      /*  mBlogSingleVideo.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            public void onPrepared(MediaPlayer mp) {
+                mBlogSingleVideo.start();
+            }
+        });*/
 
         mBlogSingleVideo.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override

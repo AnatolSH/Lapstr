@@ -117,10 +117,10 @@ public class PostActivity extends AppCompatActivity {
 
         StorageReference filepath = mStorage.child("Videos").child(mVideoUri.getLastPathSegment());
 
-        DateFormat df = new SimpleDateFormat("yyyy.MM.dd");
+        DateFormat df = new SimpleDateFormat("dd.MM.yyyy");
         final String dd = df.format(Calendar.getInstance().getTime());
 
-        DateFormat dq = new SimpleDateFormat("HH:mm:ss");
+        DateFormat dq = new SimpleDateFormat("HH:mm");
         final String dt = dq.format(Calendar.getInstance().getTime());
 
 
