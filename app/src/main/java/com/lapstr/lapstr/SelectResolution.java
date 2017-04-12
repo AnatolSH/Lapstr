@@ -10,7 +10,7 @@ import android.os.Bundle;
 public class SelectResolution extends DialogFragment {
     String selection;
     public static Integer size = CamcorderProfile.QUALITY_TIME_LAPSE_HIGH;
-    final CharSequence[] items = {"Full HD 1080p","HD 720p","SD 480p","QVGA 240p"};
+    final CharSequence[] items = {"4k 2160p","Full HD 1080p","HD 720p","SD 480p","QVGA 240p"};
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
@@ -21,23 +21,29 @@ public class SelectResolution extends DialogFragment {
                 switch (arg1){
                     case 0:
                         selection = (String) items[arg1];
-                        size = CamcorderProfile.QUALITY_TIME_LAPSE_1080P;
+                        size = CamcorderProfile.QUALITY_TIME_LAPSE_2160P;
                         getActivity();
                         arg0.dismiss();
                         break;
                     case 1:
                         selection = (String) items[arg1];
-                        size = CamcorderProfile.QUALITY_TIME_LAPSE_720P;
+                        size = CamcorderProfile.QUALITY_TIME_LAPSE_1080P;
                         getActivity();
                         arg0.dismiss();
                         break;
                     case 2:
                         selection = (String) items[arg1];
-                        size = CamcorderProfile.QUALITY_TIME_LAPSE_480P;
+                        size = CamcorderProfile.QUALITY_TIME_LAPSE_720P;
                         getActivity();
                         arg0.dismiss();
                         break;
                     case 3:
+                        selection = (String) items[arg1];
+                        size = CamcorderProfile.QUALITY_TIME_LAPSE_480P;
+                        getActivity();
+                        arg0.dismiss();
+                        break;
+                    case 4:
                         selection = (String) items[arg1];
                         size = CamcorderProfile.QUALITY_TIME_LAPSE_QVGA;
                         getActivity();

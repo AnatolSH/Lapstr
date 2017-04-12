@@ -33,7 +33,6 @@
     <string name="hint_name">Fullname</string>
 
 
-
     <string name="title_activity_reset_password">ResetPasswordActivity</string>
     <string name="hint_new_email">New Email</string>
     <string name="btn_change">Change</string>
@@ -48,17 +47,17 @@
 
 
     <string name="forgot_password_msg">Enter your email that you used for register</string>
-        <string name="choose_awa">Choose awatar</string>
+    <string name="choose_awa">Choose awatar</string>
     <string name="lbl_forgot_password">Forgot password?</string>
-         <string name="hint_password">Password</string>
+    <string name="hint_password">Password</string>
     <string name="action_sign_in_short">Register</string>
     <string name="btn_forgot_password">Forgot your password?</string>
     <string name="btn_link_to_login">Already registered. Login Me!</string>
     <string name="btn_link_to_registerr">Not a member? Get registered in Lapstr now!</string>
     <string name="btn_login">LOGIN</string>
-        <string name="usn">Username</string>
-        <string name="btn_en">en</string>
-        <string name="btn_ru">ru</string>
+    <string name="usn">Username</string>
+    <string name="btn_en">en</string>
+    <string name="btn_ru">ru</string>
     <string name="btn_reset_password">Reset Password</string>
     <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="post_title">Post title</string>

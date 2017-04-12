@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-  <!--  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> -->
+    <!-- <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/> -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.READ_PROFILE" />
@@ -27,17 +27,17 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".SplashActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
         <activity
             android:name=".CameraActivity"
             android:screenOrientation="landscape"
@@ -45,22 +45,27 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_profile"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
+        <activity android:name=".LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name=".SignupActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".EditCabinet"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".PostActivity"
-            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".EditCabinet"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".PostActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ResetPasswordActivity"
-            android:screenOrientation="portrait"
             android:label="@string/title_activity_reset_password"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name="com.google.android.gms.common.api.GoogleApiActivity"
@@ -70,11 +75,9 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
         <meta-data
             android:name="android.support.PARENT_ACTIVITY"
-            android:value=".BlogSingleActivity"
-            />
+            android:value=".BlogSingleActivity" />
 
         <receiver
             android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
@@ -119,12 +122,13 @@ FirebaseInstanceIdService performs security checks at runtime,
             </intent-filter>
         </service>
 
-        <activity android:name=".BlogSingleActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".UserSingleActivity"
-            android:screenOrientation="portrait">
-        </activity>
+        <activity
+            android:name=".BlogSingleActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".UserSingleActivity"
+            android:screenOrientation="portrait"></activity>
+
     </application>
 
 </manifest>

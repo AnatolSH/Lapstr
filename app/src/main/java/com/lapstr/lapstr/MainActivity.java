@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.CountDownTimer;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -84,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
         layoutManager.setStackFromEnd(true);
         mBloglist.setLayoutManager(layoutManager);
         /////////
+
 
 
         mediaC = new MediaController(this);
