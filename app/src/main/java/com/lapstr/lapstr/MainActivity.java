@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -61,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean mProcessLike;
 
 
+
     static MediaController mediaC;
 
     @Override
@@ -86,8 +88,6 @@ public class MainActivity extends AppCompatActivity {
         mBloglist.setLayoutManager(layoutManager);
         /////////
 
-
-
         mediaC = new MediaController(this);
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
@@ -104,8 +104,8 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+      //  getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+      //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         newActivity = (Button) findViewById(R.id.new_activity);
         myCabinet = (Button) findViewById(R.id.cab);
@@ -207,13 +207,13 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                    viewHolder.setAwa(model.getAwaurl());
-                    viewHolder.setName(model.getName());
-                    viewHolder.setImage(model.getUrl());
-                    viewHolder.setTitle(model.getTitle());
-                    viewHolder.setmLikebtn(post_key);
-                    viewHolder.setDate(model.getDate());
-                    viewHolder.setTime(model.getTime());
+                viewHolder.setAwa(model.getAwaurl());
+                viewHolder.setName(model.getName());
+                viewHolder.setImage(model.getUrl());
+                viewHolder.setTitle(model.getTitle());
+                viewHolder.setmLikebtn(post_key);
+                viewHolder.setDate(model.getDate());
+                viewHolder.setTime(model.getTime());
 
                 viewHolder.mView.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -254,36 +254,36 @@ public class MainActivity extends AppCompatActivity {
 
                         mProcessLike = true;
 
-                            mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    int maxNum = (int) dataSnapshot.child(post_key).getChildrenCount();
+                        mDatabaseLike.child("Likes").addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                int maxNum = (int) dataSnapshot.child(post_key).getChildrenCount();
 
-                                    if (mProcessLike) {
+                                if (mProcessLike) {
 
-                                        if (dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())) {
+                                    if (dataSnapshot.child(post_key).hasChild(auth.getCurrentUser().getUid())) {
 
-                                            mDatabaseLike.child("Likes").child(post_key).child(auth.getCurrentUser().getUid()).removeValue();
-                                            mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum-1);
+                                        mDatabaseLike.child("Likes").child(post_key).child(auth.getCurrentUser().getUid()).removeValue();
+                                        mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum-1);
 
-                                            mProcessLike = false;
+                                        mProcessLike = false;
 
-                                        } else {
+                                    } else {
 
-                                            mDatabaseLike.child("Likes").child(post_key).child(auth.getCurrentUser().getUid()).setValue("Liked");
-                                            mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum+1);
-                                            mProcessLike = false;
+                                        mDatabaseLike.child("Likes").child(post_key).child(auth.getCurrentUser().getUid()).setValue("Liked");
+                                        mDatabaseLike.child("Likes").child("count").child(post_key).setValue(maxNum+1);
+                                        mProcessLike = false;
 
-                                        }
                                     }
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(DatabaseError databaseError) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
 
-                                }
-                            });
-                        }
+                            }
+                        });
+                    }
                 });
 
             }

@@ -41,16 +41,16 @@
         <activity
             android:name=".CameraActivity"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen">
-        </activity>
+            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_profile"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".LoginActivity"
+        <activity
+            android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SignupActivity"
             android:label="@string/title_activity_login"
@@ -124,11 +124,10 @@ FirebaseInstanceIdService performs security checks at runtime,
 
         <activity
             android:name=".BlogSingleActivity"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UserSingleActivity"
-            android:screenOrientation="portrait"></activity>
-
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
