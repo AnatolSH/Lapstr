@@ -1,30 +1,18 @@
 package com.lapstr.lapstr;
 
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.media.MediaPlayer;
-import android.net.Uri;
-import android.os.CountDownTimer;
-import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.VideoView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
@@ -34,22 +22,15 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button mSelectImage;
-    private Button newActivity;
+    private Button mSelectVideo;
+    private Button mSelectCamera;
     private Button myCabinet;
     private Button singout;
     private RecyclerView mBloglist;
@@ -60,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth auth;
     private DatabaseReference mDatabaseLike;
     private boolean mProcessLike;
-
 
 
     static MediaController mediaC;
@@ -77,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mSelectImage = (Button) findViewById(R.id.select_image);
+        mSelectVideo = (Button) findViewById(R.id.select_video);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -107,15 +87,15 @@ public class MainActivity extends AppCompatActivity {
       //  getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
       //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        newActivity = (Button) findViewById(R.id.new_activity);
+        mSelectCamera = (Button) findViewById(R.id.camera_activity);
         myCabinet = (Button) findViewById(R.id.cab);
         singout = (Button) findViewById(R.id.sign_out);
 
-        mSelectImage.setOnClickListener(new View.OnClickListener() {//Выбор видео для заливки
+        mSelectVideo.setOnClickListener(new View.OnClickListener() {//Выбор видео для заливки
             @Override
             public void onClick(View view) {
-                mSelectImage.setOnClickListener(this);
-                if (view == mSelectImage) {
+                mSelectVideo.setOnClickListener(this);
+                if (view == mSelectVideo) {
                     Intent SecAct99 = new Intent(getApplicationContext(), PostActivity.class);
                     startActivity(SecAct99);
                 }
@@ -123,11 +103,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        newActivity.setOnClickListener(new View.OnClickListener(){//открывает КАМЕРУ
+        mSelectCamera.setOnClickListener(new View.OnClickListener(){//открывает КАМЕРУ
             @Override
             public void onClick(View view) {
-                newActivity.setOnClickListener(this);
-                if (view == newActivity) {
+                mSelectCamera.setOnClickListener(this);
+                if (view == mSelectCamera) {
                     Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
                     startActivity(SecAct);
                 }
@@ -154,6 +134,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
     public void signOut() { //метод на разлогинивание
         auth.signOut();

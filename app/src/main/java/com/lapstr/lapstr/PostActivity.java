@@ -1,30 +1,19 @@
 package com.lapstr.lapstr;
 
-/**
- * Created by Anatole on 04.02.2017.
- */
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.media.ThumbnailUtils;
 import android.net.Uri;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,17 +27,15 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class PostActivity extends AppCompatActivity {
 
-    private ImageButton mselectImage;
+    private ImageButton mSelectVideo;
     private EditText mPostTitle;
     private Button mSubmitBtn;
     private Uri mVideoUri = null;
@@ -76,7 +63,7 @@ public class PostActivity extends AppCompatActivity {
         mStorage = FirebaseStorage.getInstance().getReference();
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         baza = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
-        mselectImage = (ImageButton) findViewById(R.id.videoSelect5);
+        mSelectVideo = (ImageButton) findViewById(R.id.videoSelect5);
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mFirebaseDatabase2 = mFirebaseInstance2.getReference("cabinet");
 
@@ -87,7 +74,7 @@ public class PostActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mselectImage.setOnClickListener(new View.OnClickListener() {
+        mSelectVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent galleryIntent= new Intent(Intent.ACTION_GET_CONTENT);
@@ -205,7 +192,7 @@ public class PostActivity extends AppCompatActivity {
 
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
             mVideoUri= data.getData();
-            mselectImage.setImageURI(mVideoUri);
+            mSelectVideo.setImageURI(mVideoUri);
         }
     }
 
