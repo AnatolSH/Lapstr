@@ -21,7 +21,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textPersonName"
+        android:inputType="textCapSentences|textMultiLine"
         android:ems="10"
         android:layout_below="@+id/videoSelect5"
         android:layout_centerHorizontal="true"
@@ -31,6 +31,8 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/input_outline"
         android:padding="10dp"
+        android:maxLength="30"
+        android:scrollHorizontally="false"
         android:singleLine="true"
         android:hint="@string/post_title" />
 
@@ -43,4 +45,5 @@
         android:id="@+id/button3"
         android:background="@color/colorPrimary"
         android:textColor="@android:color/white" />
+
 </RelativeLayout>

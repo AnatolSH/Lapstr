@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 public class SelectFpsInVideo extends DialogFragment {
     String selection;
-    public static Integer fps = 24;
+    public static Integer fps = 30;
     final CharSequence[] items = {"30 frame","24 frame","15 frame","10 frame","5 frame"};
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {

@@ -1,0 +1,17 @@
+    <tabs>
+        <tab
+            id="@+id/tab_homepage"
+            icon="@drawable/my_tab_icon_home" />
+        <tab
+            id="@+id/tab_selectVideo"
+            icon="@drawable/my_tab_icon_add" />
+        <tab
+            id="@+id/tab_camera"
+            icon="@drawable/my_tab_icon_camera" />
+        <tab
+            id="@+id/tab_cabinet"
+            icon="@drawable/my_tab_icon_cabinet" />
+        <tab
+            id="@+id/tab_signout"
+            icon="@drawable/my_tab_icon_signout" />
+    </tabs>

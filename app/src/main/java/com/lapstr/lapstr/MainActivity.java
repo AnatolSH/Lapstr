@@ -2,7 +2,9 @@ package com.lapstr.lapstr;
 
 import android.content.Intent;
 import android.media.MediaPlayer;
+import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,6 +25,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabSelectListener;
 import com.squareup.picasso.Picasso;
 
 import java.util.Map;
@@ -46,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
     static MediaController mediaC;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mBloglist = (RecyclerView) findViewById(R.id.blog_list2);
@@ -68,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
         mBloglist.setLayoutManager(layoutManager);
         /////////
 
+
         mediaC = new MediaController(this);
 
         authListener = new FirebaseAuth.AuthStateListener() { //если не авторизован, то открывает логин активити
@@ -87,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
       //  getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
       //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        mSelectCamera = (Button) findViewById(R.id.camera_activity);
+     /*   mSelectCamera = (Button) findViewById(R.id.camera_activity);
         myCabinet = (Button) findViewById(R.id.cab);
         singout = (Button) findViewById(R.id.sign_out);
 
@@ -130,6 +135,36 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 singout.setOnClickListener(this);
                 if (view == singout) {
+                    signOut();
+                }
+            }
+        });  */
+
+        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelected(@IdRes int tabId) {
+
+                if (tabId == R.id.tab_homepage) {
+
+                }
+                if (tabId == R.id.tab_selectVideo) {
+
+                    Intent SecAct99 = new Intent(getApplicationContext(), PostActivity.class);
+                    startActivity(SecAct99);
+                }
+                if (tabId == R.id.tab_cabinet) {
+
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    startActivity(SecAct);
+                }
+                if (tabId == R.id.tab_camera) {
+
+                    Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
+                    startActivity(SecAct);
+                }
+
+                if (tabId == R.id.tab_signout) {
                     signOut();
                 }
             }

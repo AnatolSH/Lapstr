@@ -89,8 +89,8 @@ public class UserSingleActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
             }
         };
-        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+      //  getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+      //  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         mDatabaseLike.child("Uploaded").child(userVideos).addValueEventListener(new ValueEventListener() {
             @Override

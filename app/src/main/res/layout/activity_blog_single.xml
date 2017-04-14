@@ -163,18 +163,23 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textCapSentences|textMultiLine"
             android:ems="10"
             android:id="@+id/vvodcomment"
             android:background="@drawable/input_outline"
+            android:maxLength="140"
+            android:maxLines ="4"
+            android:scrollHorizontally="false"
             android:padding="10dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:singleLine="false"
+            android:singleLine="true"
             android:hint="Добавьте коментарий..."
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_toLeftOf="@+id/buttcomm"
+            android:layout_toStartOf="@+id/buttcomm" />
 
         <TextView
             android:layout_width="wrap_content"
