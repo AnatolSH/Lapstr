@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_post"
@@ -18,32 +18,121 @@
         android:src="@mipmap/add_btn1"
         android:adjustViewBounds="true" />
 
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textCapSentences|textMultiLine"
         android:ems="10"
         android:layout_below="@+id/videoSelect5"
-        android:layout_centerHorizontal="true"
         android:id="@+id/titleField5"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="220dp"
         android:layout_marginRight="10dp"
         android:background="@drawable/input_outline"
         android:padding="10dp"
         android:maxLength="30"
         android:scrollHorizontally="false"
         android:singleLine="true"
-        android:hint="@string/post_title" />
+        android:hint="@string/post_title"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:text="@string/subm_post"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:id="@+id/button3"
         android:background="@color/colorPrimary"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="270dp" />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:gravity="bottom"
+        android:layout_gravity="bottom">
+
+
+        <ImageButton
+            app:srcCompat="@mipmap/ic_home_white_36dp"
+            android:id="@+id/imageButton2"
+            android:layout_gravity="bottom"
+            android:scaleType="fitCenter"
+            android:background="?attr/colorPrimary"
+            android:layout_width="81dp"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:layout_width="77dp"
+            app:srcCompat="@mipmap/ic_add_box_white_36dp"
+            android:id="@+id/imageButton3"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageButton2"
+            android:layout_toEndOf="@+id/imageButton2"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:layout_width="80dp"
+            app:srcCompat="@mipmap/ic_photo_camera_white_36dp"
+            android:id="@+id/imageButton4"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:layout_width="71dp"
+            app:srcCompat="@mipmap/ic_account_box_white_36dp"
+            android:id="@+id/imageButton5"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageButton4"
+            android:layout_toEndOf="@+id/imageButton4"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
+
+        <ImageButton
+            android:layout_width="match_parent"
+            app:srcCompat="@mipmap/ic_exit_to_app_white_36dp"
+            android:id="@+id/imageButton6"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_toRightOf="@+id/imageButton5"
+            android:layout_toEndOf="@+id/imageButton5"
+            android:layout_gravity="bottom"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
+
+    </RelativeLayout>
+
+
+   <!-- <com.roughike.bottombar.BottomBar
+        android:id="@+id/bottomBar"
+        android:layout_width="match_parent"
+        app:bb_tabXmlResource="@xml/bottombar_tabs"
+        app:bb_behavior="shy|iconsOnly"
+        android:background="@color/colorPrimary"
+        app:bb_inActiveTabColor="@color/white"
+        app:bb_activeTabColor="@color/white"
+        app:bb_badgesHideWhenActive="true"
+        android:animateLayoutChanges="false"
+        android:layout_height="50dp"
+        android:layout_gravity="bottom" /> -->
+
+</android.support.design.widget.CoordinatorLayout>

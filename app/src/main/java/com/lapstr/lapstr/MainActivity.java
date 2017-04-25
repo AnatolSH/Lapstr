@@ -5,6 +5,9 @@ import android.media.MediaPlayer;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -37,6 +40,11 @@ public class MainActivity extends AppCompatActivity {
     private Button mSelectCamera;
     private Button myCabinet;
     private Button singout;
+    private ImageButton homeBtn;
+    private ImageButton addBtn;
+    private ImageButton cameraBtn;
+    private ImageButton cabinetBtn;
+    private ImageButton outBtn;
     private RecyclerView mBloglist;
     private DatabaseReference mDatabase;
 
@@ -61,7 +69,7 @@ public class MainActivity extends AppCompatActivity {
         mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        mSelectVideo = (Button) findViewById(R.id.select_video);
+        //mSelectVideo = (Button) findViewById(R.id.select_video);
         auth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
@@ -140,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });  */
 
-        BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+       /* BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
         bottomBar.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelected(@IdRes int tabId) {
@@ -152,6 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent SecAct99 = new Intent(getApplicationContext(), PostActivity.class);
                     startActivity(SecAct99);
+
                 }
                 if (tabId == R.id.tab_cabinet) {
 
@@ -168,9 +177,67 @@ public class MainActivity extends AppCompatActivity {
                     signOut();
                 }
             }
+        });*/
+
+        homeBtn = (ImageButton) findViewById(R.id.imageButton2);
+        addBtn = (ImageButton) findViewById(R.id.imageButton3);
+        cameraBtn = (ImageButton) findViewById(R.id.imageButton4);
+        cabinetBtn = (ImageButton) findViewById(R.id.imageButton5);
+        outBtn = (ImageButton) findViewById(R.id.imageButton6);
+
+        homeBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                homeBtn.setOnClickListener(this);
+                if (view == homeBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        addBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                addBtn.setOnClickListener(this);
+                if (view == addBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), PostActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        cameraBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                cameraBtn.setOnClickListener(this);
+                if (view == cameraBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        cabinetBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                cabinetBtn.setOnClickListener(this);
+                if (view == cabinetBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        outBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                outBtn.setOnClickListener(this);
+                singout.setOnClickListener(this);
+                if (view == singout) {
+                    signOut();
+                }
+            }
         });
 
     }
+
     public void signOut() { //метод на разлогинивание
         auth.signOut();
         finish();

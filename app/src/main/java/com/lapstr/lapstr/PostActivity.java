@@ -7,10 +7,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.support.annotation.IdRes;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -26,6 +33,9 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.roughike.bottombar.BottomBar;
+import com.roughike.bottombar.OnTabReselectListener;
+import com.roughike.bottombar.OnTabSelectListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -48,6 +58,13 @@ public class PostActivity extends AppCompatActivity {
     private Locale myLocale;
     Context context;
     private String lang;
+
+    private ImageButton homeBtn;
+    private ImageButton addBtn;
+    private ImageButton cameraBtn;
+    private ImageButton cabinetBtn;
+    private ImageButton outBtn;
+    private Button singout;
 
     private static final int GALLERY_REQUEST = 1;
 
@@ -74,7 +91,7 @@ public class PostActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mSelectVideo.setOnClickListener(new View.OnClickListener() {
+    mSelectVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent galleryIntent= new Intent(Intent.ACTION_GET_CONTENT);
@@ -91,9 +108,104 @@ public class PostActivity extends AppCompatActivity {
         addCabChangeListener();
         loadLocale();
 
+
+       /* BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
+        bottomBar.setOnTabReselectListener(new OnTabReselectListener() {
+            @Override
+            public void onTabReSelected(@IdRes int tabId) {
+
+
+                if (tabId == R.id.tab_selectVideo) {
+
+                }
+
+                if (tabId == R.id.tab_homepage) {
+                    Intent SecAct9 = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(SecAct9);
+
+                }
+                if (tabId == R.id.tab_cabinet) {
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    startActivity(SecAct);
+
+                }
+
+                if (tabId == R.id.tab_camera) {
+                    Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
+                    startActivity(SecAct);
+
+                }
+
+                if (tabId == R.id.tab_signout) {
+                    Intent SecAct = new Intent(getApplicationContext(), LoginActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });*/
+
+        homeBtn = (ImageButton) findViewById(R.id.imageButton2);
+        addBtn = (ImageButton) findViewById(R.id.imageButton3);
+        cameraBtn = (ImageButton) findViewById(R.id.imageButton4);
+        cabinetBtn = (ImageButton) findViewById(R.id.imageButton5);
+        outBtn = (ImageButton) findViewById(R.id.imageButton6);
+
+        homeBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                homeBtn.setOnClickListener(this);
+                if (view == homeBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        addBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                addBtn.setOnClickListener(this);
+                if (view == addBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), PostActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        cameraBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                cameraBtn.setOnClickListener(this);
+                if (view == cameraBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        cabinetBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                cabinetBtn.setOnClickListener(this);
+                if (view == cabinetBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        outBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                outBtn.setOnClickListener(this);
+                if (view == outBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+
     }
 
-
+    public void SignOut() { //метод на разлогинивание
+        mAuth.signOut();
+        finish();
+    }
 
     private void startPosting() {
 
@@ -232,4 +344,6 @@ public class PostActivity extends AppCompatActivity {
         getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
         updateTexts();
     }
+
+
 }

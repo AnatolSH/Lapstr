@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.support.v7.widget.CardView;
@@ -56,6 +57,12 @@ public class EditCabinet extends AppCompatActivity{
     private ImageView awa;
     private String nick;
 
+    private ImageButton homeBtn;
+    private ImageButton addBtn;
+    private ImageButton cameraBtn;
+    private ImageButton cabinetBtn;
+    private ImageButton outBtn;
+
     private RecyclerView rv;
     private ArrayList<User> us = new ArrayList<>();
     private ArrayList<User> yourList = new ArrayList<>();
@@ -82,6 +89,63 @@ public class EditCabinet extends AppCompatActivity{
         rv.setHasFixedSize(true);
 
         addCabChangeListener();
+
+        homeBtn = (ImageButton) findViewById(R.id.imageButton2);
+        addBtn = (ImageButton) findViewById(R.id.imageButton3);
+        cameraBtn = (ImageButton) findViewById(R.id.imageButton4);
+        cabinetBtn = (ImageButton) findViewById(R.id.imageButton5);
+        outBtn = (ImageButton) findViewById(R.id.imageButton6);
+
+        homeBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                homeBtn.setOnClickListener(this);
+                if (view == homeBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        addBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                addBtn.setOnClickListener(this);
+                if (view == addBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), PostActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        cameraBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                cameraBtn.setOnClickListener(this);
+                if (view == cameraBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), CameraActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        cabinetBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                cabinetBtn.setOnClickListener(this);
+                if (view == cabinetBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), EditCabinet.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
+        outBtn.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                outBtn.setOnClickListener(this);
+                if (view == outBtn) {
+                    Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(SecAct);
+                }
+            }
+        });
 
     }
 

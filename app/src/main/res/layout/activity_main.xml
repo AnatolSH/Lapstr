@@ -7,87 +7,150 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <!--  <Button
+         android:text="Select"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/select_video"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentLeft="true"
+         android:layout_alignParentStart="true"
+         android:background="@color/colorPrimary"
+         android:textColor="@color/white"
+         android:layout_toStartOf="@+id/camera_activity"
+         android:layout_toLeftOf="@+id/camera_activity" />
+
+     <Button
+         android:text="Cabinet"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/cab"
+         android:background="@color/colorPrimary"
+         android:textColor="@color/white"
+         android:layout_alignParentBottom="true"
+         android:layout_toStartOf="@+id/sign_out"
+         android:layout_toLeftOf="@+id/sign_out" />
+
+     <Button
+         android:text="Sign Out"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/sign_out"
+         android:background="@color/colorPrimary"
+         android:textColor="@color/white"
+         android:layout_alignParentBottom="true"
+         android:layout_alignParentRight="true"
+         android:layout_alignParentEnd="true" />
+
+     <Button
+         android:text="Camera"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:id="@+id/camera_activity"
+         android:background="@color/colorPrimary"
+         android:textColor="@color/white"
+         android:layout_alignParentBottom="true"
+         android:layout_toLeftOf="@+id/cab"
+         android:layout_toStartOf="@+id/cab" /> -->
+
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:id="@+id/blog_list2"
-        android:clipToPadding="false"
         android:clipChildren="false"
         app:reverseLayout="false"
         android:paddingTop="5dp"
-        android:paddingBottom="5dp"
+        android:paddingBottom="53dp"
+        android:layout_above="@+id/imageButton3"
         android:layout_alignParentTop="true"
-        android:layout_above="@+id/select_video">
+        android:clipToPadding="false">
     </android.support.v7.widget.RecyclerView>
 
-   <!-- <Button
-        android:text="Select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/select_video"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:id="@+id/nav_bar"
         android:layout_alignParentStart="true"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:layout_toStartOf="@+id/camera_activity"
-        android:layout_toLeftOf="@+id/camera_activity" />
-
-    <Button
-        android:text="Cabinet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/cab"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
+        android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_toStartOf="@+id/sign_out"
-        android:layout_toLeftOf="@+id/sign_out" />
+        android:layout_gravity="bottom">
 
-    <Button
-        android:text="Sign Out"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/sign_out"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        <ImageButton
+            app:srcCompat="@mipmap/ic_home_white_36dp"
+            android:id="@+id/imageButton2"
+            android:layout_gravity="bottom"
+            android:scaleType="fitCenter"
+            android:background="?attr/colorPrimary"
+            android:layout_width="81dp"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
 
-    <Button
-        android:text="Camera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/camera_activity"
-        android:background="@color/colorPrimary"
-        android:textColor="@color/white"
-        android:layout_alignParentBottom="true"
-        android:layout_toLeftOf="@+id/cab"
-        android:layout_toStartOf="@+id/cab" /> -->
+        <ImageButton
+            android:layout_width="77dp"
+            app:srcCompat="@mipmap/ic_add_box_white_36dp"
+            android:id="@+id/imageButton3"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageButton2"
+            android:layout_toEndOf="@+id/imageButton2"
+            android:padding="7dp"
+            android:layout_height="match_parent" />
 
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_photo_camera_white_36dp"
+            android:id="@+id/imageButton4"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:padding="7dp" />
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/myScrollingContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        <ImageButton
+            android:layout_width="71dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_account_box_white_36dp"
+            android:id="@+id/imageButton5"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageButton4"
+            android:layout_toEndOf="@+id/imageButton4"
+            android:padding="7dp" />
 
-        <!-- Your loooooong scrolling content here. -->
+        <ImageButton
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_exit_to_app_white_36dp"
+            android:id="@+id/imageButton6"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_toRightOf="@+id/imageButton5"
+            android:layout_toEndOf="@+id/imageButton5"
+            android:layout_gravity="bottom"
+            android:padding="7dp" />
 
-    </android.support.v4.widget.NestedScrollView>
+    </RelativeLayout>
 
-    <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        android:layout_gravity="bottom"
-        app:bb_tabXmlResource="@xml/bottombar_tabs"
-        app:bb_behavior="shy|iconsOnly"
-        android:layout_height="55dp"
-        android:background="@color/colorPrimary"
-        app:bb_inActiveTabColor="@color/white"
-        app:bb_activeTabColor="@color/white"
-        app:bb_badgesHideWhenActive="true"
-        android:animateLayoutChanges="false" />
+    <!--  <com.roughike.bottombar.BottomBar
+         android:id="@+id/bottomBar"
+         android:layout_width="match_parent"
+         android:layout_gravity="bottom"
+         app:bb_tabXmlResource="@xml/bottombar_tabs"
+         app:bb_behavior="shy|iconsOnly"
+         android:background="@color/colorPrimary"
+         app:bb_inActiveTabColor="@color/white"
+         app:bb_activeTabColor="@color/white"
+         app:bb_badgesHideWhenActive="true"
+         android:animateLayoutChanges="false"
+         android:layout_height="50dp" />-->
 
 
 </android.support.design.widget.CoordinatorLayout>

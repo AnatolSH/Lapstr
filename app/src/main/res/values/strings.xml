@@ -62,6 +62,9 @@
     <string name="btn_back"><![CDATA[<< Back]]></string>
     <string name="post_title">Post title</string>
     <string name="subm_post">Submit post</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
 
 
