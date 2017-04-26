@@ -120,37 +120,14 @@
             android:layout_gravity="bottom"
             android:scaleType="fitCenter"
             android:background="?attr/colorPrimary"
-            android:layout_width="81dp"
             android:padding="7dp"
-            android:layout_height="match_parent" />
-
-        <ImageButton
-            android:layout_width="77dp"
-            app:srcCompat="@mipmap/ic_add_box_white_36dp"
-            android:id="@+id/imageButton3"
-            android:scaleType="fitCenter"
-            android:background="@color/colorPrimary"
-            android:layout_gravity="bottom"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageButton2"
-            android:layout_toEndOf="@+id/imageButton2"
-            android:padding="7dp"
-            android:layout_height="match_parent" />
-
-        <ImageButton
-            android:layout_width="80dp"
             android:layout_height="match_parent"
-            app:srcCompat="@mipmap/ic_photo_camera_white_36dp"
-            android:id="@+id/imageButton4"
-            android:scaleType="fitCenter"
-            android:background="@color/colorPrimary"
-            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:padding="7dp" />
+            android:layout_toLeftOf="@+id/imageButton3"
+            android:layout_toStartOf="@+id/imageButton3" />
 
         <ImageButton
-            android:layout_width="71dp"
             android:layout_height="match_parent"
             app:srcCompat="@mipmap/ic_account_box_white_36dp"
             android:id="@+id/imageButton5"
@@ -160,7 +137,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imageButton4"
             android:layout_toEndOf="@+id/imageButton4"
-            android:padding="7dp" />
+            android:padding="7dp"
+            android:layout_width="75dp" />
 
         <ImageButton
             android:layout_width="match_parent"
@@ -173,6 +151,31 @@
             android:layout_toEndOf="@+id/imageButton5"
             android:layout_gravity="bottom"
             android:padding="7dp" />
+
+        <ImageButton
+            app:srcCompat="@mipmap/ic_add_box_white_36dp"
+            android:id="@+id/imageButton3"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:padding="7dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:layout_toLeftOf="@+id/imageButton4"
+            android:layout_toStartOf="@+id/imageButton4"
+            android:layout_width="75dp" />
+
+        <ImageButton
+            android:layout_width="75dp"
+            android:layout_height="match_parent"
+            app:srcCompat="@mipmap/ic_photo_camera_white_36dp"
+            android:id="@+id/imageButton4"
+            android:scaleType="fitCenter"
+            android:background="@color/colorPrimary"
+            android:layout_gravity="bottom"
+            android:padding="7dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
 
     </RelativeLayout>
 

@@ -129,68 +129,6 @@ tools:context=".CameraActivity">
 </TableLayout>
 
 
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:text="Resolution:"
-    android:id="@+id/textView"
-    android:layout_marginTop="335dp"
-    android:textColor="#ffffff" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:text="Frame Interval:"
-    android:id="@+id/textView2"
-    android:layout_marginTop="350dp"
-    android:textColor="#ffffff" />
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:text="FPS:"
-    android:id="@+id/textView3"
-    android:layout_marginTop="365dp"
-    android:textColor="#ffffff" />
-
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="24"
-        android:id="@+id/textView7"
-        android:textColor="#ffffff"
-        android:layout_alignBaseline="@+id/textView3"
-        android:layout_alignBottom="@+id/textView3"
-        android:layout_toRightOf="@+id/textView3"
-        android:layout_toEndOf="@+id/textView3" />
-
-    <TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:text="1080p"
-    android:id="@+id/textView5"
-    android:layout_gravity="left|bottom"
-    android:layout_alignParentEnd="false"
-    android:layout_marginTop="335dp"
-    android:layout_marginLeft="70dp"
-    android:textColor="#ffffff" />
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:textAppearance="?android:attr/textAppearanceSmall"
-    android:text="2 seconds"
-    android:id="@+id/textView6"
-    android:layout_marginTop="350dp"
-    android:layout_marginLeft="95dp"
-    android:textColor="#ffffff" />
-
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -314,5 +252,75 @@ tools:context=".CameraActivity">
         android:layout_alignParentEnd="true"
         android:layout_alignLeft="@+id/imageView"
         android:layout_alignStart="@+id/imageView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="30"
+        android:id="@+id/textView7"
+        android:textColor="#ffffff"
+        android:layout_alignBaseline="@+id/textView3"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_toRightOf="@+id/textView3"
+        android:layout_toEndOf="@+id/textView3" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="1080p"
+    android:id="@+id/textView5"
+    android:layout_gravity="left|bottom"
+        android:textColor="#ffffff"
+        android:layout_alignBaseline="@+id/textView"
+        android:layout_alignBottom="@+id/textView"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="2 seconds"
+    android:id="@+id/textView6"
+        android:textColor="#ffffff"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:layout_toEndOf="@+id/textView2" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="Frame Interval:"
+    android:id="@+id/textView2"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="FPS:"
+    android:id="@+id/textView3"
+        android:textColor="#ffffff"
+        android:layout_below="@+id/textView2"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textAppearance="?android:attr/textAppearanceSmall"
+    android:text="Resolution:"
+    android:id="@+id/textView"
+        android:textColor="#ffffff"
+        android:layout_above="@+id/flashlight_button"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

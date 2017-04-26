@@ -229,10 +229,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 outBtn.setOnClickListener(this);
-                singout.setOnClickListener(this);
-                if (view == singout) {
                     signOut();
-                }
             }
         });
 
