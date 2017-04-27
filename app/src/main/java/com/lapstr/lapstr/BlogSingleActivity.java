@@ -88,6 +88,7 @@ public class BlogSingleActivity extends AppCompatActivity {
     private ImageButton mLikebtn;
     private boolean mProcessLike;
     private String post_name;
+    private String videoName;
 
     private FirebaseAuth mAuth;
 
@@ -157,6 +158,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 String post_avatar = (String) dataSnapshot.child("awaurl").getValue();
                 String post_Time = (String) dataSnapshot.child("time").getValue();
                 String post_Date = (String) dataSnapshot.child("date").getValue();
+                videoName = (String) dataSnapshot.child("videoName").getValue();
                 post_name = (String) dataSnapshot.child("name").getValue();
                 String post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
@@ -317,6 +319,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
                 mDatabaseLike.child("Comments").child("countComments").child(mPost_key).removeValue();
+                del();
             }
         });
 
@@ -393,6 +396,20 @@ public class BlogSingleActivity extends AppCompatActivity {
 
                 mPostComment.setText("");
             }
+
+    public void del(){
+        StorageReference desertRef = mStorage.child("Videos/" + videoName);
+        desertRef.delete().addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                // File deleted successfully
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception exception) {
+            }
+        });
+    }
 
     @Override
     public void onStart() {

@@ -245,6 +245,7 @@ public class PostActivity extends AppCompatActivity {
                 newPost.child("uid").setValue(uid);
                 newPost.child("date").setValue(dd);
                 newPost.child("time").setValue(dt);
+                newPost.child("videoName").setValue(mVideoUri.getLastPathSegment().toString());
 
                 dataForUserBd.child("name").setValue(nick);
                 dataForUserBd.child("awaurl").setValue(urk);
