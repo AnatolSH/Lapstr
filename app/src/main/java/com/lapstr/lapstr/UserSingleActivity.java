@@ -71,7 +71,7 @@ public class UserSingleActivity extends AppCompatActivity {
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        userVideos = getIntent().getExtras().getString("userName");
+        userVideos = getIntent().getExtras().getString("uid");
         mBlogSingleName = (TextView) findViewById(R.id.post_name0);
         mBlogSingleAvatar = (ImageView) findViewById(R.id.awko0);
 

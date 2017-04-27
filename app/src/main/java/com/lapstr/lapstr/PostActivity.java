@@ -53,6 +53,7 @@ public class PostActivity extends AppCompatActivity {
     private DatabaseReference mFirebaseDatabase2;
     private FirebaseDatabase mFirebaseInstance2;
     private String nick;
+    private String uID;
     private FirebaseAuth mAuth;
     private String urk;
     private Locale myLocale;
@@ -233,7 +234,7 @@ public class PostActivity extends AppCompatActivity {
                 DatabaseReference newPost = mFirebaseDatabase.push();
                 String str = newPost.getKey();
                 String uid = mAuth.getCurrentUser().getUid();
-                DatabaseReference dataForUserBd = baza.child("Uploaded").child(nick).child(str);
+                DatabaseReference dataForUserBd = baza.child("Uploaded").child((mAuth.getCurrentUser().getUid())).child(str);
                 DatabaseReference comm = baza.child("Comments").child("countComments").child(str);
                 DatabaseReference loice = baza.child("Likes").child("count").child(str);
 
@@ -266,6 +267,7 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 DataSnapshot contSnap = dataSnapshot.child("users");
+                uID = dataSnapshot.getKey().toString();
                 Iterable<DataSnapshot> contShild = contSnap.getChildren();
                 ArrayList<Cabinet> co = new ArrayList<>();
                 for(DataSnapshot cont: contShild)

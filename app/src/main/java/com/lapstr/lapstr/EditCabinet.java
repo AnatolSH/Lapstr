@@ -74,8 +74,6 @@ public class EditCabinet extends AppCompatActivity{
         lineUserName = (TextView) findViewById(R.id.txt_user5);
         lineUserEmail = (TextView) findViewById(R.id.lineuseremail);
         awa = (ImageView) findViewById(R.id.imageView11);
-      //  inputName = (EditText) findViewById(R.id.name5);
-      //  btnSave = (Button) findViewById(R.id.btn_save5);
         mFirebaseInstance = FirebaseDatabase.getInstance();
         mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
         mFirebaseDatabase2 = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
@@ -215,24 +213,6 @@ public class EditCabinet extends AppCompatActivity{
             }
         });
 
-
-/*      btnSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String name = inputName.getText().toString();
-            //    String email = inputEmail.getText().toString();
-                updateCabinet(name);
-            }
-        });*/
-
-    }
-
-    private void updateCabinet(String name) {
-            FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
-            String userId = equ.getUid();
-            mFirebaseDatabase.child("users").child(userId).child("userName").setValue(name);
-         //   mFirebaseDatabase.child("users").child(userId).child("email").setValue(email);
-            addCabChangeListener();
     }
 
     @Override

@@ -312,7 +312,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 mDatabaseLike.child("Likes").child(mPost_key).removeValue();
                 mDatabaseLike.child("Likes").child("count").child(mPost_key).removeValue();
                 mDatabaseLike.child("Comments").child(mPost_key).removeValue();
-                mDatabaseLike.child("Uploaded").child(post_name).child(mPost_key).removeValue();
+                mDatabaseLike.child("Uploaded").child((mAuth.getCurrentUser().getUid())).child(mPost_key).removeValue();
 
                 Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
@@ -386,7 +386,7 @@ public class BlogSingleActivity extends AppCompatActivity {
 
         final String title_val = mPostComment.getText().toString().trim();
 
-                DatabaseReference newPost = mFirebaseDatabase.child(mPost_key).push();
+                DatabaseReference newPost = mFirebaseDatabase.child(mPost_key).child((mAuth.getCurrentUser().getUid()));
                 newPost.child("awaurl").setValue(urk);
                 newPost.child("name").setValue(nick);
                 newPost.child("title").setValue(title_val);

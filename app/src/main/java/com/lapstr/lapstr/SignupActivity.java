@@ -270,11 +270,10 @@ public class SignupActivity extends AppCompatActivity {
 
     private void createNewUser(String n, String e, String d) {
 
-        String userId = mDatabase.push().getKey();
         String uid = auth.getCurrentUser().getUid();
         Cabinet user = new Cabinet(n, e, d, uid);
 
-        mDatabase.child("users").child(userId).setValue(user);
+        mDatabase.child("users").child(uid).setValue(user);
     }
 
     @Override

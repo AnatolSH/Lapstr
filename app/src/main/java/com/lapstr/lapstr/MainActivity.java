@@ -240,23 +240,6 @@ public class MainActivity extends AppCompatActivity {
         finish();
     }
 
-
-  /*  public static Bitmap getBitmapFromURL(String src) { //для прорисовки аватарок
-        try {
-            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-            StrictMode.setThreadPolicy(policy);
-            URL url = new URL(src);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap myBitmap = BitmapFactory.decodeStream(input);
-            return myBitmap;
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }*/
-
     @Override
     public void onStart() {
         super.onStart();
@@ -279,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
                 mFirebaseDatabase.child(getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        blbabla[0] = dataSnapshot.child("name").getValue().toString();
+                        blbabla[0] = dataSnapshot.child("uid").getValue().toString();
                     }
 
                     @Override
@@ -311,7 +294,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         Intent singleBlogIntent = new Intent(MainActivity.this, UserSingleActivity.class);
-                        singleBlogIntent.putExtra("userName", blbabla[0]);
+                        singleBlogIntent.putExtra("uid", blbabla[0]);
                         startActivity(singleBlogIntent);
 
                     }
