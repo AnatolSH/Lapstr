@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -15,6 +17,7 @@ import android.os.Bundle;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,14 +104,16 @@ public class PostActivity extends AppCompatActivity {
                 startActivityForResult(galleryIntent, GALLERY_REQUEST);
             }
         });
+
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startPosting();
+                    startPosting();
             }
         });
         addCabChangeListener();
         loadLocale();
+
 
 
        /* BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
@@ -209,10 +214,16 @@ public class PostActivity extends AppCompatActivity {
         finish();
     }
 
-    private void startPosting() {
+    public ProgressDialog loadingdialog;
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            loadingdialog.dismiss();
 
-        mProgress.setMessage("Posting...");
-        mProgress.show();
+        }
+    };
+
+    private void startPosting()  {
 
         final String title_val = mPostTitle.getText().toString().trim();
 
@@ -265,6 +276,16 @@ public class PostActivity extends AppCompatActivity {
             }
         });
 
+       // mProgress.setMessage("Posting...");
+        //mProgress.show();
+
+
+        try {
+            Thread.sleep(3500); //ТУТ ждёт 3.5 секунды
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
         Intent SecAct99 = new Intent(getApplicationContext(), MainActivity.class);
         startActivity(SecAct99);
     }
@@ -302,11 +323,6 @@ public class PostActivity extends AppCompatActivity {
             }
         });}
 
-    @Override
-    public boolean onSupportNavigateUp(){
-        finish();
-        return true;
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
