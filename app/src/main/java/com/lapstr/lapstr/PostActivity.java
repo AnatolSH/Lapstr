@@ -24,6 +24,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -63,6 +64,7 @@ public class PostActivity extends AppCompatActivity {
     private Locale myLocale;
     Context context;
     private String lang;
+    private ProgressBar progressBar;
 
     private ImageButton homeBtn;
     private ImageButton addBtn;
@@ -94,6 +96,7 @@ public class PostActivity extends AppCompatActivity {
         mProgress = new ProgressDialog(this);
         mAuth = FirebaseAuth.getInstance();
 
+        progressBar = (ProgressBar) findViewById(R.id.progressBar2);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     mSelectVideo.setOnClickListener(new View.OnClickListener() {
@@ -109,6 +112,9 @@ public class PostActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                     startPosting();
+
+                progressBar.setVisibility(View.VISIBLE);
+
             }
         });
         addCabChangeListener();

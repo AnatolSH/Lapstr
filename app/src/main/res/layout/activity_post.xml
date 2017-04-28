@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:id="@+id/videoSelect5"
         android:background="#00ffffff"
         android:src="@mipmap/add_btn1"
@@ -47,6 +47,8 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="270dp" />
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -124,18 +126,29 @@
 
     </RelativeLayout>
 
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:layout_marginTop="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"
+        android:id="@+id/progressBar2"
+        android:layout_gravity="center" />
 
-   <!-- <com.roughike.bottombar.BottomBar
-        android:id="@+id/bottomBar"
-        android:layout_width="match_parent"
-        app:bb_tabXmlResource="@xml/bottombar_tabs"
-        app:bb_behavior="shy|iconsOnly"
-        android:background="@color/colorPrimary"
-        app:bb_inActiveTabColor="@color/white"
-        app:bb_activeTabColor="@color/white"
-        app:bb_badgesHideWhenActive="true"
-        android:animateLayoutChanges="false"
-        android:layout_height="50dp"
-        android:layout_gravity="bottom" /> -->
+
+    <!-- <com.roughike.bottombar.BottomBar
+         android:id="@+id/bottomBar"
+         android:layout_width="match_parent"
+         app:bb_tabXmlResource="@xml/bottombar_tabs"
+         app:bb_behavior="shy|iconsOnly"
+         android:background="@color/colorPrimary"
+         app:bb_inActiveTabColor="@color/white"
+         app:bb_activeTabColor="@color/white"
+         app:bb_badgesHideWhenActive="true"
+         android:animateLayoutChanges="false"
+         android:layout_height="50dp"
+         android:layout_gravity="bottom" /> -->
 
 </android.support.design.widget.CoordinatorLayout>

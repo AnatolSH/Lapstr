@@ -80,6 +80,8 @@ public class EditCabinet extends AppCompatActivity{
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mediaC = new MediaController(this);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         homeBtn = (ImageButton) findViewById(R.id.imageButton2);
         addBtn = (ImageButton) findViewById(R.id.imageButton3);
         cameraBtn = (ImageButton) findViewById(R.id.imageButton4);
@@ -173,18 +175,8 @@ public class EditCabinet extends AppCompatActivity{
                 viewHolder.setName(model.getUserName());
                 viewHolder.setCountVideo(model.getCountVideo());
 
-                viewHolder.awaClick.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
 
-                        Intent singleBlogIntent = new Intent(EditCabinet.this, UserSingleActivity.class);
-                        singleBlogIntent.putExtra("uid", blbabla[0]);
-                        startActivity(singleBlogIntent);
-
-                    }
-                });
-
-                viewHolder.nickClick.setOnClickListener(new View.OnClickListener() {
+                viewHolder.imageButton1.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -208,12 +200,15 @@ public class EditCabinet extends AppCompatActivity{
         ImageView awaClick;
         TextView nickClick;
 
+        ImageButton imageButton1;
+
         public BlogViweHolder(View itemView) {
             super(itemView);
 
             mView = itemView;
             awaClick = (ImageView) mView.findViewById(R.id.awko88);
             nickClick = (TextView) mView.findViewById(R.id.post_name88);
+            imageButton1 = (ImageButton) mView.findViewById(R.id.imageButton7);
         }
 
         public void setAwa(String imgur){

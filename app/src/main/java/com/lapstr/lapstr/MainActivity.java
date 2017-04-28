@@ -278,16 +278,6 @@ public class MainActivity extends AppCompatActivity {
                 viewHolder.setDate(model.getDate());
                 viewHolder.setTime(model.getTime());
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
-                        singleBlogIntent.putExtra("blog_id", post_key);
-                        startActivity(singleBlogIntent);
-
-                    }
-                });
 
                 viewHolder.awaClick.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -306,6 +296,27 @@ public class MainActivity extends AppCompatActivity {
 
                         Intent singleBlogIntent = new Intent(MainActivity.this, UserSingleActivity.class);
                         singleBlogIntent.putExtra("uid", blbabla[0]);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+
+                viewHolder.imageButton1.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id", post_key);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+                viewHolder.imageButton2.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(MainActivity.this, BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id", post_key);
                         startActivity(singleBlogIntent);
 
                     }
@@ -370,6 +381,9 @@ public class MainActivity extends AppCompatActivity {
         ImageButton play;
         VideoView post_video;
 
+        ImageButton imageButton1;
+        ImageButton imageButton2;
+
         public BlogViweHolder(View itemView) {
             super(itemView);
 
@@ -383,6 +397,9 @@ public class MainActivity extends AppCompatActivity {
             play = (ImageButton) mView.findViewById(R.id.playButton);
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
             auth = FirebaseAuth.getInstance();
+
+            imageButton1 = (ImageButton) mView.findViewById(R.id.imageButton9);
+            imageButton2 = (ImageButton) mView.findViewById(R.id.imageButton10);
 
             play.setOnClickListener(new View.OnClickListener() {
                 @Override

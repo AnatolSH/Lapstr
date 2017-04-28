@@ -73,6 +73,8 @@ public class BlogSingleActivity extends AppCompatActivity {
     private String countVid;
     private int sum;
     private String res;
+    private String useid;
+    private String post_uid;
 
     private String mPost_key = null;
     private DatabaseReference mDatabase;
@@ -150,8 +152,6 @@ public class BlogSingleActivity extends AppCompatActivity {
                 startPosting();
             }
         });
-        addCabChangeListener();
-
 
         mDatabase.child(mPost_key).addValueEventListener(new ValueEventListener() {
             @Override
@@ -163,7 +163,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 String post_Date = (String) dataSnapshot.child("date").getValue();
                 videoName = (String) dataSnapshot.child("videoName").getValue();
                 post_name = (String) dataSnapshot.child("name").getValue();
-                String post_uid = (String) dataSnapshot.child("uid").getValue();
+                post_uid = (String) dataSnapshot.child("uid").getValue();
                 post_video = (String) dataSnapshot.child("url").getValue();
                 mBlogSingleName.setText(post_name);
 
@@ -354,7 +354,18 @@ public class BlogSingleActivity extends AppCompatActivity {
             public void onClick(View view) {
 
                 Intent singleBlogIntent = new Intent(BlogSingleActivity.this, UserSingleActivity.class);
-                singleBlogIntent.putExtra("userName", mBlogSingleName.getText());
+                singleBlogIntent.putExtra("uid", post_uid);
+                startActivity(singleBlogIntent);
+
+            }
+        });
+
+        mBlogSingleName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent singleBlogIntent = new Intent(BlogSingleActivity.this, UserSingleActivity.class);
+                singleBlogIntent.putExtra("uid", post_uid);
                 startActivity(singleBlogIntent);
 
             }
@@ -368,35 +379,8 @@ public class BlogSingleActivity extends AppCompatActivity {
     }
 
 
-    private void addCabChangeListener() { //метод чтения из бд Users
-        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot contSnap = dataSnapshot.child("users");
-                Iterable<DataSnapshot> contShild = contSnap.getChildren();
-                ArrayList<Cabinet> co = new ArrayList<>();
-                for(DataSnapshot cont: contShild)
-                {
-                    Cabinet c = cont.getValue(Cabinet.class);
-                    co.add(c);
-                }
 
-                FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
 
-                for (int i = 0; i < co.size(); i++) {
-                    if((co.get(i).getEmail()).equals(equ.getEmail()))
-                    {
-                        nick = co.get(i).getUserName(); //получаем текущий ник пользователя
-                        urk = co.get(i).getUrl(); //получаем текущую ссылку на аватарку
-                        break;
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });}
 
     private void startPosting() {
 
@@ -455,6 +439,7 @@ public class BlogSingleActivity extends AppCompatActivity {
                 viewHolder.setAwa(model.getAwaurl());
                 viewHolder.setName(model.getName());
                 viewHolder.setTitle(model.getTitle());
+
             }
 
         };
