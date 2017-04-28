@@ -54,6 +54,7 @@ public class PostActivity extends AppCompatActivity {
     private FirebaseDatabase mFirebaseInstance2;
     private String nick;
     private String uID;
+    private String cVideo;
     private FirebaseAuth mAuth;
     private String urk;
     private Locale myLocale;
@@ -237,6 +238,7 @@ public class PostActivity extends AppCompatActivity {
                 DatabaseReference dataForUserBd = baza.child("Uploaded").child((mAuth.getCurrentUser().getUid())).child(str);
                 DatabaseReference comm = baza.child("Comments").child("countComments").child(str);
                 DatabaseReference loice = baza.child("Likes").child("count").child(str);
+                DatabaseReference countVideo = mFirebaseDatabase2.child("users").child((mAuth.getCurrentUser().getUid()));
 
                 newPost.child("awaurl").setValue(urk);
                 newPost.child("name").setValue(nick);
@@ -253,6 +255,10 @@ public class PostActivity extends AppCompatActivity {
                 dataForUserBd.child("title").setValue(title_val);
                 dataForUserBd.child("date").setValue(dd);
                 dataForUserBd.child("time").setValue(dt);
+                int sum = Integer.parseInt(cVideo);
+                sum = sum + 1;
+                String res = String.valueOf(sum);
+                countVideo.child("countVideo").setValue(res);
 
                 comm.setValue(0);
                 loice.setValue(0);
@@ -285,6 +291,7 @@ public class PostActivity extends AppCompatActivity {
                     {
                         nick = co.get(i).getUserName(); //получаем текущий ник пользователя
                         urk = co.get(i).getUrl(); //получаем текущую ссылку на аватарку
+                        cVideo = co.get(i).getCountVideo();
                         break;
                     }
                 }

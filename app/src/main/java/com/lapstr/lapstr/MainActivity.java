@@ -305,7 +305,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onClick(View view) {
 
                         Intent singleBlogIntent = new Intent(MainActivity.this, UserSingleActivity.class);
-                        singleBlogIntent.putExtra("userName", blbabla[0]);
+                        singleBlogIntent.putExtra("uid", blbabla[0]);
                         startActivity(singleBlogIntent);
 
                     }

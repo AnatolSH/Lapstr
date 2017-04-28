@@ -271,7 +271,8 @@ public class SignupActivity extends AppCompatActivity {
     private void createNewUser(String n, String e, String d) {
 
         String uid = auth.getCurrentUser().getUid();
-        Cabinet user = new Cabinet(n, e, d, uid);
+        String countVid = "0";
+        Cabinet user = new Cabinet(n, e, d, uid, countVid);
 
         mDatabase.child("users").child(uid).setValue(user);
     }

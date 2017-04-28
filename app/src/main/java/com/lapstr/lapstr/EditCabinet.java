@@ -3,9 +3,11 @@ package com.lapstr.lapstr;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -14,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.MediaController;
 import android.widget.TextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,6 +27,9 @@ import java.util.List;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.VideoView;
+
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -38,6 +44,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 /**
@@ -45,48 +52,33 @@ import java.util.ArrayList;
  */
 
 public class EditCabinet extends AppCompatActivity{
-    private TextView lineUserName;
-    private TextView lineUserEmail;
-    private EditText inputName;
-    private Button btnSave;
-    private DatabaseReference mFirebaseDatabase;
-    private DatabaseReference mFirebaseDatabase2;
-
-    private FirebaseDatabase mFirebaseInstance;
-    private String userId;
-    private ImageView awa;
-    private String nick;
-
     private ImageButton homeBtn;
     private ImageButton addBtn;
     private ImageButton cameraBtn;
     private ImageButton cabinetBtn;
     private ImageButton outBtn;
+    private RecyclerView mBloglist;
+    private DatabaseReference mDatabase;
 
-    private RecyclerView rv;
-    private ArrayList<User> us = new ArrayList<>();
-    private ArrayList<User> yourList = new ArrayList<>();
+    private DatabaseReference mFirebaseDatabase;
+    private FirebaseAuth auth;
+
+    static MediaController mediaC;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.editcab_activity);
-        lineUserName = (TextView) findViewById(R.id.txt_user5);
-        lineUserEmail = (TextView) findViewById(R.id.lineuseremail);
-        awa = (ImageView) findViewById(R.id.imageView11);
-        mFirebaseInstance = FirebaseDatabase.getInstance();
-        mFirebaseDatabase = mFirebaseInstance.getReference("cabinet");
-        mFirebaseDatabase2 = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
+        mBloglist = (RecyclerView) findViewById(R.id.blog_list88);
+        mBloglist.setHasFixedSize(true);
+        mBloglist.setLayoutManager(new LinearLayoutManager(this));
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("cabinet").child("users");
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
-        rv=(RecyclerView)findViewById(R.id.blog_list99);
-
-        LinearLayoutManager llm = new LinearLayoutManager(this);
-        rv.setLayoutManager(llm);
-        rv.setHasFixedSize(true);
-
-        addCabChangeListener();
+        auth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mediaC = new MediaController(this);
 
         homeBtn = (ImageButton) findViewById(R.id.imageButton2);
         addBtn = (ImageButton) findViewById(R.id.imageButton3);
@@ -138,93 +130,110 @@ public class EditCabinet extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 outBtn.setOnClickListener(this);
-                if (view == outBtn) {
-                    Intent SecAct = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(SecAct);
-                }
+                signOut();
             }
         });
 
     }
 
-
-    private void initializeAdapter(){
-        RVAdapter adapter = new RVAdapter(yourList);
-        rv.setAdapter(adapter);
-    }
-
-    private void addUserChangeListener() {//тут все ссылки для ленты + имена тех кто залил
-        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot contSnap = dataSnapshot;
-                Iterable<DataSnapshot> contShild = contSnap.getChildren();
-                for(DataSnapshot cont: contShild)
-                {
-                    User c = cont.getValue(User.class);
-                    us.add(c);
-                }
-
-                for (int i = 0; i < us.size(); i++) {
-                    if((us.get(i).getName()).equals(nick))
-                    {
-                        yourList.add(us.get(i));
-                    }
-                }
-                initializeAdapter();
-            }
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-    }
-
-    private void addCabChangeListener() {
-        mFirebaseDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                DataSnapshot contSnap = dataSnapshot.child("users");
-                Iterable<DataSnapshot> contShild = contSnap.getChildren();
-                ArrayList<Cabinet> co = new ArrayList<>();
-                for(DataSnapshot cont: contShild)
-                {
-                    Cabinet c = cont.getValue(Cabinet.class);
-                    co.add(c);
-                }
-
-                FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
-
-                for (int i = 0; i < co.size(); i++) {
-                    if((co.get(i).getEmail()).equals(equ.getEmail()))
-                    {
-                       // awa.setImageBitmap(getBitmapFromURL(co.get(i).getUrl()));
-                        Picasso.with(getApplicationContext()).load(co.get(i).getUrl()).into(awa);
-                        lineUserName.setText(co.get(i).getUserName());
-                        lineUserEmail.setText(co.get(i).getEmail());
-                        nick = co.get(i).getUserName();
-                        break;
-                    }
-                }
-                addUserChangeListener();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-            }
-        });
-
-    }
-
-    @Override
-    public boolean onSupportNavigateUp(){
+    public void signOut() { //метод на разлогинивание
+        auth.signOut();
         finish();
-        return true;
     }
 
     @Override
     public void onStart() {
         super.onStart();
 
+        FirebaseRecyclerAdapter<Cabinet, EditCabinet.BlogViweHolder> firebaseRecyclerAdapter = new FirebaseRecyclerAdapter<Cabinet, EditCabinet.BlogViweHolder>(
+
+                Cabinet.class,
+                R.layout.blog_row_for_user,
+                EditCabinet.BlogViweHolder.class,
+                mFirebaseDatabase
+
+        ) {
+            @Override
+            protected void populateViewHolder(EditCabinet.BlogViweHolder viewHolder, Cabinet model, final int position) {
+
+                final String[] blbabla = new String[1];
+
+                mFirebaseDatabase.child(getRef(position).getKey()).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        blbabla[0] = dataSnapshot.child("uid").getValue().toString();
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                    }
+                });
+
+                viewHolder.setAwa(model.getUrl());
+                viewHolder.setName(model.getUserName());
+                viewHolder.setCountVideo(model.getCountVideo());
+
+                viewHolder.awaClick.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(EditCabinet.this, UserSingleActivity.class);
+                        singleBlogIntent.putExtra("uid", blbabla[0]);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+
+                viewHolder.nickClick.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(EditCabinet.this, UserSingleActivity.class);
+                        singleBlogIntent.putExtra("uid", blbabla[0]);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+            }
+
+        };
+
+        mBloglist.setAdapter(firebaseRecyclerAdapter);
+    }
+
+    public static class BlogViweHolder extends RecyclerView.ViewHolder{
+
+        View mView;
+
+        ImageView awaClick;
+        TextView nickClick;
+
+        public BlogViweHolder(View itemView) {
+            super(itemView);
+
+            mView = itemView;
+            awaClick = (ImageView) mView.findViewById(R.id.awko88);
+            nickClick = (TextView) mView.findViewById(R.id.post_name88);
+        }
+
+        public void setAwa(String imgur){
+
+            ImageView im_d = (ImageView) mView.findViewById(R.id.awko88);
+            Picasso.with(itemView.getContext()).load(imgur).into(im_d);
+
+        }
+
+        public void setName(String desc){
+
+            TextView post_name = (TextView) mView.findViewById(R.id.post_name88);
+            post_name.setText(desc);
+        }
+
+        public void setCountVideo(String co)
+        {
+            TextView countVideo = (TextView) mView.findViewById(R.id.post_title99);
+            countVideo.setText(co);
+        }
+
     }
 }
-

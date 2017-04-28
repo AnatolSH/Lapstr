@@ -70,6 +70,9 @@ public class BlogSingleActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener authListener;
     private DatabaseReference mFirebaseDatabase2;
     private FirebaseDatabase mFirebaseInstance2;
+    private String countVid;
+    private int sum;
+    private String res;
 
     private String mPost_key = null;
     private DatabaseReference mDatabase;
@@ -186,6 +189,25 @@ public class BlogSingleActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+        mFirebaseDatabase2.child("users").child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                countVid = (String) dataSnapshot.child("countVideo").getValue();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+
+
+
 
         mDatabaseLike.child("Comments").addValueEventListener(new ValueEventListener() {
             @Override
@@ -315,6 +337,10 @@ public class BlogSingleActivity extends AppCompatActivity {
                 mDatabaseLike.child("Likes").child("count").child(mPost_key).removeValue();
                 mDatabaseLike.child("Comments").child(mPost_key).removeValue();
                 mDatabaseLike.child("Uploaded").child((mAuth.getCurrentUser().getUid())).child(mPost_key).removeValue();
+                sum = Integer.parseInt(countVid);
+                sum = sum - 1;
+                res = String.valueOf(sum);
+                mFirebaseDatabase2.child("users").child(mAuth.getCurrentUser().getUid()).child("countVideo").setValue(res);
 
                 Intent mainIntent = new Intent(BlogSingleActivity.this, MainActivity.class);
                 startActivity(mainIntent);
