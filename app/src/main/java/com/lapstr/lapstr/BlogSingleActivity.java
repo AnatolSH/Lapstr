@@ -371,6 +371,8 @@ public class BlogSingleActivity extends AppCompatActivity {
 
             }
         });
+
+        addCabChangeListener();
     }
 
     @Override
@@ -379,7 +381,35 @@ public class BlogSingleActivity extends AppCompatActivity {
         return true;
     }
 
+    private void addCabChangeListener() { //метод чтения из бд Users
+        mFirebaseDatabase2.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                DataSnapshot contSnap = dataSnapshot.child("users");
+                Iterable<DataSnapshot> contShild = contSnap.getChildren();
+                ArrayList<Cabinet> co = new ArrayList<>();
+                for(DataSnapshot cont: contShild)
+                {
+                    Cabinet c = cont.getValue(Cabinet.class);
+                    co.add(c);
+                }
 
+                FirebaseUser equ = FirebaseAuth.getInstance().getCurrentUser();
+
+                for (int i = 0; i < co.size(); i++) {
+                    if((co.get(i).getEmail()).equals(equ.getEmail()))
+                    {
+                        nick = co.get(i).getUserName(); //получаем текущий ник пользователя
+                        urk = co.get(i).getUrl(); //получаем текущую ссылку на аватарку
+                        break;
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+            }
+        });}
 
 
 
