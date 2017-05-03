@@ -82,8 +82,8 @@
             android:layout_marginTop="10dp" />
 
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             app:srcCompat="@android:drawable/ic_media_play"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true"
@@ -113,6 +113,31 @@
             android:layout_alignBottom="@+id/videoTime"
             android:layout_toLeftOf="@+id/videoTime"
             android:layout_toStartOf="@+id/videoTime" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:color/transparent"
+            android:layout_alignParentTop="true"
+            android:id="@+id/imageButton8"
+            android:layout_above="@+id/media_layout"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/transparent" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@android:color/transparent"
+            android:id="@+id/imageButton13"
+            android:layout_below="@+id/media_layout"
+            android:layout_toRightOf="@+id/countlike211"
+            android:layout_alignBottom="@+id/like_btn11"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent" />
 
 
     </RelativeLayout>

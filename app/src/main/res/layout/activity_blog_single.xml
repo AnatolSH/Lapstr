@@ -32,7 +32,8 @@
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/awko"
             android:layout_toEndOf="@+id/awko"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:layout_above="@+id/media_layout" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -43,7 +44,8 @@
             android:layout_toEndOf="@+id/post_name"
             android:textStyle="bold"
             android:text="Title"
-            android:layout_alignParentTop="true" />
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/playButton2" />
 
         <Button
             android:text="Delete"
@@ -204,6 +206,15 @@
             android:layout_alignBottom="@+id/videoDate"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:srcCompat="@mipmap/line"
+            android:id="@+id/imageView2"
+            android:layout_below="@+id/videoDate"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
 
     </RelativeLayout>
 

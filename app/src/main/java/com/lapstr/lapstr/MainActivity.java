@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-                viewHolder.imageButton1.setOnClickListener(new View.OnClickListener() {
+                viewHolder.imageButton9.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -311,7 +311,7 @@ public class MainActivity extends AppCompatActivity {
 
                     }
                 });
-                viewHolder.imageButton2.setOnClickListener(new View.OnClickListener() {
+                viewHolder.imageButton10.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -381,8 +381,8 @@ public class MainActivity extends AppCompatActivity {
         ImageButton play;
         VideoView post_video;
 
-        ImageButton imageButton1;
-        ImageButton imageButton2;
+        ImageButton imageButton9;
+        ImageButton imageButton10;
 
         public BlogViweHolder(View itemView) {
             super(itemView);
@@ -398,8 +398,8 @@ public class MainActivity extends AppCompatActivity {
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
             auth = FirebaseAuth.getInstance();
 
-            imageButton1 = (ImageButton) mView.findViewById(R.id.imageButton9);
-            imageButton2 = (ImageButton) mView.findViewById(R.id.imageButton10);
+            imageButton9 = (ImageButton) mView.findViewById(R.id.imageButton9);
+            imageButton10 = (ImageButton) mView.findViewById(R.id.imageButton10);
 
             play.setOnClickListener(new View.OnClickListener() {
                 @Override

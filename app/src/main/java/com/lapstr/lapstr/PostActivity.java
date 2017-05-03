@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -119,7 +120,6 @@ public class PostActivity extends AppCompatActivity {
         });
         addCabChangeListener();
         loadLocale();
-
 
 
        /* BottomBar bottomBar = (BottomBar) findViewById(R.id.bottomBar);
@@ -328,6 +328,12 @@ public class PostActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError error) {
             }
         });}
+
+    @Override
+    public boolean onSupportNavigateUp(){
+        finish();
+        return true;
+    }
 
 
     @Override

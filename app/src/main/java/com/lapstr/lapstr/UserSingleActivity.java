@@ -153,7 +153,28 @@ public class UserSingleActivity extends AppCompatActivity {
                 viewHolder.setDate(model.getDate());
                 viewHolder.setTime(model.getTime());
 
-                viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+               /* viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(UserSingleActivity.this, BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id", post_key);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });*/
+
+                viewHolder.imageButton8.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent singleBlogIntent = new Intent(UserSingleActivity.this, BlogSingleActivity.class);
+                        singleBlogIntent.putExtra("blog_id", post_key);
+                        startActivity(singleBlogIntent);
+
+                    }
+                });
+                viewHolder.imageButton13.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
 
@@ -222,6 +243,9 @@ public class UserSingleActivity extends AppCompatActivity {
         VideoView post_video;
         ImageButton play;
 
+        ImageButton imageButton8;
+        ImageButton imageButton13;
+
         public BlogViweHolder(View itemView) {
             super(itemView);
 
@@ -234,6 +258,9 @@ public class UserSingleActivity extends AppCompatActivity {
             mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
             post_video= (VideoView) mView.findViewById(R.id.post_video11);
             auth = FirebaseAuth.getInstance();
+
+            imageButton8 = (ImageButton) mView.findViewById(R.id.imageButton8);
+            imageButton13 = (ImageButton) mView.findViewById(R.id.imageButton13);
 
             play.setOnClickListener(new View.OnClickListener() {
                 @Override
