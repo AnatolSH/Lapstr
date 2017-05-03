@@ -104,7 +104,7 @@ public class BlogSingleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_blog_single);
 
-        mDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
+        mDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo");
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
 
         mFirebaseInstance2 = FirebaseDatabase.getInstance();

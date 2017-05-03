@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
         mBloglist.setLayoutManager(new LinearLayoutManager(this));
         mDatabaseLike = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
 
-        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo");
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         //mSelectVideo = (Button) findViewById(R.id.select_video);

@@ -86,7 +86,7 @@ public class PostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_post);
 
         mStorage = FirebaseStorage.getInstance().getReference();
-        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo").child("contacts");
+        mFirebaseDatabase = FirebaseDatabase.getInstance().getReference("uploadedVideo");
         baza = FirebaseDatabase.getInstance().getReference().child("UsersVideo");
         mSelectVideo = (ImageButton) findViewById(R.id.videoSelect5);
         mFirebaseInstance2 = FirebaseDatabase.getInstance();
