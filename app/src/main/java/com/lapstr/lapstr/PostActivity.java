@@ -26,6 +26,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -73,6 +74,7 @@ public class PostActivity extends AppCompatActivity {
     private ImageButton cabinetBtn;
     private ImageButton outBtn;
     private Button singout;
+    private  boolean isContain1 = false;
 
     private static final int GALLERY_REQUEST = 1;
 
@@ -112,10 +114,12 @@ public class PostActivity extends AppCompatActivity {
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                    startPosting();
-
-                progressBar.setVisibility(View.VISIBLE);
-
+                    if(isContain1 == true)
+                    {startPosting();
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                else {
+                        Toast.makeText(PostActivity.this, "Данный формат не является видеофайлом", Toast.LENGTH_LONG).show();}
             }
         });
         addCabChangeListener();
@@ -342,6 +346,22 @@ public class PostActivity extends AppCompatActivity {
 
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
             mVideoUri= data.getData();
+            String sq = data.getType();
+            String[] format = {
+                    "video/avi",
+                    "video/mp4",
+                    "video/mkv",
+                    "video/flv",
+                    "video/mov",
+                    "video/wma"
+            };
+            int i = 0;
+            while(i<format.length)
+            {
+                if(isContain1 == true) break;
+                isContain1 = sq.contains(format[i]);
+                i++;
+            }
         }
     }
 
