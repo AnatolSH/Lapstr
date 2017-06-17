@@ -25,16 +25,7 @@
         android:padding="@dimen/activity_horizontal_margin">
 
 
-        <ImageButton
-            app:srcCompat="@mipmap/ic_language_white_48dp"
-            android:id="@+id/imageButton"
-            android:background="@android:color/transparent"
-            android:onClick="selectLanguage"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:scaleType="fitCenter" />
-
-       <!-- <Button
+        <!-- <Button
             android:text="Язык"
             android:layout_width="66dp"
             android:layout_height="wrap_content"
@@ -125,7 +116,7 @@
         <Button
             android:id="@+id/btn_reset_password"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="28dp"
             android:layout_marginTop="20dip"
             android:background="@null"
             android:text="@string/btn_forgot_password"
@@ -137,12 +128,22 @@
         <Button
             android:id="@+id/sign_in_button"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="20dp"
             android:layout_marginTop="20dip"
             android:background="@null"
             android:text="@string/btn_link_to_login"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="15dp" />
+
+        <ImageButton
+            app:srcCompat="@mipmap/ic_language_white_48dp"
+            android:id="@+id/imageButton"
+            android:background="@android:color/transparent"
+            android:onClick="selectLanguage"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:scaleType="fitCenter"
+            android:layout_marginTop="10dp" />
     </LinearLayout>
 </android.support.design.widget.CoordinatorLayout>
