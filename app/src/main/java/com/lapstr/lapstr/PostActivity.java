@@ -342,7 +342,6 @@ public class PostActivity extends AppCompatActivity {
 
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
             mVideoUri= data.getData();
-            mSelectVideo.setImageURI(mVideoUri);
         }
     }
 
