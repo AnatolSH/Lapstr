@@ -103,7 +103,7 @@
             app:srcCompat="@mipmap/ic_add_box_white_36dp"
             android:id="@+id/imageButton3"
             android:scaleType="fitCenter"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:layout_gravity="bottom"
             android:padding="7dp"
             android:layout_height="match_parent"

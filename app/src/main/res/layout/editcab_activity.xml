@@ -48,7 +48,7 @@
             app:srcCompat="@mipmap/ic_account_box_white_36dp"
             android:id="@+id/imageButton5"
             android:scaleType="fitCenter"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:layout_gravity="bottom"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imageButton4"
