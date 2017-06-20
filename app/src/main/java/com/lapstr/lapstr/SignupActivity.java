@@ -384,5 +384,4 @@ public class SignupActivity extends AppCompatActivity {
                 i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(i);
     }
-
 }
