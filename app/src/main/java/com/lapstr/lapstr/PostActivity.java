@@ -26,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -113,9 +112,9 @@ public class PostActivity extends AppCompatActivity {
         mSubmitBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                        startPosting();
-                        progressBar.setVisibility(View.VISIBLE);
+                    startPosting();
 
+                progressBar.setVisibility(View.VISIBLE);
 
             }
         });
@@ -343,6 +342,7 @@ public class PostActivity extends AppCompatActivity {
 
         if(requestCode == GALLERY_REQUEST && resultCode == RESULT_OK){
             mVideoUri= data.getData();
+            mSelectVideo.setImageURI(mVideoUri);
         }
     }
 
